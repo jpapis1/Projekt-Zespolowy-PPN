@@ -44,30 +44,52 @@ public class User {
     private String name;
     private String surname;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="idWallet")
-    Wallet wallet;
-
     @ManyToOne(targetEntity=Permission.class )
-    @JoinColumn(name="idPermission")
+    @JoinColumn(name="id_permission")
     private Permission permission;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="idPortfolio")
-    private Portfolio portfolio;
+    private double taxRate;
+    private double brokersProfitMargin;
+    private double handlingFee;
 
     public User(){ }
 
-    public User(String username, String password, String email, String name, String surname, Wallet wallet, Permission permission, Portfolio portfolio) {
+    public User(String username, String password, String email, String name, String surname, Permission permission, double taxRate, double brokersProfitMargin, double handlingFee) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
         this.surname = surname;
-        this.wallet = wallet;
         this.permission = permission;
-        this.portfolio = portfolio;
+        this.taxRate = taxRate;
+        this.brokersProfitMargin = brokersProfitMargin;
+        this.handlingFee = handlingFee;
     }
+
+    public double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public double getBrokersProfitMargin() {
+        return brokersProfitMargin;
+    }
+
+    public void setBrokersProfitMargin(double brokersProfitMargin) {
+        this.brokersProfitMargin = brokersProfitMargin;
+    }
+
+    public double getHandlingFee() {
+        return handlingFee;
+    }
+
+    public void setHandlingFee(double handlingFee) {
+        this.handlingFee = handlingFee;
+    }
+
     public int getIdUser() {
         return idUser;
     }
@@ -116,27 +138,11 @@ public class User {
         this.surname = surname;
     }
 
-    public Wallet getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
-    }
-
     public Permission getPermission() {
         return permission;
     }
 
     public void setPermission(Permission permission) {
         this.permission = permission;
-    }
-
-    public Portfolio getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
     }
 }

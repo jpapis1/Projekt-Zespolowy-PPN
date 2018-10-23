@@ -27,24 +27,36 @@ import java.util.Date;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idTransaction;
     private String shortName;
     private double units;
     private double unitPrice;
     private Date date;
     private boolean isBuy;
+    private boolean doesExists;
     private double taxRate;
     private double brokersProfitMargin;
     private double handlingFee;
 
-    public Transaction(){ }
-    public Transaction(String shortName, double units, double unitPrice, Date date, boolean isBuy) {
+    @ManyToOne(targetEntity=User.class )
+    @JoinColumn(name="id_user")
+    private User user;
+
+    public Transaction() {
+    }
+
+    public Transaction(String shortName, double units, double unitPrice, Date date, boolean isBuy, boolean doesExists, double taxRate, double brokersProfitMargin, double handlingFee, User user) {
         this.shortName = shortName;
         this.units = units;
         this.unitPrice = unitPrice;
         this.date = date;
         this.isBuy = isBuy;
+        this.doesExists = doesExists;
+        this.taxRate = taxRate;
+        this.brokersProfitMargin = brokersProfitMargin;
+        this.handlingFee = handlingFee;
+        this.user = user;
     }
 
     public int getIdTransaction() {
@@ -95,6 +107,14 @@ public class Transaction {
         isBuy = buy;
     }
 
+    public boolean isDoesExists() {
+        return doesExists;
+    }
+
+    public void setDoesExists(boolean doesExists) {
+        this.doesExists = doesExists;
+    }
+
     public double getTaxRate() {
         return taxRate;
     }
@@ -117,5 +137,13 @@ public class Transaction {
 
     public void setHandlingFee(double handlingFee) {
         this.handlingFee = handlingFee;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

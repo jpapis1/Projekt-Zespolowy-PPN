@@ -21,7 +21,6 @@ package app;
 
 import app.model.*;
 import app.repository.PermissionRepository;
-import app.repository.PortfolioRepository;
 import app.repository.TransactionRepository;
 import app.repository.UserRepository;
 import org.slf4j.Logger;
@@ -46,7 +45,7 @@ public class Application {
 
     @Bean
     public CommandLineRunner run(UserRepository userRepository, PermissionRepository permissionRepository,
-                                 PortfolioRepository portfolioRepository, TransactionRepository transactionRepository) {
+                                  TransactionRepository transactionRepository) {
         return (args) -> {
 /*
             ArrayList<Transaction> transactionList = new ArrayList<>();
