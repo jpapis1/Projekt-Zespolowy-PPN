@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block content %}
+{% if company %}
+    <h1>Company information</h1>
+
+    <p>Name: {{company.companyName}}</p> 
+    <p>Company symbol: {{company.symbol}}</p> 
+    <p>Description: {{company.description}}</p> 
+    <p>Exchange: {{company.exchange}}</p> 
+    <p>CEO: {{company.CEO}}</p>
+    <p>Sector: {{company.sector}}</p>
+
+{% endif %}
+
+
+{% if news %}
+    <h3>News</h3>
+    <hr>
+    {% for story in news %}
+        <img src="{{story.image}}" alt="No image available.">
+        <h4>{{story.headline}}</h4>
+        Summary: <p>{{story.summary}}</p>
+        Source: {{story.source}}
+        <hr>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock content %}

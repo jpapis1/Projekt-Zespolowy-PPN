@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Company information</h1>
+<h3>Company ticker:</h3>
+<form action="{% url 'company' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="short" placeholder="Ticker eg. AAPL">
+    <input type="submit" class="btn btn-primary">
+</form>
+
+{% if error_msg %}
+    <p>{{error_msg}}</p>
+{% endif %}
+<!-- <canvas id="myChart"></canvas>
+<script type="text/javascript">
+	
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: [],
+        datasets: [{
+            label: "Volume",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [],
+        },
+            ]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script> -->
+{% endblock content %}
