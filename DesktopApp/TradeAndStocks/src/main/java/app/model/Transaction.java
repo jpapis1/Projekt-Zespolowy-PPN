@@ -40,7 +40,7 @@ public class Transaction {
     private double handlingFee;
 
     @ManyToOne(targetEntity=User.class )
-    @JoinColumn(name="id_user")
+    @JoinColumn(name="idUser")
     private User user;
 
     public Transaction() {

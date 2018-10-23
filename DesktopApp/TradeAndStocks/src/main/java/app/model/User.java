@@ -45,7 +45,7 @@ public class User {
     private String surname;
 
     @ManyToOne(targetEntity=Permission.class )
-    @JoinColumn(name="id_permission")
+    @JoinColumn(name="idPermission")
     private Permission permission;
 
     private double taxRate;
