@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$',views.index, name='index'),
     url(r'chart',views.chart, name='chart'),
-    url(r'company',views.company, name='company')
+    url(r'company',views.company, name='company'),
+    url(r'rate_single',views.rate_single, name='rate_single')
 
 ]

@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>One Stock Rate of Return </h1>
+<form action="{% url 'rate_single' %}" method="post">
+    {% csrf_token %}
+    <h3>Company ticker:</h3>
+    <input type="text" name="short" placeholder="Ticker eg. AAPL">
+    <h3>Start date:</h3>
+    <input type="date" name="start" placeholder="Start date">
+    <h3>End date:</h3>
+    <input type="date" name="end" placeholder="End date">
+
+    {% comment %} {{ the_div|safe }}
+
+    {{ the_script|safe }} {% endcomment %}
+    <input type="submit" class="btn btn-primary">
+</form>
+
+{% if error_msg %}
+    <p>{{error_msg}}</p>
+{% endif %}
+
+{% endblock content %}
