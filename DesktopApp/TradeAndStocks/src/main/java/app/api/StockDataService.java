@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class StockDataService {
-    public ArrayList<StockData> getDayStockPrices(String stockName)  {
+    static public ArrayList<StockData> getDayStockPrices(String stockName)  {
         String sURL = "https://api.iextrading.com/1.0/stock/" + stockName + "/chart/1d";
 
         try {
@@ -24,7 +24,7 @@ public class StockDataService {
             request.connect();
             JsonParser jp = new JsonParser();
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonArray array = root.getAsJsonArray().getAsJsonArray();
+            JsonArray array = root.getAsJsonArray();
             ArrayList<StockData> stockDataList = new ArrayList<>();
             for(JsonElement element : array) {
                 String date_s = element.getAsJsonObject().get("date").getAsString() + element.getAsJsonObject().get("minute").getAsString();
@@ -39,7 +39,7 @@ public class StockDataService {
         }
         return null;
     }
-    public ArrayList<StockData> getMonthStockPrices(String stockName)  {
+    static public ArrayList<StockData> getMonthStockPrices(String stockName)  {
         String sURL = "https://api.iextrading.com/1.0/stock/" + stockName + "/chart/1m";
         try {
             URL url = new URL(sURL);
@@ -47,7 +47,7 @@ public class StockDataService {
             request.connect();
             JsonParser jp = new JsonParser();
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonArray array = root.getAsJsonArray().getAsJsonArray();
+            JsonArray array = root.getAsJsonArray();
             ArrayList<StockData> stockDataList = new ArrayList<>();
             for(JsonElement element : array) {
                 String date_s = element.getAsJsonObject().get("date").getAsString() + "15:59";
