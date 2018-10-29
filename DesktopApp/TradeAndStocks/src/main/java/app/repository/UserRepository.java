@@ -28,6 +28,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends CrudRepository<User,Integer>{
     List<User> findByPassword(String password);
-    List<User> findByName (String name);
+    List<User> findByFirstName(String firstName);
     User findFirstByUsername (String username);
 }

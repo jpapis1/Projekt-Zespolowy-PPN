@@ -20,11 +20,7 @@
 
 package app.model;
 
-import app.repository.UserRepository;
-
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 public class User {
@@ -41,8 +37,8 @@ public class User {
     @Column(unique=true)
     private String email;
 
-    private String name;
-    private String surname;
+    private String firstName;
+    private String lastName;
 
     @ManyToOne(targetEntity=Permission.class )
     @JoinColumn(name="idPermission")
@@ -54,12 +50,12 @@ public class User {
 
     public User(){ }
 
-    public User(String username, String password, String email, String name, String surname, Permission permission, double taxRate, double brokersProfitMargin, double handlingFee) {
+    public User(String username, String password, String email, String firstName, String lastName, Permission permission, double taxRate, double brokersProfitMargin, double handlingFee) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.name = name;
-        this.surname = surname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.permission = permission;
         this.taxRate = taxRate;
         this.brokersProfitMargin = brokersProfitMargin;
@@ -122,20 +118,20 @@ public class User {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Permission getPermission() {

@@ -19,34 +19,39 @@
 
 package app;
 
-import app.model.*;
+import app.api.StockData;
 import app.repository.PermissionRepository;
 import app.repository.TransactionRepository;
 import app.repository.UserRepository;
+import app.api.StockDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class);
+        //SpringApplication.run(Application.class);
+        StockDataService stockDataService = new StockDataService();
+        ArrayList<StockData> stockData = stockDataService.getDayStockPrices("aapl");
+        stockData = stockDataService.getMonthStockPrices("aapl");
+        System.out.println();
+
+
+
     }
 
     @Bean
     public CommandLineRunner run(UserRepository userRepository, PermissionRepository permissionRepository,
                                   TransactionRepository transactionRepository) {
         return (args) -> {
+
 /*
             ArrayList<Transaction> transactionList = new ArrayList<>();
             Transaction t1 = new Transaction("appl",1.442,348.38,new Date(),true);
@@ -84,7 +89,7 @@ public class Application {
                     new Wallet(19902.32),
                     permissionRepository.findFirstByName("client"),portfolio2));
             log.warn(Integer.toString(userRepository.findByName("Jerzy").size()));
-            userRepository.findAll().forEach(x -> log.warn(x.getName() + " " + x.getSurname() + " " + x.getPermission().getName()));
+            userRepository.findAll().forEach(x -> log.warn(x.getFirstName() + " " + x.getLastName() + " " + x.getPermission().getFirstName()));
 
             User user = userRepository.findFirstByUsername("stefan");
             */
