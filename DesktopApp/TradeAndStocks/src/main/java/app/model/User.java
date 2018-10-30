@@ -20,6 +20,8 @@
 
 package app.model;
 
+import app.service.PermissionService;
+
 import javax.persistence.*;
 
 @Entity
@@ -151,5 +153,53 @@ public class User {
 
     public void setHandlingFee(double handlingFee) {
         this.handlingFee = handlingFee;
+    }
+
+    public static class UserBuilder {
+        private String username;
+        private String password;
+        private String email;
+        private String firstName;
+        private String lastName;
+        private Permission permission;
+        private double funds;
+        private double taxRate;
+        private double brokersProfitMargin;
+        private double handlingFee;
+        public UserBuilder(String username) {
+            this.username = username;
+        }
+        public UserBuilder pass(String password) {
+            this.password = password;
+            return this;
+        }
+        public UserBuilder mail(String email) {
+            this.email = email;
+            return this;
+        }
+        public UserBuilder funds(double funds) {
+            this.funds = funds;
+            return this;
+        }
+        public UserBuilder perm(PermissionEnum permissionEnum) {
+            this.permission = PermissionService.getRepo().findFirstByName(permissionEnum);
+            return this;
+        }
+        public UserBuilder taxes(double taxRate, double brokersProfitMargin, double handlingFee) {
+            this.taxRate = taxRate;
+            this.brokersProfitMargin = brokersProfitMargin;
+            this.handlingFee = handlingFee;
+            return this;
+        }
+        public UserBuilder fullName(String firstName,String lastName) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            return this;
+        }
+        public User build() {
+            return new User(username, password, email, firstName, lastName,
+                    permission, funds, taxRate, brokersProfitMargin, handlingFee);
+        }
+
     }
 }

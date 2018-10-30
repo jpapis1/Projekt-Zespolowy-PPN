@@ -57,10 +57,11 @@ public class Application {
             PermissionService.initialize(permissionRepository);
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
-
-            User user = new User("stefan", "pass", "s.a@aain.pl", "Stefan", "Lis",
-                    PermissionService.getRepo().findFirstByName(PermissionEnum.client),
-                    1000.0, 0.2, 0.1, 0.1);
+            User user = new User.UserBuilder("user")
+                    .fullName("Stefan","Waszczyk")
+                    .pass("H@sło").mail("stefan@gg.pl")
+                    .funds(1000.0).perm(PermissionEnum.client)
+                    .taxes(0.1,0,0).build();
             UserService.getRepo().save(user);
             TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
                     user.getTaxRate(),user.getBrokersProfitMargin(), user.getHandlingFee(), user));
