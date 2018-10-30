@@ -19,14 +19,24 @@
 
 package app;
 
+import app.model.Permission;
+import app.model.PermissionEnum;
+import app.model.Transaction;
+import app.model.User;
 import app.repository.PermissionRepository;
 import app.repository.TransactionRepository;
 import app.repository.UserRepository;
+import app.service.PermissionService;
+import app.service.TransactionService;
+import app.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -34,7 +44,7 @@ public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        //SpringApplication.run(Application.class);
+        SpringApplication.run(Application.class);
 
 
 
@@ -44,51 +54,16 @@ public class Application {
     public CommandLineRunner run(UserRepository userRepository, PermissionRepository permissionRepository,
                                   TransactionRepository transactionRepository) {
         return (args) -> {
+            PermissionService.initialize(permissionRepository);
+            TransactionService.initialize(transactionRepository);
+            UserService.initialize(userRepository);
 
-/*
-            ArrayList<Transaction> transactionList = new ArrayList<>();
-            Transaction t1 = new Transaction("appl",1.442,348.38,new Date(),true);
-            transactionList.add(t1);
-            Transaction t2 = new Transaction("msft",20.481,141.01,new Date(),true);
-            transactionList.add(t2);
-            transactionRepository.save(t1);
-            transactionRepository.save(t2);
-            Portfolio portfolio2 = new Portfolio(transactionList);
-
-            portfolioRepository.save(portfolio2);
-
-            permissionRepository.save(new Permission("admin"));
-            permissionRepository.save(new Permission("client"));
-            userRepository.save(new User("test@test.com",
-                    "abc",
-                    "gage@ga.pl",
-                    "Jerzy",
-                    "Hop",
-                    new Wallet(0),
-                    permissionRepository.findFirstByName("admin"),new Portfolio()));
-
-            userRepository.save(new User("stefan",
-                    "passWoRd",
-                    "abc@side.pl",
-                    "Stefan",
-                    "Apel",
-                    new Wallet(100.44),
-                    permissionRepository.findFirstByName("client"),new Portfolio()));
-            userRepository.save(new User("robert@pp.pl",
-                    "iusc81Kby",
-                    "bcs@internet.com",
-                    "Marcin",
-                    "Unrukowski",
-                    new Wallet(19902.32),
-                    permissionRepository.findFirstByName("client"),portfolio2));
-            log.warn(Integer.toString(userRepository.findByName("Jerzy").size()));
-            userRepository.findAll().forEach(x -> log.warn(x.getFirstName() + " " + x.getLastName() + " " + x.getPermission().getFirstName()));
-
-            User user = userRepository.findFirstByUsername("stefan");
-            */
-            //user.getPortfolio().addTransaction(new Transaction("appl",1.442,348.38,new Date(),true));
-            //user.getPortfolio().addTransaction(new Transaction("msft",20.481,141.01,new Date(),true));
-            //userRepository.save(user);
+            User user = new User("stefan", "pass", "s.a@aain.pl", "Stefan", "Lis",
+                    PermissionService.getRepo().findFirstByName(PermissionEnum.client),
+                    1000.0, 0.2, 0.1, 0.1);
+            UserService.getRepo().save(user);
+            TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
+                    user.getTaxRate(),user.getBrokersProfitMargin(), user.getHandlingFee(), user));
 
         };
     }

@@ -28,10 +28,12 @@ public class Permission {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int idPermission;
     @Column(unique=true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private PermissionEnum name;
 
     public Permission() { }
-    public Permission(String name) {
+
+    public Permission(PermissionEnum name) {
         this.name = name;
     }
 
@@ -43,11 +45,11 @@ public class Permission {
         this.idPermission = idPermission;
     }
 
-    public String getName() {
+    public PermissionEnum getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(PermissionEnum name) {
         this.name = name;
     }
 }

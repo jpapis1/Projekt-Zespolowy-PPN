@@ -44,45 +44,24 @@ public class User {
     @JoinColumn(name="idPermission")
     private Permission permission;
 
+
+    private double funds;
     private double taxRate;
     private double brokersProfitMargin;
     private double handlingFee;
 
     public User(){ }
 
-    public User(String username, String password, String email, String firstName, String lastName, Permission permission, double taxRate, double brokersProfitMargin, double handlingFee) {
+    public User(String username, String password, String email, String firstName, String lastName, Permission permission, double funds, double taxRate, double brokersProfitMargin, double handlingFee) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.permission = permission;
+        this.funds = funds;
         this.taxRate = taxRate;
         this.brokersProfitMargin = brokersProfitMargin;
-        this.handlingFee = handlingFee;
-    }
-
-    public double getTaxRate() {
-        return taxRate;
-    }
-
-    public void setTaxRate(double taxRate) {
-        this.taxRate = taxRate;
-    }
-
-    public double getBrokersProfitMargin() {
-        return brokersProfitMargin;
-    }
-
-    public void setBrokersProfitMargin(double brokersProfitMargin) {
-        this.brokersProfitMargin = brokersProfitMargin;
-    }
-
-    public double getHandlingFee() {
-        return handlingFee;
-    }
-
-    public void setHandlingFee(double handlingFee) {
         this.handlingFee = handlingFee;
     }
 
@@ -140,5 +119,37 @@ public class User {
 
     public void setPermission(Permission permission) {
         this.permission = permission;
+    }
+
+    public double getFunds() {
+        return funds;
+    }
+
+    public void setFunds(double funds) {
+        this.funds = funds;
+    }
+
+    public double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public double getBrokersProfitMargin() {
+        return brokersProfitMargin;
+    }
+
+    public void setBrokersProfitMargin(double brokersProfitMargin) {
+        this.brokersProfitMargin = brokersProfitMargin;
+    }
+
+    public double getHandlingFee() {
+        return handlingFee;
+    }
+
+    public void setHandlingFee(double handlingFee) {
+        this.handlingFee = handlingFee;
     }
 }

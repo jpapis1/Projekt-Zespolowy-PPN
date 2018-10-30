@@ -21,10 +21,11 @@
 package app.repository;
 
 import app.model.Permission;
+import app.model.PermissionEnum;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PermissionRepository extends CrudRepository<Permission,Integer> {
-    public Permission findFirstByName(String name);
+    public Permission findFirstByName(PermissionEnum name);
 }
