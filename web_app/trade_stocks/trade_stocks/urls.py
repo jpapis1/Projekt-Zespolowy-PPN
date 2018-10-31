@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^$',views.index, name='index'),
     url(r'chart',views.chart, name='chart'),
     url(r'company',views.company, name='company'),
-    url(r'rate_single',views.rate_single, name='rate_single')
+    url(r'rate_single',views.rate_single, name='rate_single'),
+    url(r'signup',views.signup, name='signup')
+
 
 ]

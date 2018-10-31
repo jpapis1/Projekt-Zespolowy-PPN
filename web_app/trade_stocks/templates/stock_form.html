@@ -6,7 +6,7 @@
 <h3>Company ticker:</h3>
 <form action="{% url 'company' %}" method="post">
     {% csrf_token %}
-    <input type="text" name="short" placeholder="Ticker eg. AAPL">
+    <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
     <input type="submit" class="btn btn-primary">
 </form>
 
