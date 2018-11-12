@@ -19,9 +19,6 @@
  */
 
 package app.model;
-
-import app.service.PermissionService;
-
 import javax.persistence.*;
 
 @Entity
@@ -48,13 +45,14 @@ public class User {
 
 
     private double funds;
-    private double taxRate;
-    private double brokersProfitMargin;
-    private double handlingFee;
+
+    @ManyToOne(targetEntity=app.model.Broker.class)
+    @JoinColumn(name="idBroker")
+    private Broker broker;
 
     public User(){ }
 
-    public User(String username, String password, String email, String firstName, String lastName, Permission permission, double funds, double taxRate, double brokersProfitMargin, double handlingFee) {
+    public User(String username, String password, String email, String firstName, String lastName, Permission permission, double funds, Broker broker) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -62,9 +60,7 @@ public class User {
         this.lastName = lastName;
         this.permission = permission;
         this.funds = funds;
-        this.taxRate = taxRate;
-        this.brokersProfitMargin = brokersProfitMargin;
-        this.handlingFee = handlingFee;
+        this.broker = broker;
     }
 
     public int getIdUser() {
@@ -131,30 +127,14 @@ public class User {
         this.funds = funds;
     }
 
-    public double getTaxRate() {
-        return taxRate;
+    public Broker getBroker() {
+        return broker;
     }
 
-    public void setTaxRate(double taxRate) {
-        this.taxRate = taxRate;
+    public void setBroker(Broker broker) {
+        this.broker = broker;
     }
-
-    public double getBrokersProfitMargin() {
-        return brokersProfitMargin;
-    }
-
-    public void setBrokersProfitMargin(double brokersProfitMargin) {
-        this.brokersProfitMargin = brokersProfitMargin;
-    }
-
-    public double getHandlingFee() {
-        return handlingFee;
-    }
-
-    public void setHandlingFee(double handlingFee) {
-        this.handlingFee = handlingFee;
-    }
-
+/*
     public static class UserBuilder {
         private String username;
         private String password;
@@ -166,6 +146,7 @@ public class User {
         private double taxRate;
         private double brokersProfitMargin;
         private double handlingFee;
+
         public UserBuilder(String username) {
             this.username = username;
         }
@@ -202,4 +183,5 @@ public class User {
         }
 
     }
+    */
 }

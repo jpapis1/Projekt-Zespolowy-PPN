@@ -23,12 +23,8 @@ import app.model.Permission;
 import app.model.PermissionEnum;
 import app.model.Transaction;
 import app.model.User;
-import app.repository.PermissionRepository;
-import app.repository.TransactionRepository;
-import app.repository.UserRepository;
-import app.service.PermissionService;
-import app.service.TransactionService;
-import app.service.UserService;
+import app.repository.*;
+import app.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -52,20 +48,24 @@ public class Application {
 
     @Bean
     public CommandLineRunner run(UserRepository userRepository, PermissionRepository permissionRepository,
-                                  TransactionRepository transactionRepository) {
+                                 TransactionRepository transactionRepository, CountryRepository countryRepository,
+                                 BrokerRepository brokerRepository) {
         return (args) -> {
             PermissionService.initialize(permissionRepository);
+            CountryService.initialize(countryRepository);
+            BrokerService.initialize(brokerRepository);
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
-            User user = new User.UserBuilder("user")
+            /*
+            User user = new User.UserBuilder("us1aer")
                     .fullName("Stefan","Waszczyk")
-                    .pass("H@sło").mail("stefan@gg.pl")
+                    .pass("H@sło").mail("stefaznz@gg.pl")
                     .funds(1000.0).perm(PermissionEnum.client)
                     .taxes(0.1,0,0).build();
             UserService.getRepo().save(user);
             TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
-                    user.getTaxRate(),user.getBrokersProfitMargin(), user.getHandlingFee(), user));
-
+                    user.getBroker().getCountry().getTaxRate(),user.getBroker().getProfitMargin(), user.getBroker().getHandlingFee(), user));
+*/
         };
     }
 
