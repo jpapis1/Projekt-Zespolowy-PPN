@@ -9,9 +9,9 @@ public class CountryService {
     public static void initialize(CountryRepository repo) {
         if(!initialized) {
             countryRepository = repo;
-            countryRepository.save(new Country("Poland",0.19));
-            countryRepository.save(new Country("United States",0.15));
-            countryRepository.save(new Country("Germany",0.25));
+            //countryRepository.save(new Country("Poland",0.19));
+            //countryRepository.save(new Country("United States",0.15));
+            //countryRepository.save(new Country("Germany",0.25));
             initialized = true;
         }
     }

@@ -10,8 +10,8 @@ public class PermissionService {
     public static void initialize(PermissionRepository repo) {
         if(!initialized) {
             permissionRepository = repo;
-            permissionRepository.save(new Permission(PermissionEnum.admin));
-            permissionRepository.save(new Permission(PermissionEnum.client));
+            //permissionRepository.save(new Permission(PermissionEnum.admin));
+            //permissionRepository.save(new Permission(PermissionEnum.client));
             initialized = true;
         }
     }
