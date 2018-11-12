@@ -19,6 +19,10 @@
  */
 
 package app.model;
+import app.repository.BrokerRepository;
+import app.service.BrokerService;
+import app.service.PermissionService;
+
 import javax.persistence.*;
 
 @Entity
@@ -134,7 +138,7 @@ public class User {
     public void setBroker(Broker broker) {
         this.broker = broker;
     }
-/*
+
     public static class UserBuilder {
         private String username;
         private String password;
@@ -143,9 +147,7 @@ public class User {
         private String lastName;
         private Permission permission;
         private double funds;
-        private double taxRate;
-        private double brokersProfitMargin;
-        private double handlingFee;
+        private Broker broker;
 
         public UserBuilder(String username) {
             this.username = username;
@@ -166,10 +168,8 @@ public class User {
             this.permission = PermissionService.getRepo().findFirstByName(permissionEnum);
             return this;
         }
-        public UserBuilder taxes(double taxRate, double brokersProfitMargin, double handlingFee) {
-            this.taxRate = taxRate;
-            this.brokersProfitMargin = brokersProfitMargin;
-            this.handlingFee = handlingFee;
+        public UserBuilder broker(String broker) {
+            this.broker = BrokerService.getRepo().findFirstByName(broker);
             return this;
         }
         public UserBuilder fullName(String firstName,String lastName) {
@@ -179,9 +179,8 @@ public class User {
         }
         public User build() {
             return new User(username, password, email, firstName, lastName,
-                    permission, funds, taxRate, brokersProfitMargin, handlingFee);
+                    permission, funds,broker);
         }
 
     }
-    */
 }

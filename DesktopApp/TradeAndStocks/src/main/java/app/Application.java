@@ -56,16 +56,16 @@ public class Application {
             BrokerService.initialize(brokerRepository);
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
-            /*
+
             User user = new User.UserBuilder("us1aer")
                     .fullName("Stefan","Waszczyk")
                     .pass("H@sło").mail("stefaznz@gg.pl")
                     .funds(1000.0).perm(PermissionEnum.client)
-                    .taxes(0.1,0,0).build();
+                    .broker("Bank Of America").build();
             UserService.getRepo().save(user);
             TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
                     user.getBroker().getCountry().getTaxRate(),user.getBroker().getProfitMargin(), user.getBroker().getHandlingFee(), user));
-*/
+
         };
     }
 
