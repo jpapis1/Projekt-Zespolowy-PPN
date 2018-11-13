@@ -35,9 +35,10 @@ public class Transaction {
     private Date date;
     private boolean isBuy;
     private boolean doesExists;
-    private double taxRate;
-    private double brokersProfitMargin;
-    private double handlingFee;
+
+    @ManyToOne(targetEntity=Broker.class )
+    @JoinColumn(name="idBroker")
+    private Broker broker;
 
     @ManyToOne(targetEntity=User.class )
     @JoinColumn(name="idUser")
@@ -46,16 +47,14 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(String shortName, double units, double unitPrice, Date date, boolean isBuy, boolean doesExists, double taxRate, double brokersProfitMargin, double handlingFee, User user) {
+    public Transaction(String shortName, double units, double unitPrice, Date date, boolean isBuy, boolean doesExists, Broker broker, User user) {
         this.shortName = shortName;
         this.units = units;
         this.unitPrice = unitPrice;
         this.date = date;
         this.isBuy = isBuy;
         this.doesExists = doesExists;
-        this.taxRate = taxRate;
-        this.brokersProfitMargin = brokersProfitMargin;
-        this.handlingFee = handlingFee;
+        this.broker = broker;
         this.user = user;
     }
 
@@ -115,28 +114,12 @@ public class Transaction {
         this.doesExists = doesExists;
     }
 
-    public double getTaxRate() {
-        return taxRate;
+    public Broker getBroker() {
+        return broker;
     }
 
-    public void setTaxRate(double taxRate) {
-        this.taxRate = taxRate;
-    }
-
-    public double getBrokersProfitMargin() {
-        return brokersProfitMargin;
-    }
-
-    public void setBrokersProfitMargin(double brokersProfitMargin) {
-        this.brokersProfitMargin = brokersProfitMargin;
-    }
-
-    public double getHandlingFee() {
-        return handlingFee;
-    }
-
-    public void setHandlingFee(double handlingFee) {
-        this.handlingFee = handlingFee;
+    public void setBroker(Broker broker) {
+        this.broker = broker;
     }
 
     public User getUser() {

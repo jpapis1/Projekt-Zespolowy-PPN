@@ -64,7 +64,7 @@ public class Application {
                     .broker("Bank Of America").build();
             UserService.getRepo().save(user);
             TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
-                    user.getBroker().getCountry().getTaxRate(),user.getBroker().getProfitMargin(), user.getBroker().getHandlingFee(), user));
+                    user.getBroker(), user));
 
         };
     }
