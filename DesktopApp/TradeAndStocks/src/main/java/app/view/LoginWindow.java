@@ -49,6 +49,15 @@ public class LoginWindow extends Application {
                 button1.setEffect(null);
             }
         });
+        button1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        {
+            @Override public void handle(MouseEvent e)
+            {
+                button1.setEffect(shadow);
+                button1.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+
+            }
+        });
 
         button2.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
