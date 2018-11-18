@@ -57,9 +57,9 @@ public class Application {
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
 
-            User user = new User.UserBuilder("us1zaer")
-                    .fullName("Jerzy","Pek")
-                    .pass("H@sło").mail("jerzy@s.pl")
+            User user = new User.UserBuilder("us1zazxaeer")
+                    .fullName("Jeragzy","Pek")
+                    .pass("H@sło").mail("jerzy@efaefs.pl")
                     .funds(3000.0).perm(PermissionEnum.client)
                     .broker("Bank Of America").build();
             UserService.getRepo().save(user);

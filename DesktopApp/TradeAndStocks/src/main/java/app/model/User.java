@@ -24,6 +24,7 @@ import app.service.BrokerService;
 import app.service.PermissionService;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -54,6 +55,17 @@ public class User {
     @JoinColumn(name="idBroker")
     private Broker broker;
 
+
+    // dla Pythona
+    private Date date_joined;
+    private String first_name;
+    private String last_name;
+    private int is_active;
+    private int is_staff;
+    private int is_superuser;
+    private int is_anonymous;
+    private int is_authenticated;
+    //
     public User(){ }
 
     public User(String username, String password, String email, String firstName, String lastName, Permission permission, double funds, Broker broker) {
@@ -139,6 +151,71 @@ public class User {
         this.broker = broker;
     }
 
+    // Dla Pythona
+    public Date getDate_joined() {
+        return date_joined;
+    }
+
+    public void setDate_joined(Date date_joined) {
+        this.date_joined = date_joined;
+    }
+
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public int getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(int is_active) {
+        this.is_active = is_active;
+    }
+
+    public int getIs_staff() {
+        return is_staff;
+    }
+
+    public void setIs_staff(int is_staff) {
+        this.is_staff = is_staff;
+    }
+
+    public int getIs_superuser() {
+        return is_superuser;
+    }
+
+    public void setIs_superuser(int is_superuser) {
+        this.is_superuser = is_superuser;
+    }
+
+    public int getIs_anonymous() {
+        return is_anonymous;
+    }
+
+    public void setIs_anonymous(int is_anonymous) {
+        this.is_anonymous = is_anonymous;
+    }
+
+    public int getIs_authenticated() {
+        return is_authenticated;
+    }
+
+    public void setIs_authenticated(int is_authenticated) {
+        this.is_authenticated = is_authenticated;
+    }
+    //
     public static class UserBuilder {
         private String username;
         private String password;
@@ -178,8 +255,17 @@ public class User {
             return this;
         }
         public User build() {
-            return new User(username, password, email, firstName, lastName,
+            User user = new User(username, password, email, firstName, lastName,
                     permission, funds,broker);
+            user.setFirst_name("");
+            user.setLast_name("");
+            user.setDate_joined(new Date());
+            user.setIs_anonymous(0);
+            user.setIs_active(0);
+            user.setIs_authenticated(0);
+            user.setIs_staff(0);
+            user.setIs_superuser(0);
+            return user;
         }
 
     }
