@@ -57,7 +57,7 @@ public class Application {
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
 
-            User user = new User.UserBuilder("us1zazxaeer")
+            /*User user = new User.UserBuilder("us1zazxaeer")
                     .fullName("Jeragzy","Pek")
                     .pass("H@sło").mail("jerzy@efaefs.pl")
                     .funds(3000.0).perm(PermissionEnum.client)
@@ -66,6 +66,8 @@ public class Application {
             TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
                     user.getBroker(), user));
 
+*/
+            log.warn(String.valueOf(UserService.getRepo().findFirstByUsername("aianofige").getFunds()));
         };
     }
 

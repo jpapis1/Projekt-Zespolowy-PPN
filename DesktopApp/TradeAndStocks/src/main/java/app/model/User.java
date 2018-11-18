@@ -22,6 +22,7 @@ package app.model;
 import app.repository.BrokerRepository;
 import app.service.BrokerService;
 import app.service.PermissionService;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,24 +34,31 @@ public class User {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private int idUser;
 
+    @NonNull
     @Column(unique=true)
     private String username;
 
+    @NonNull
     private String password;
 
+    @NonNull
     @Column(unique=true)
     private String email;
 
+    @NonNull
     private String firstName;
+    @NonNull
     private String lastName;
 
+    @NonNull
     @ManyToOne(targetEntity=Permission.class )
     @JoinColumn(name="idPermission")
     private Permission permission;
 
-
+    @NonNull
     private double funds;
 
+    @NonNull
     @ManyToOne(targetEntity=app.model.Broker.class)
     @JoinColumn(name="idBroker")
     private Broker broker;
