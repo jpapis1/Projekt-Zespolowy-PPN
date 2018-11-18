@@ -103,7 +103,7 @@ def signup(request):
             # form = SignupForm()
             reg_message = "Registration Successful!"
         # return redirect('login.html', reg_message='bar')            
-        return render(request,'login.html',{'reg_message':reg_message})
+        return render(request,'success.html',{'reg_message':reg_message})
 
     elif request.method == 'GET':
         form = SignupForm()
