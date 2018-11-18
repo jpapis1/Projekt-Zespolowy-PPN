@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -55,6 +56,8 @@ public class LoginWindow extends Application {
             {
                 button1.setEffect(shadow);
                 button1.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                stage.hide();
+                new HomeWindow().start(new Stage());
 
             }
         });
