@@ -10,8 +10,11 @@ import numpy as np
 import pandas as pd
 from bokeh.models import ColumnDataSource
 from django.views.decorators.csrf import csrf_exempt
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from django.http import HttpResponseRedirect
+from django.contrib.auth.hashers import make_password
+from django.shortcuts import redirect
+from django.contrib.auth import authenticate, login
 
 error_msg = "Invalid Parameters"
 
@@ -29,11 +32,11 @@ def chart(request):
     return render(request,'chart.html',{'data':data})
 
 # TODO: Make sure that post call to this from the desktop app can go through(csrf_exempt maybe token authentication)
+@csrf_exempt
 def company(request):
     if request.method == 'GET':
         return render(request,'stock_form.html')
     elif request.method == 'POST':
-        # TODO: change to form for company so it ccould use GET to retrieve info like this here.
         try:
             ticker = request.POST.get('ticker')
             company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
@@ -48,27 +51,10 @@ def company(request):
             return render(request,'company_info.html',{'company':company,'news':news})
 
         except:
-            return render(request,'stock_form.html',{'error_msg':"error_occured"})
-
-        # TODO: Fix that
-        # if(type(request.GET.get('ticker')) != None):
-        #     ticker = request.GET.get('short')
-        #     company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
-        #     news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
-        #     try:
-        #         company = json.loads(company_json.content)
-        #         news = json.loads(news_json.content)
-        #     except:
-        #         error_msg = "Unknown Ticker"
-        #         return render(request,'stock_form.html',{'error_msg':error_msg})
-
-        #     return render(request,'company_info.html',{'company':company,'news':news})
-        # else:
-        #     return render(request,'stock_form.html')
-        
+            return render(request,'stock_form.html',{'error_msg':"error_occured"})       
 
 def rate_single(request):
-    # Pick and stay with one - log for single asset over time
+    # Pick and stay with one - logarythmic for single asset over time
     # Simple if multiple assets over the same timeframe
     # Simple Rate of return = (ending price (+dividend) - beg. price) / beg.price
     # Logarythmic ror = log (ending price / beg. price)
@@ -96,7 +82,6 @@ def rate_single(request):
             plot.line(x='date', y='close', source=source)
             script, div = components(plot)
         except:
-            # error_msg = "Invalid Parameters"
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
     
         return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
@@ -105,24 +90,42 @@ def rate_single(request):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
+        reg_message = "Registration failed."
         if (form.is_valid()):
-            # Add additional stuff that's not in forms here
-            # Get number of users in db and add one to that
-            # and use it as an id
             user = form.save(commit=False)
-            # TODO: ENCRYPT THE PASSWORDS
-            # TODO: Fix the user_id assignment
-            user.iduser = 1
-            user.brokersprofitmargin = 0
-            user.handlingfee = 0
-            user.taxrate = 0
-            user.funds = 1000000
-            # user_id_counter += 1
+            pw = form.cleaned_data['password']
+            print(pw)
+            user.password = make_password(pw)
+            user.idbroker = 1
+            user.funds = 3000
+            user.idpersmission = 1
             user.save()
-            # return HttpResponseRedirect(reverse_lazy(index))
-            form = SignupForm()
-        return render(request,'registration_form.html',{'form': form})
+            # form = SignupForm()
+            reg_message = "Registration Successful!"
+        # return redirect('login.html', reg_message='bar')            
+        return render(request,'login.html',{'reg_message':reg_message})
 
     elif request.method == 'GET':
         form = SignupForm()
         return render(request,'registration_form.html',{'form': form})
+
+def loginuser(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        print(username)
+        print(password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page.
+            return render(request,'index.html', {'u': username, 'p':password})
+        else:
+            # Return an 'invalid login' error message.           
+            return render(request,'login.html')
+
+    elif request.method == 'GET':
+        form = LoginForm()
+        return render(request,'login.html',{'form': form})
+
+    return render(request, 'login.html')

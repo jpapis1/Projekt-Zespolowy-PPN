@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Login</h1>
+{% if reg_message %}
+    <p>{{reg_message}}</p>
+{% endif %}
+
+{% if p %}
+    <p>{{p}}</p>
+{% endif %}
+
+{% if u %}
+    <p>{{u}}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="save btn btn-default">Login</button>
+</form>
+
+{% if error_msg %}
+    <p>{{error_msg}}</p>
+{% endif %}
+
+{% endblock content %}
