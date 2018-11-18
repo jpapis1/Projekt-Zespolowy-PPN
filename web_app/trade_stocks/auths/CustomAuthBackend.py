@@ -13,8 +13,9 @@ class MyBackend:
         print(user.password)
         print(password)
         print(check_password(password,make_password(password)))
-        password = check_password(password,user.password)
-        if password:
+        success = check_password(password,user.password)
+        print(success)
+        if success:
             return user
 
         return None

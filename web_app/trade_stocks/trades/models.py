@@ -56,7 +56,7 @@ class Transaction(models.Model):
 
 
 class User(models.Model):
-    REQUIRED_FIELDS = ('email','username', 'password')
+    REQUIRED_FIELDS = ('email', 'password')
     id = models.AutoField(db_column='idUser', primary_key=True)  # Field name made lowercase.
     email = models.CharField(unique=True, max_length=255, blank=False, null=True)
     firstname = models.CharField(db_column='firstName', max_length=255, blank=False, null=False)  # Field name made lowercase.
@@ -67,7 +67,10 @@ class User(models.Model):
     idbroker = models.IntegerField(db_column='idBroker', blank=False, null=False)  # Field name made lowercase.
     idpermission = models.IntegerField(db_column='idPermission', blank=False, null=False)  # Field name made lowercase.
     # last_login = models.DateTimeField(blank=True,null=True)
+    is_anonymous = models.BooleanField((""))
+    is_authenticated = models.BooleanField((""))
     
+    USERNAME_FIELD = 'username'
     class Meta:
         managed = False
         db_table = 'User'
