@@ -54,9 +54,14 @@ public class StockDataService {
 
             JsonArray array = root.getAsJsonArray();
                 JsonObject latestElement = array.get(array.size() - 1).getAsJsonObject();
-                String date_s = latestElement.get("date").getAsString() + latestElement.get("minute").getAsString();
-                SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddhh:mm");
-                Date date = dt.parse(date_s);
+                int i = 2;
+                while (latestElement.get("average").getAsDouble()==-1) {
+                    latestElement = array.get(array.size() - i).getAsJsonObject();
+                    i++;
+                }
+                    String date_s = latestElement.get("date").getAsString() + latestElement.get("minute").getAsString();
+                    SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddhh:mm");
+                    Date date = dt.parse(date_s);
 
 
                 return new StockData(date, latestElement.get("average").getAsDouble());
