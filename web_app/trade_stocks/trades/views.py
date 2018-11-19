@@ -14,7 +14,10 @@ from .forms import SignupForm, LoginForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+import bcrypt
+from trades.models import User
+
 
 error_msg = "Invalid Parameters"
 
@@ -98,7 +101,8 @@ def signup(request):
             user.password = make_password(pw)
             user.idbroker = 1
             user.funds = 3000
-            user.idpersmission = 1
+            user.idpermission = 2
+            user.is_authenticated = False
             user.save()
             # form = SignupForm()
             reg_message = "Registration Successful!"
@@ -115,11 +119,17 @@ def loginuser(request):
         password = request.POST['password']
         print(username)
         print(password)
+        print(make_password('password'))
+        print(make_password('password'))
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             # Redirect to a success page.
-            return render(request,'index.html', {'u': username, 'p':password})
+            print(user.id)
+            print(User.objects.get(pk=user.id))
+
+            # return render(request,'index.html', {'u': username, 'p':password})
+            return redirect('index')
         else:
             # Return an 'invalid login' error message.           
             return render(request,'login.html')
@@ -129,3 +139,9 @@ def loginuser(request):
         return render(request,'login.html',{'form': form})
 
     return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
+
+

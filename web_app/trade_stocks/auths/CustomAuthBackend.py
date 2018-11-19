@@ -10,12 +10,21 @@ class MyBackend:
         # Check the username/password and return a user.
         
         user = User.objects.get(username=username)
-        print(user.password)
-        print(password)
-        print(check_password(password,make_password(password)))
+
         success = check_password(password,user.password)
-        print(success)
+        print("Change")
+        print(user.is_authenticated)
+        user.is_authenticated = True
+        print(user.is_authenticated)
+        user.save()
         if success:
             return user
 
         return None
+    
+    def get_user(self, user_id):
+        try:
+            print(User.objects.get(pk=user_id))
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return None

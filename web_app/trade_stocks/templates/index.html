@@ -56,8 +56,18 @@
                 <a class="nav-link" href="#">About</a>
             </li>
             </ul>
+              {% if user.is_authenticated %}
+                <span class="nav-item">
+                  <a href="{% url 'logout_view' %}">Logout </a>
+                </span>
+                Hello {{ user.username }}
+                {% else %}
+                <span class="nav-item">
+                  Not logged in.
+                </span>
+              {% endif %}
             <span class="nav-item">
-              <a href="{% url 'signup' %}">Signup</a>
+              <a href="{% url 'signup' %}">Signup </a>
             </span>
             <span class="nav-item">
               <a href="{% url 'loginuser' %}">Login</a>
@@ -70,6 +80,7 @@
 <div class="jumbotron">
   <h1 class="display-4">Welcome to Trades and Stocks.</h1>
   <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
 </div>
 <div class="mx-auto" style="width:80%">
 <div class="menu-container">

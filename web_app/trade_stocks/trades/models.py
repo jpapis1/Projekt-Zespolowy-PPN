@@ -68,7 +68,7 @@ class User(models.Model):
     idpermission = models.IntegerField(db_column='idPermission', blank=False, null=False)  # Field name made lowercase.
     # last_login = models.DateTimeField(blank=True,null=True)
     is_anonymous = models.BooleanField((""))
-    is_authenticated = models.BooleanField((""))
+    is_authenticated = models.BooleanField(("False"))
     
     USERNAME_FIELD = 'username'
     class Meta:
