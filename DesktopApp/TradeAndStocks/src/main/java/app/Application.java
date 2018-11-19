@@ -25,6 +25,7 @@ import app.model.Transaction;
 import app.model.User;
 import app.repository.*;
 import app.service.*;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -32,6 +33,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.spec.KeySpec;
 import java.util.Date;
 
 
@@ -67,7 +71,7 @@ public class Application {
                     user.getBroker(), user));
 
 */
-            log.warn(String.valueOf(UserService.getRepo().findFirstByUsername("aianofige").getFunds()));
+            log.warn(Boolean.toString(UserService.isPasswordCorrect("Test1","password")));
         };
     }
 

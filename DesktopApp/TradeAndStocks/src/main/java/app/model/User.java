@@ -65,13 +65,21 @@ public class User {
 
 
     // dla Pythona
+    @Transient
     private Date date_joined;
+    @Transient
     private String first_name;
+    @Transient
     private String last_name;
+    @Transient
     private int is_active;
+    @Transient
     private int is_staff;
+    @Transient
     private int is_superuser;
+    @Transient
     private int is_anonymous;
+    @Transient
     private int is_authenticated;
     //
     public User(){ }
