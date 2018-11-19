@@ -19,6 +19,8 @@
 
 package app;
 
+import app.api.StockDataMap;
+import app.api.StockDataService;
 import app.model.Permission;
 import app.model.PermissionEnum;
 import app.model.Transaction;
@@ -36,6 +38,7 @@ import org.springframework.context.annotation.Bean;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -72,6 +75,8 @@ public class Application {
 
 */
             log.warn(Boolean.toString(UserService.isPasswordCorrect("Test1","password")));
+            ArrayList<StockDataMap> maps = StockDataService.getAllStocksList();
+            maps.forEach(System.out::println);
         };
     }
 
