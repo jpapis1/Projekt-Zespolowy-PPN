@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from trades import views
 from django.conf.urls import url
-from django.contrib.auth import views as auth_views
+# from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,9 @@ urlpatterns = [
     url(r'rate_single',views.rate_single, name='rate_single'),
     url(r'signup',views.signup, name='signup'),
     url(r'login',views.loginuser, name='loginuser'),
-    url(r'logout',views.logout_view, name='logout_view')
+    url(r'logout',views.logout_view, name='logout_view'),
+    url(r'profile',views.profile, name='profile'),
+    url(r'rate_portfolio', views.rate_portfolio, name='rate_portfolio'),
 
 
 ]

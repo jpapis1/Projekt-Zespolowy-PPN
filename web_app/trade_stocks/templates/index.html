@@ -56,23 +56,24 @@
                 <a class="nav-link" href="#">About</a>
             </li>
             </ul>
-              {% if user.is_authenticated %}
-                <span class="nav-item">
-                  <a href="{% url 'logout_view' %}">Logout </a>
-                </span>
-                Hello {{ user.username }}
+                {% if user.is_authenticated %}
+                  <span class="nav-item">
+                    Hello<a href="{% url 'profile' %}">{{ user.username }}</a>
+                  </span>
+                  <span class="nav-item">
+                    <a href="{% url 'logout_view' %}">Logout </a>
+                  </span>
                 {% else %}
-                <span class="nav-item">
-                  Not logged in.
-                </span>
-              {% endif %}
-            <span class="nav-item">
-              <a href="{% url 'signup' %}">Signup </a>
-            </span>
-            <span class="nav-item">
-              <a href="{% url 'loginuser' %}">Login</a>
-            </span>
-            
+                  <span class="nav-item">
+                    Not logged in.
+                  </span>
+                  <span class="nav-item">
+                    <a href="{% url 'loginuser' %}">Login</a>
+                  </span>
+                  <span class="nav-item">
+                    <a href="{% url 'signup' %}">Signup </a>
+                  </span>                
+                {% endif %}
         </div>
     </nav>
 
@@ -101,7 +102,7 @@ tak jak we wzorze(builtbybuffalo) {% endcomment %}
         <div class="face2"></div>
       </div>
       <div class="hexagon" id="nav-work">
-        <a href="#" >Indexes</a>
+        <a href="{% url 'rate_portfolio' %}" >Portfolio</a>
         <div class="face1"></div>
         <div class="face2"></div>
       </div>

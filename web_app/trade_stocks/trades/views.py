@@ -17,6 +17,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 import bcrypt
 from trades.models import User
+from django.contrib.auth.decorators import login_required
 
 
 error_msg = "Invalid Parameters"
@@ -143,5 +144,67 @@ def loginuser(request):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+@login_required
+def profile(request):
+
+    return render(request, 'profile.html')
+
+@login_required    
+def rate_portfolio(request):
+    if request.method == 'GET':
+        return render(request,'rate_portfolio.html')
+        print("GET")
+    elif request.method == 'POST':
+        # TODO: implement input validation/errors
+        # TODO: option to get tickers and weights from users portfolios
+        # TODO: plots
+        # tickers = []
+        tickers = request.POST.getlist('tickers[]')
+
+        start = request.POST.get('start')
+        end = request.POST.get('end')
+        try:
+            # Calling the API through the module and calculating log RoR
+            start = datetime(2017, 11, 1)
+            end = datetime(2018, 11, 20)
+
+            # tickers = ['PG','MSFT','F','GE']
+
+            mydata = pd.DataFrame()
+            for t in tickers:
+                mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
+
+            # Normalization to 100 - displays the behavior of a stock
+            # (mydata / mydata.iloc[0] * 100).plot(figsize = (15,6));
+            # plt.show()
+
+            # Prices
+            # mydata.plot(figsize=(15,6))
+            # plt.show()
+
+            returns = (mydata / mydata.shift(1)) - 1
+            
+            # Calculate percentage from amount of stocks that user has. - even by default
+            weights = np.array([1/len(tickers)] * len(tickers))
+
+            annual_returns = returns.mean() * 250
+
+            np.dot(annual_returns, weights)
+            pfolio_1 = str(round(np.dot(annual_returns,weights), 5) * 100) + ' %'
+            
+            # Plotting
+            # df.reset_index(inplace = True)
+            # df['date'] = pd.to_datetime(df['date'])
+            # source = ColumnDataSource(df)
+            # plot = figure(x_axis_type='datetime',title="Close prices")
+            # plot.line(x='date', y='close', source=source)
+            # script, div = components(plot)
+        except:
+            return render(request,'rate_portfolio.html',{'error_msg':error_msg})
+    
+        return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end})
+
+    return render(request, 'rate_portfolio.html')
 
 
