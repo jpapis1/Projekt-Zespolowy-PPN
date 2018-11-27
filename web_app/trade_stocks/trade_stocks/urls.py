@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'logout',views.logout_view, name='logout_view'),
     url(r'profile',views.profile, name='profile'),
     url(r'rate_portfolio', views.rate_portfolio, name='rate_portfolio'),
+    # url(r'markowitz', views.markowitz, name='markowitz'),
 
 
 ]

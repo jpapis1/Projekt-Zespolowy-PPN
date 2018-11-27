@@ -154,7 +154,7 @@ def profile(request):
 def rate_portfolio(request):
     if request.method == 'GET':
         return render(request,'rate_portfolio.html')
-        print("GET")
+        # print("GET")
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers and weights from users portfolios
@@ -208,3 +208,64 @@ def rate_portfolio(request):
     return render(request, 'rate_portfolio.html')
 
 
+# def markowitz(request):
+#     if request.method == 'GET':
+#         return render(request,'rate_portfolio.html')
+#         # print("GET")
+#     elif request.method == 'POST':
+#         # TODO: implement input validation/errors
+#         # TODO: option to get tickers and weights from users portfolios
+#         # TODO: plots
+#         print("POSTMARKOWITZ")
+#         tickers = request.POST.getlist('tickers[]')
+
+#         num_assets = len(tickers)
+        
+#         start = request.POST.get('start')
+#         end = request.POST.get('end')
+#         try:
+#             # Calling the API through the module and calculating log RoR
+#             start = datetime(2017, 11, 1)
+#             end = datetime(2018, 11, 20)
+
+#             mydata = pd.DataFrame()
+#             for t in tickers:
+#                 mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
+
+            
+#             # Calculate percentage from amount of stocks that user has. - even by default
+#             log_returns = np.log(mydata / mydata.shift(1))
+#             pfolio_returns = []
+#             pfolio_volatilities = []
+
+#             for x in range (1000):
+#                 weights = np.random.random(num_assets)
+#                 weights /= np.sum(weights)
+#                 pfolio_returns.append(np.sum(weights * log_returns.mean()) * 250)
+#                 pfolio_volatilities.append(np.sqrt(np.dot(weights.T, np.dot(log_returns.cov() * 250, weights))))
+                
+#             pfolio_returns = np.array(pfolio_returns)
+#             pfolio_volatilities = np.array(pfolio_volatilities)
+
+#             pfolio_returns, pfolio_volatilities
+
+#             portfolios = pd.DataFrame({'Return': pfolio_returns,'Volatility': pfolio_volatilities})
+
+#             all_rate_pfolio = []
+#             all_rate_pfolio = pfolio_returns/pfolio_volatilities
+#             for item in all_rate_pfolio:
+#                 print(item)
+#             best_rate_pfolio = max(all_rate_pfolio)
+
+#             # print(best_rate_pfolio.sort()[-1])
+
+#             # portfolios.plot(x='Volatility', y='Return',kind='scatter',figsize = (10,6));
+#             # plt.xlabel('Expected Volatility')
+#             # plt.ylabel('Expected Return')   
+            
+#         except:
+#             return render(request,'rate_portfolio.html',{'error_msg':error_msg})
+    
+#         return render(request, 'rate_portfolio.html',{'best_rate_pfolio':best_rate_pfolio,'start':start,'end':end})
+
+#     return render(request, 'rate_portfolio.html')
