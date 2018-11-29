@@ -38,24 +38,26 @@ def chart(request):
 # TODO: Make sure that post call to this from the desktop app can go through(csrf_exempt maybe token authentication)
 @csrf_exempt
 def company(request):
-    if request.method == 'GET':
-        return render(request,'stock_form.html')
-    elif request.method == 'POST':
-        try:
-            ticker = request.POST.get('ticker')
-            company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
-            news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
-            try:
-                company = json.loads(company_json.content)
-                news = json.loads(news_json.content)
-            except:
-                error_msg = "Unknown Ticker"
-                return render(request,'stock_form.html',{'error_msg':error_msg})
-            
-            return render(request,'company_info.html',{'company':company,'news':news})
+    return render(request,'company_form.html')
 
+def company_ticker(request,ticker):
+    print("TICKER")
+    print(ticker)
+    try:
+        # ticker = request.POST.get('ticker')
+        company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
+        news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
+        try:
+            company = json.loads(company_json.content)
+            news = json.loads(news_json.content)
         except:
-            return render(request,'stock_form.html',{'error_msg':"error_occured"})       
+            error_msg = "Unknown Ticker"
+            return render(request,'company_form.html',{'error_msg':error_msg})
+            
+        return render(request,'company_info.html',{'company':company,'news':news})
+
+    except:
+        return render(request,'company_form.html',{'error_msg':"error_occured"})       
 
 def rate_single(request):
     # Pick and stay with one - logarythmic for single asset over time
@@ -98,7 +100,7 @@ def signup(request):
         if (form.is_valid()):
             user = form.save(commit=False)
             pw = form.cleaned_data['password']
-            print(pw)
+            # print(pw)
             user.password = make_password(pw)
             user.idbroker = 1
             user.funds = 3000
@@ -126,8 +128,8 @@ def loginuser(request):
         if user is not None:
             login(request, user)
             # Redirect to a success page.
-            print(user.id)
-            print(User.objects.get(pk=user.id))
+            # print(user.id)
+            # print(User.objects.get(pk=user.id))
 
             # return render(request,'index.html', {'u': username, 'p':password})
             return redirect('index')
