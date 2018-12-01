@@ -102,7 +102,7 @@ public class StockData {
 
         public StockDataBuilder setLatestPriceAndDate()  {
             String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/1d";
-
+            System.out.println(map.get("shortName"));
             try {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();

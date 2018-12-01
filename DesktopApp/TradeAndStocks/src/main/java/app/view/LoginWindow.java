@@ -1,5 +1,6 @@
 package app.view;
 
+import app.service.UserService;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,13 +18,13 @@ public class LoginWindow extends Application {
     @Override
     public void start(Stage stage) {
         //creating label email
-        Text emailText = new Text("Email");
+        Text emailOrUsername = new Text("Email/Username");
 
         //creating label password
         Text passwordText = new Text("Password");
 
         //Creating Text Filed for email
-        TextField emailTextField = new TextField();
+        TextField emailOrUsernameField = new TextField();
 
         //Creating Text Filed for password
         PasswordField passwordTextField = new PasswordField();
@@ -56,8 +57,12 @@ public class LoginWindow extends Application {
             {
                 submitButton.setEffect(shadow);
                 submitButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
-                stage.hide();
-                new HomeWindow().start(new Stage());
+                if(UserService.isPasswordCorrect(emailOrUsernameField.getText(),passwordTextField.getText())) {
+                    stage.hide();
+                    new HomeWindow().start(new Stage());
+                } else {
+                    System.out.println("WRONG CREDENTIALS");
+                }
 
             }
         });
@@ -85,7 +90,7 @@ public class LoginWindow extends Application {
             {
                 clearButton.setEffect(shadow);
                 clearButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
-                emailTextField.clear();
+                emailOrUsernameField.clear();
                 passwordTextField.clear();
             }
         });
@@ -108,8 +113,8 @@ public class LoginWindow extends Application {
         gridPane.setAlignment(Pos.CENTER);
 
         //Arranging all the nodes in the grid
-        gridPane.add(emailText, 0, 0);
-        gridPane.add(emailTextField, 1, 0);
+        gridPane.add(emailOrUsername, 0, 0);
+        gridPane.add(emailOrUsernameField, 1, 0);
         gridPane.add(passwordText, 0, 1);
         gridPane.add(passwordTextField, 1, 1);
         gridPane.add(submitButton, 0, 2);
@@ -119,7 +124,7 @@ public class LoginWindow extends Application {
         submitButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
         clearButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
 
-        emailText.setStyle("-fx-font: normal 15px 'sans-serif' ");
+        emailOrUsername.setStyle("-fx-font: normal 15px 'sans-serif' ");
         passwordText.setStyle("-fx-font: normal 15px 'sans-serif' ");
         gridPane.setStyle("-fx-background-color: #f5f5f5;");
 

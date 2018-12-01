@@ -24,8 +24,12 @@ public class UserService {
         return userRepository;
     }
 
-    public static boolean isPasswordCorrect(String username, String password) {
-        User user = userRepository.findFirstByUsername(username);
+    public static boolean isPasswordCorrect(String usernameOrEmail, String password) {
+        User user = userRepository.findFirstByUsername(usernameOrEmail);
+        if(user == null ) { // username not found
+            user = userRepository.findFirstByEmail(usernameOrEmail);
+        }
+        if(user == null) return false; // neither username nor email was found
         String[] pass = user.getPassword().split("\\$");
         KeySpec spec = new PBEKeySpec(password.toCharArray(),pass[2].getBytes(),Integer.valueOf(pass[1]),256);
         try {

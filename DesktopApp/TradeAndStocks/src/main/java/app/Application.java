@@ -23,6 +23,9 @@ import app.api.StockData;
 import app.api.StockDataService;
 import app.repository.*;
 import app.service.*;
+import app.view.HomeWindow;
+import app.view.LoginWindow;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -54,7 +57,8 @@ public class Application {
             BrokerService.initialize(brokerRepository);
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
-
+            LoginWindow.launch(LoginWindow.class);
+            //new LoginWindow().start(new Stage());
             /*User user = new User.UserBuilder("us1zazxaeer")
                     .fullName("Jeragzy","Pek")
                     .pass("H@sło").mail("jerzy@efaefs.pl")
@@ -65,9 +69,9 @@ public class Application {
                     user.getBroker(), user));
 
 */
-            log.warn(Boolean.toString(UserService.isPasswordCorrect("Test1","password")));
-            ArrayList<StockData> maps = StockDataService.getAllStocksList();
-            maps.forEach(System.out::println);
+            //log.warn(Boolean.toString(UserService.isPasswordCorrect("Test1","password")));
+            //ArrayList<StockData> maps = StockDataService.getAllStocksList();
+            //maps.forEach(System.out::println);
         };
     }
 
