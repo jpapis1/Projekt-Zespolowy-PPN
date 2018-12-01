@@ -91,8 +91,9 @@ public class HomeWindow extends Application{
 
 
         //Creating Buttons
-        Button button1 = new Button("   PROFILE   ");
+        Button profileButton = new Button("   PROFILE   ");
         Button button2 = new Button("RESET ACCOUNT");
+        Button menuButton1 = new Button();
 
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
@@ -109,18 +110,18 @@ public class HomeWindow extends Application{
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         //Arranging all the nodes in the grid
-        gridPane.add(button1, 1, 0);
+        gridPane.add(profileButton, 1, 0);
         gridPane.add(button2, 2, 0);
-        button1.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
         button2.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-
+        menuButton1.setStyle("-fx-shape:M10 10;");
         gridPane.setStyle("-fx-background-color: BEIGE;");
 
 
 
 
         //Creating a Group object
-        Group root = new Group(gridPane,hexagon,hexagon2,hexagon3,hexagon4,hexagon5,hexagon6,hexagon7);
+        Group root = new Group(gridPane,menuButton1,hexagon,hexagon2,hexagon3,hexagon4,hexagon5,hexagon6,hexagon7);
 
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);

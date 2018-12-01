@@ -13,8 +13,8 @@ public class PortfoliosWindow extends Application {
     @Override
     //Creating Buttons
     public void start(Stage stage) {
-        Button button1 = new Button("   PROFILE   ");
-        Button button2 = new Button("RESET ACCOUNT");
+        Button profileButton = new Button("   PROFILE   ");
+        Button resetButton = new Button("RESET ACCOUNT");
 
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
@@ -31,10 +31,10 @@ public class PortfoliosWindow extends Application {
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         //Arranging all the nodes in the grid
-        gridPane.add(button1, 1, 0);
-        gridPane.add(button2, 2, 0);
-        button1.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-        button2.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        gridPane.add(profileButton, 1, 0);
+        gridPane.add(resetButton, 2, 0);
+        profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
         gridPane.setStyle("-fx-background-color: BEIGE;");
 

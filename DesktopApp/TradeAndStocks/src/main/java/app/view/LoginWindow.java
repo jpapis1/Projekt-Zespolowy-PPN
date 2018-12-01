@@ -17,67 +17,80 @@ public class LoginWindow extends Application {
     @Override
     public void start(Stage stage) {
         //creating label email
-        Text text1 = new Text("Email");
+        Text emailText = new Text("Email");
 
         //creating label password
-        Text text2 = new Text("Password");
+        Text passwordText = new Text("Password");
 
         //Creating Text Filed for email
-        TextField textField1 = new TextField();
+        TextField emailTextField = new TextField();
 
         //Creating Text Filed for password
-        PasswordField textField2 = new PasswordField();
+        PasswordField passwordTextField = new PasswordField();
 
         //Creating Buttons
-        Button button1 = new Button("Submit");
-        Button button2 = new Button("Clear");
+        Button submitButton = new Button("Submit");
+        Button clearButton = new Button("Clear");
         DropShadow shadow = new DropShadow();
 
         //Adding the shadow when the mouse cursor is on
-        button1.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
+        submitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override public void handle(MouseEvent e)
             {
-                button1.setEffect(shadow);
-                button1.setStyle("-fx-background-color: #16a6b6; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                submitButton.setEffect(shadow);
+                submitButton.setStyle("-fx-background-color: #16a6b6; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
             }
         });
         //Removing the shadow when the mouse cursor is off
-        button1.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+        submitButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e)
             {
-                button1.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
-                button1.setEffect(null);
+                submitButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                submitButton.setEffect(null);
             }
         });
-        button1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        submitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
         {
             @Override public void handle(MouseEvent e)
             {
-                button1.setEffect(shadow);
-                button1.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                submitButton.setEffect(shadow);
+                submitButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
                 stage.hide();
                 new HomeWindow().start(new Stage());
 
             }
         });
 
-        button2.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
+        clearButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
             @Override public void handle(MouseEvent e)
             {
-                button2.setEffect(shadow);
-                button2.setStyle("-fx-background-color: #16a6b6; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                clearButton.setEffect(shadow);
+                clearButton.setStyle("-fx-background-color: #16a6b6; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
             }
         });
         //Removing the shadow when the mouse cursor is off
-        button2.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+        clearButton.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             @Override public void handle(MouseEvent e)
             {
-                button2.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
-                button2.setEffect(null);
+                clearButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                clearButton.setEffect(null);
             }
         });
+
+        clearButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        {
+            @Override public void handle(MouseEvent e)
+            {
+                clearButton.setEffect(shadow);
+                clearButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+                emailTextField.clear();
+                passwordTextField.clear();
+            }
+        });
+
+
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
 
@@ -95,19 +108,19 @@ public class LoginWindow extends Application {
         gridPane.setAlignment(Pos.CENTER);
 
         //Arranging all the nodes in the grid
-        gridPane.add(text1, 0, 0);
-        gridPane.add(textField1, 1, 0);
-        gridPane.add(text2, 0, 1);
-        gridPane.add(textField2, 1, 1);
-        gridPane.add(button1, 0, 2);
-        gridPane.add(button2, 1, 2);
+        gridPane.add(emailText, 0, 0);
+        gridPane.add(emailTextField, 1, 0);
+        gridPane.add(passwordText, 0, 1);
+        gridPane.add(passwordTextField, 1, 1);
+        gridPane.add(submitButton, 0, 2);
+        gridPane.add(clearButton, 1, 2);
 
         //Styling nodes
-        button1.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
-        button2.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
+        submitButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
+        clearButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif'");
 
-        text1.setStyle("-fx-font: normal 15px 'sans-serif' ");
-        text2.setStyle("-fx-font: normal 15px 'sans-serif' ");
+        emailText.setStyle("-fx-font: normal 15px 'sans-serif' ");
+        passwordText.setStyle("-fx-font: normal 15px 'sans-serif' ");
         gridPane.setStyle("-fx-background-color: #f5f5f5;");
 
         //Creating a scene object

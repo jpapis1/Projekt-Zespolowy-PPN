@@ -1,23 +1,31 @@
 package app.view;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class UsersStocksWindow extends Application {
+
+    private TableView allStocksTable = new TableView();
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     //Creating Buttons
     public void start(Stage stage) {
-        Button button1 = new Button("   PROFILE   ");
-        Button button2 = new Button("RESET ACCOUNT");
+        Button profileButton = new Button("   PROFILE   ");
+        Button resetButton = new Button("RESET ACCOUNT");
 
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
@@ -34,13 +42,22 @@ public class UsersStocksWindow extends Application {
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         //Arranging all the nodes in the grid
-        gridPane.add(button1, 1, 0);
-        gridPane.add(button2, 2, 0);
-        button1.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-        button2.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        gridPane.add(profileButton, 1, 0);
+        gridPane.add(resetButton, 2, 0);
+        gridPane.add(allStocksTable,3,1);
+        profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
         gridPane.setStyle("-fx-background-color: BEIGE;");
 
+
+        TableColumn sectorColumn = new TableColumn("Sector");
+        TableColumn shortNameColumn = new TableColumn("Short Name");
+        TableColumn nameColumn = new TableColumn("Name");
+        TableColumn dateColumn = new TableColumn("Date");
+        TableColumn priceColumn = new TableColumn("Price");
+
+        allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
 
         //Creating a Group object
         Group root = new Group(gridPane);
@@ -57,4 +74,3 @@ public class UsersStocksWindow extends Application {
         stage.show();
     }
 }
-
