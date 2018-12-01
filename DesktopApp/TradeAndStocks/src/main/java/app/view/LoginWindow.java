@@ -59,7 +59,8 @@ public class LoginWindow extends Application {
                 submitButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
                 if(UserService.isPasswordCorrect(emailOrUsernameField.getText(),passwordTextField.getText())) {
                     stage.hide();
-                    new HomeWindow().start(new Stage());
+                    //new HomeWindow().start(new Stage());
+                    new MyStocksWindow().start(new Stage());
                 } else {
                     System.out.println("WRONG CREDENTIALS");
                 }

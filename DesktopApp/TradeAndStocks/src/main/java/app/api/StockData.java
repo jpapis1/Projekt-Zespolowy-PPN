@@ -17,6 +17,13 @@ import java.util.HashMap;
 
 public class StockData {
     private HashMap map;
+    // ONLY USED WHEN CONSTRUCTED WITH ALL DATA
+    String sector;
+    String shortName;
+    String name;
+    Double price;
+    Date date;
+    //
     public StockData(String shortName, String name, String sector, double price, Date date) {
         map = new HashMap();
         setSector(sector);
@@ -24,6 +31,11 @@ public class StockData {
         setName(name);
         setPrice(price);
         setDate(date);
+        this.sector = sector;
+        this.shortName = shortName;
+        this.name = name;
+        this.price = price;
+        this.date = date;
     }
     public StockData(String shortName, String name, String sector) {
         map = new HashMap();
