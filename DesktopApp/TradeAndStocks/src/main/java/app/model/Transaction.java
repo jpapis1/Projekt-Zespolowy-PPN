@@ -129,4 +129,62 @@ public class Transaction {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "idTransaction=" + idTransaction +
+                ", shortName='" + shortName + '\'' +
+                ", units=" + units +
+                ", unitPrice=" + unitPrice +
+                ", date=" + date +
+                ", isBuy=" + isBuy +
+                ", doesExists=" + doesExists +
+                ", broker=" + broker +
+                ", user=" + user +
+                '}';
+    }
+
+    public static class TransactionBuilder {
+        private String shortName;
+        private double units;
+        private double unitPrice;
+        private Date date;
+        private boolean isBuy;
+        private boolean doesExists;
+        private Broker broker;
+        private User user;
+
+        public TransactionBuilder(String shortName, User user) {
+            this.shortName = shortName;
+            this.user = user;
+            this.broker = user.getBroker();
+            doesExists = true;
+        }
+
+        public TransactionBuilder setToBuy() {
+            isBuy = true;
+            return this;
+        }
+        public TransactionBuilder setToSell() {
+            isBuy = false;
+            return this;
+        }
+        public TransactionBuilder units(double units) {
+            this.units = units;
+            return this;
+        }
+        public TransactionBuilder price(double unitPrice) {
+            this.unitPrice = unitPrice;
+            return this;
+        }
+        public TransactionBuilder date(Date date) {
+            this.date = date;
+            return this;
+        }
+        public Transaction build() {
+            return new Transaction(shortName, units, unitPrice, date, isBuy, doesExists, broker, user);
+        }
+
+    }
 }
