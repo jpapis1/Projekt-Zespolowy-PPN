@@ -24,13 +24,11 @@ import app.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-//@Configuration
+@Configuration
 public class Config
 {
-    /*
     @Bean
-    public UserRepository userRepository() {
-        return new User();
+    public String webAppAddress(){
+        return "localhost";
     }
-    */
 }

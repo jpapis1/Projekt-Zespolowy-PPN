@@ -21,6 +21,7 @@ package app;
 
 import app.api.StockData;
 import app.api.StockDataService;
+import app.config.Config;
 import app.repository.*;
 import app.service.*;
 import app.view.HomeWindow;
@@ -31,6 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
@@ -57,6 +60,10 @@ public class Application {
             BrokerService.initialize(brokerRepository);
             TransactionService.initialize(transactionRepository);
             UserService.initialize(userRepository);
+            ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+
+            String webAddress = ctx.getBean(String.class);
+            System.out.println(webAddress);
             LoginWindow.launch(LoginWindow.class);
             //new LoginWindow().start(new Stage());
             /*User user = new User.UserBuilder("us1zazxaeer")
