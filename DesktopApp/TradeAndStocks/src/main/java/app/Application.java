@@ -19,14 +19,11 @@
 
 package app;
 
-import app.api.StockData;
-import app.api.StockDataService;
 import app.config.Config;
 import app.repository.*;
 import app.service.*;
-import app.view.HomeWindow;
-import app.view.LoginWindow;
-import javafx.stage.Stage;
+import app.view.windows.LoginWindow;
+import app.view.windows.MyStocksWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -35,8 +32,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
 
 
 @SpringBootApplication
@@ -64,7 +59,8 @@ public class Application {
 
             String webAddress = ctx.getBean(String.class);
             System.out.println(webAddress);
-            LoginWindow.launch(LoginWindow.class);
+            //LoginWindow.launch(LoginWindow.class);
+            MyStocksWindow.launch(MyStocksWindow.class);
             //new LoginWindow().start(new Stage());
             /*User user = new User.UserBuilder("us1zazxaeer")
                     .fullName("Jeragzy","Pek")

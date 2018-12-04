@@ -1,5 +1,6 @@
 package app.api;
 
+import app.view.tables.AllStocksTable;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -17,57 +18,8 @@ import java.util.Date;
 public class StockDataService {
     static public final String[] usedStocks= {"AAPL","HPQ","INTC","MSFT","FB","AMD","AMZN","GOOGL","FDX","HAS",
             "MCD","MET","NFLX","NKE","HD","PYPL","QCOM","SBUX","TGT","TXN","TWTR","FOX","VZ","XRX"};
-    static public ArrayList<StockData> getDayStockPrices(String stockName)  {
-        String sURL = "https://api.iextrading.com/1.0/stock/" + stockName + "/chart/1d";
 
-        try {
-            URL url = new URL(sURL);
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonArray array = root.getAsJsonArray();
-            ArrayList<StockData> stockDataList = new ArrayList<>();
-            for(JsonElement element : array) {
-                String date_s = element.getAsJsonObject().get("date").getAsString() + element.getAsJsonObject().get("minute").getAsString();
-                SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddhh:mm");
-                Date date = dt.parse(date_s);
-                stockDataList.add(new StockData(stockName,date,element.getAsJsonObject().get("average").getAsDouble()));
-
-            }
-            return stockDataList;
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    static public ArrayList<StockData> getMonthStockPrices(String stockName)  {
-        String sURL = "https://api.iextrading.com/1.0/stock/" + stockName + "/chart/1m";
-        try {
-            URL url = new URL(sURL);
-            URLConnection request = url.openConnection();
-            request.connect();
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonArray array = root.getAsJsonArray();
-            ArrayList<StockData> stockDataList = new ArrayList<>();
-            for(JsonElement element : array) {
-                String date_s = element.getAsJsonObject().get("date").getAsString() + "15:59";
-                SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-ddhh:mm");
-                Date date = dt.parse(date_s);
-                stockDataList.add(new StockData(stockName,date,element.getAsJsonObject().get("close").getAsDouble()));
-
-            }
-            return stockDataList;
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    static public ArrayList<StockData> getAllStocksList() {
+    static public ArrayList<StockData> getAllStockDataList() {
         ArrayList<StockData> stockData = new ArrayList<>();
         for(String shortName : usedStocks) {
             StockData map = new StockData.StockDataBuilder(shortName)
@@ -75,5 +27,14 @@ public class StockDataService {
             stockData.add(map);
         }
         return stockData;
+    }
+    static public ArrayList<AllStocksTable> getAllStocksTableList() {
+        ArrayList<AllStocksTable> tables = new ArrayList<>();
+        for(String shortName : usedStocks) {
+            StockData map = new StockData.StockDataBuilder(shortName)
+                    .setNameAndSector().setLatestPriceAndDate().build();
+            tables.add(new AllStocksTable(map));
+        }
+        return tables;
     }
 }

@@ -1,18 +1,11 @@
-package app.view;
+package app.view.windows;
 
-import app.api.StockData;
-import app.api.StockDataService;
 import javafx.application.Application;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
@@ -20,19 +13,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.util.Callback;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
+public class UsersStocksWindow extends Application {
 
-import static app.api.StockDataService.getAllStocksList;
-
-public class MyStocksWindow extends Application {
     private TableView allStocksTable = new TableView();
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     //Creating Buttons
     public void start(Stage stage) {
@@ -46,7 +34,7 @@ public class MyStocksWindow extends Application {
         gridPane.setMinSize(2000, 1000);
 
         //Setting the padding
-        gridPane.setPadding(new Insets(10, 0, 0, 10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
 
         //Setting the vertical and horizontal gaps between the columns
         gridPane.setVgap(5);
@@ -63,33 +51,21 @@ public class MyStocksWindow extends Application {
         gridPane.setStyle("-fx-background-color: BEIGE;");
 
 
-        TableColumn <StockData, String> shortNameColumn = new TableColumn("shortName");
-        TableColumn <StockData, String> nameColumn = new TableColumn("name");
-        TableColumn <StockData, String> sectorColumn = new TableColumn("sector");
-        TableColumn <StockData, Date> dateColumn = new TableColumn("date");
-        TableColumn <StockData, Double> priceColumn = new TableColumn("price");
-        ArrayList<StockData> data = StockDataService.getAllStocksList();
-        ObservableList<StockData> observableData = FXCollections.observableArrayList(data);
+        TableColumn sectorColumn = new TableColumn("Sector");
+        TableColumn shortNameColumn = new TableColumn("Short Name");
+        TableColumn nameColumn = new TableColumn("Name");
+        TableColumn dateColumn = new TableColumn("Date");
+        TableColumn priceColumn = new TableColumn("Price");
 
-        sectorColumn.setCellValueFactory(new PropertyValueFactory<>("sector"));
-        shortNameColumn.setCellValueFactory(new PropertyValueFactory<>("shortName"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
 
-        allStocksTable.setItems(observableData);
-
-
-
-        allStocksTable.getColumns().addAll(shortNameColumn, nameColumn,priceColumn, dateColumn,sectorColumn);
-        allStocksTable.setPrefSize(800,500);
         //Creating a Group object
         Group root = new Group(gridPane);
 
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
-        stage.setTitle("My Stocks");
+        stage.setTitle("Users Stocks");
 
         //Adding scene to the stage
         stage.setScene(scene);

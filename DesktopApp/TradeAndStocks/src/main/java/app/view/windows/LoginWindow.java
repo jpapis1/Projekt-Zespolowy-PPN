@@ -1,4 +1,4 @@
-package app.view;
+package app.view.windows;
 
 import app.service.UserService;
 import javafx.application.Application;
@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 

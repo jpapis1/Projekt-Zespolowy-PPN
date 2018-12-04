@@ -1,4 +1,4 @@
-package app.view;
+package app.view.windows;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class FinancialAnalysisWindow extends Application {
+public class PortfoliosWindow extends Application {
     @Override
     //Creating Buttons
     public void start(Stage stage) {
@@ -45,7 +45,7 @@ public class FinancialAnalysisWindow extends Application {
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
-        stage.setTitle("Financial Analysis");
+        stage.setTitle("Portfolios");
 
         //Adding scene to the stage
         stage.setScene(scene);
