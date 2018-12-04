@@ -1,15 +1,26 @@
 package app.service;
 
+import app.model.Transaction;
 import app.model.User;
 import app.repository.UserRepository;
+import app.view.table.AllStocksTable;
+import app.view.table.MyStocksTable;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
-import javax.jws.soap.SOAPBinding;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static java.lang.Math.round;
 
 public class UserService {
     private static UserRepository userRepository;
@@ -50,5 +61,32 @@ public class UserService {
     }
     public static void setActiveUser(User user) {
         activeUser = user;
+    }
+
+
+
+    public static ArrayList<MyStocksTable> getUserTransactions (User user) {
+        List<Transaction> list = TransactionService.getRepo().findByUser(user);
+        ArrayList<MyStocksTable> myStocksTable = new ArrayList<>();
+        Set<String> names = new HashSet<String>();
+        for (Transaction t : list) {
+            names.add(t.getShortName());
+        }
+        for (String shortName : names) {
+            List<Transaction> transactionsByShortName = list.stream().filter(x -> x.getShortName().equals(shortName)).collect(Collectors.toList());
+            double unitSum = transactionsByShortName.stream().mapToDouble(Transaction::getUnits).sum();
+
+            double unitPrice = transactionsByShortName.get(0).getUnitPrice(); // FIX!! tu powinna być aktualna cena
+            double value = transactionsByShortName.stream().mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+            double realValue = unitSum * unitPrice;
+            double profitLoss = ((1-(realValue/value)));
+            String str = String.format("%.2f", profitLoss);
+            profitLoss = Double.valueOf(str);
+            for(Transaction transaction : transactionsByShortName) {
+                System.out.println(transaction);
+            }
+            myStocksTable.add(new MyStocksTable(shortName,unitPrice,unitSum,realValue,profitLoss));
+        }
+        return myStocksTable;
     }
 }

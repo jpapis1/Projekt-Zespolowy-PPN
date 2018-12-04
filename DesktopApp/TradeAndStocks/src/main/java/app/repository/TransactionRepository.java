@@ -21,10 +21,13 @@
 package app.repository;
 
 import app.model.Transaction;
+import app.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction,Integer> {
-
+    List<Transaction> findByUser (User user);
 }

@@ -22,6 +22,7 @@ package app;
 import app.config.Config;
 import app.repository.*;
 import app.service.*;
+import app.view.table.MyStocksTable;
 import app.view.window.MyStocksWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+
+import java.util.ArrayList;
+
+import static app.service.UserService.getUserTransactions;
 
 
 @SpringBootApplication
@@ -59,7 +64,9 @@ public class Application {
             String webAddress = ctx.getBean(String.class);
             System.out.println(webAddress);
             //LoginWindow.launch(LoginWindow.class);
-            MyStocksWindow.launch(MyStocksWindow.class);
+            //MyStocksWindow.launch(MyStocksWindow.class);
+            ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
+            table.stream().forEach(System.out::println);
             //new LoginWindow().start(new Stage());
             /*User user = new User.UserBuilder("us1zazxaeer")
                     .fullName("Jeragzy","Pek")
