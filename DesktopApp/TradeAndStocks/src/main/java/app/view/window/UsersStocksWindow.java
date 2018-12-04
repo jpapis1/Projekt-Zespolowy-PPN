@@ -1,4 +1,4 @@
-package app.view.windows;
+package app.view.window;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -8,8 +8,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-public class PortfoliosWindow extends Application {
+public class UsersStocksWindow extends Application {
+
+    private TableView allStocksTable = new TableView();
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     //Creating Buttons
     public void start(Stage stage) {
@@ -33,11 +41,20 @@ public class PortfoliosWindow extends Application {
         //Arranging all the nodes in the grid
         gridPane.add(profileButton, 1, 0);
         gridPane.add(resetButton, 2, 0);
+        gridPane.add(allStocksTable,3,1);
         profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
         resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
         gridPane.setStyle("-fx-background-color: BEIGE;");
 
+
+        TableColumn sectorColumn = new TableColumn("Sector");
+        TableColumn shortNameColumn = new TableColumn("Short Name");
+        TableColumn nameColumn = new TableColumn("Name");
+        TableColumn dateColumn = new TableColumn("Date");
+        TableColumn priceColumn = new TableColumn("Price");
+
+        allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
 
         //Creating a Group object
         Group root = new Group(gridPane);
@@ -45,7 +62,7 @@ public class PortfoliosWindow extends Application {
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
-        stage.setTitle("Portfolios");
+        stage.setTitle("Users Stocks");
 
         //Adding scene to the stage
         stage.setScene(scene);

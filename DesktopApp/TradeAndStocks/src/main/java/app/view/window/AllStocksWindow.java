@@ -1,4 +1,4 @@
-package app.view.windows;
+package app.view.window;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -8,13 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
-public class UsersStocksWindow extends Application {
+public class AllStocksWindow extends Application {
 
     private TableView allStocksTable = new TableView();
     public static void main(String[] args) {
@@ -34,7 +31,7 @@ public class UsersStocksWindow extends Application {
         gridPane.setMinSize(2000, 1000);
 
         //Setting the padding
-        gridPane.setPadding(new Insets(10, 10, 10, 10));
+        gridPane.setPadding(new Insets(10, 0, 0, 10));
 
         //Setting the vertical and horizontal gaps between the columns
         gridPane.setVgap(5);
@@ -49,7 +46,11 @@ public class UsersStocksWindow extends Application {
         resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
         gridPane.setStyle("-fx-background-color: BEIGE;");
-
+        //setSector(sector);
+        //setShortName(shortName);
+        //setName(name);
+        //setPrice(price);
+        //setDate(date);
 
         TableColumn sectorColumn = new TableColumn("Sector");
         TableColumn shortNameColumn = new TableColumn("Short Name");
@@ -59,13 +60,16 @@ public class UsersStocksWindow extends Application {
 
         allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
 
+
+
+
         //Creating a Group object
         Group root = new Group(gridPane);
 
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
-        stage.setTitle("Users Stocks");
+        stage.setTitle("All Stocks");
 
         //Adding scene to the stage
         stage.setScene(scene);

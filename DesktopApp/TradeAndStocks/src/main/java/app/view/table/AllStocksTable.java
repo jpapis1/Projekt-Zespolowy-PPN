@@ -1,4 +1,4 @@
-package app.view.tables;
+package app.view.table;
 import app.api.StockData;
 
 import java.util.Date;

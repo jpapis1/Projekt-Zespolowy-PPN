@@ -1,26 +1,29 @@
-package app.view.windows;
+package app.view.window;
 
+import app.api.StockDataService;
+import app.view.table.AllStocksTable;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
-public class AllStocksWindow extends Application {
+import java.util.ArrayList;
+import java.util.Date;
 
+public class MyStocksWindow extends Application {
     private TableView allStocksTable = new TableView();
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
     //Creating Buttons
     public void start(Stage stage) {
@@ -49,30 +52,35 @@ public class AllStocksWindow extends Application {
         resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
         gridPane.setStyle("-fx-background-color: BEIGE;");
-        //setSector(sector);
-        //setShortName(shortName);
-        //setName(name);
-        //setPrice(price);
-        //setDate(date);
-
-        TableColumn sectorColumn = new TableColumn("Sector");
-        TableColumn shortNameColumn = new TableColumn("Short Name");
-        TableColumn nameColumn = new TableColumn("Name");
-        TableColumn dateColumn = new TableColumn("Date");
-        TableColumn priceColumn = new TableColumn("Price");
-
-        allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
 
 
+        TableColumn <AllStocksTable, String> shortNameColumn = new TableColumn("shortName");
+        TableColumn <AllStocksTable, String> nameColumn = new TableColumn("name");
+        TableColumn <AllStocksTable, String> sectorColumn = new TableColumn("sector");
+        TableColumn <AllStocksTable, Date> dateColumn = new TableColumn("date");
+        TableColumn <AllStocksTable, Double> priceColumn = new TableColumn("price");
+        ArrayList<AllStocksTable> data = StockDataService.getAllStocksTableList();
+        ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
+
+        sectorColumn.setCellValueFactory(new PropertyValueFactory<>("sector"));
+        shortNameColumn.setCellValueFactory(new PropertyValueFactory<>("shortName"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        allStocksTable.setItems(observableData);
 
 
+
+        allStocksTable.getColumns().addAll(shortNameColumn, nameColumn,priceColumn, dateColumn,sectorColumn);
+        allStocksTable.setPrefSize(800,500);
         //Creating a Group object
         Group root = new Group(gridPane);
 
         //Creating a scene object
         Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
-        stage.setTitle("All Stocks");
+        stage.setTitle("My Stocks");
 
         //Adding scene to the stage
         stage.setScene(scene);

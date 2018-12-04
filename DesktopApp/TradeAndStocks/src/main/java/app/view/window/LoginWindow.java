@@ -1,4 +1,4 @@
-package app.view.windows;
+package app.view.window;
 
 import app.service.UserService;
 import javafx.application.Application;

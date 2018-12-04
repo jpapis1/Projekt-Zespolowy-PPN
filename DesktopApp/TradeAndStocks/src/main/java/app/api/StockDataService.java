@@ -1,19 +1,8 @@
 package app.api;
 
-import app.view.tables.AllStocksTable;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import app.view.table.AllStocksTable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class StockDataService {
     static public final String[] usedStocks= {"AAPL","HPQ","INTC","MSFT","FB","AMD","AMZN","GOOGL","FDX","HAS",
