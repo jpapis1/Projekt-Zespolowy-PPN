@@ -1,5 +1,6 @@
 package app.service;
 
+import app.model.Transaction;
 import app.repository.TransactionRepository;
 
 public class TransactionService {
