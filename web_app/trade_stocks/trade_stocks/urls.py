@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'logout',views.logout_view, name='logout_view'),
     url(r'profile',views.profile, name='profile'),
     url(r'rate_portfolio', views.rate_portfolio, name='rate_portfolio'),
+    url(r'linear_regression',views.linear_regression, name='linear_regression'),
     # url(r'markowitz', views.markowitz, name='markowitz'),
 
 

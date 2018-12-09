@@ -18,7 +18,13 @@ from django.contrib.auth import authenticate, login, logout
 import bcrypt
 from trades.models import User
 from django.contrib.auth.decorators import login_required
+from sklearn.linear_model import LinearRegression
+from sklearn import preprocessing, cross_validation, svm
+from iexfinance import get_historical_data
+from sklearn.model_selection import train_test_split
 
+# Debugging
+import sys
 
 error_msg = "Invalid Parameters"
 
@@ -168,8 +174,8 @@ def rate_portfolio(request):
         end = request.POST.get('end')
         try:
             # Calling the API through the module and calculating log RoR
-            start = datetime(2017, 11, 1)
-            end = datetime(2018, 11, 20)
+            # start = datetime(2017, 11, 1)
+            # end = datetime(2018, 11, 20)
 
             # tickers = ['PG','MSFT','F','GE']
 
@@ -209,6 +215,66 @@ def rate_portfolio(request):
 
     return render(request, 'rate_portfolio.html')
 
+
+
+def linear_regression(request):
+    if request.method == 'GET':
+        return render(request,'linear.html')
+        # print("GET")
+    elif request.method == 'POST':
+        # TODO: implement input validation/errors
+        # TODO: option to get tickersfrom users portfolios
+        # TODO: plots
+        
+        ticker = request.POST.get('ticker')
+
+        start = request.POST.get('start')
+        if(int(start[:4]) < 2013):
+            start = "2013-01-01"
+        end = request.POST.get('end')
+        # end = datetime.today().strftime('%Y-%m-%d')
+        print(ticker)
+        try:
+            # Calling the API through the module
+
+            df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
+            df = df.reset_index()
+            df = df[['close']]
+            forecast_out = int(30) # predicting 30 days into future
+            df['Prediction'] = df[['close']].shift(-forecast_out) #  label column with data shifted 30 units up
+
+            X = np.array(df.drop(['Prediction'], 1))
+            X = preprocessing.scale(X)
+
+            X_forecast = X[-forecast_out:] # set X_forecast equal to last 30
+            X = X[:-forecast_out] # remove last 30 from X
+
+            y = np.array(df['Prediction'])
+            y = y[:-forecast_out]
+
+            # X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size = 0.2)
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+
+
+            # Training
+            clf = LinearRegression()
+            clf.fit(X_train,y_train)
+            # Testing
+            confidence = clf.score(X_test, y_test)
+            print("confidence: ", confidence)
+
+            # Predictions for next 30 days.
+            forecast_prediction = clf.predict(X_forecast)
+            print(forecast_prediction)
+            # TODO: Calculate general direction of the stock prices.
+        except:
+            print(sys.exc_info()[0])
+            return render(request,'linear.html',{'error_msg':error_msg})
+    
+        return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
+
+    return render(request, 'linear.html')
 
 # def markowitz(request):
 #     if request.method == 'GET':
