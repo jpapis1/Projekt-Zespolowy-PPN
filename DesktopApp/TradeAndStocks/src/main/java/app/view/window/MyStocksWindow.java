@@ -48,10 +48,10 @@ public class MyStocksWindow extends Application {
         gridPane.add(profileButton, 1, 0);
         gridPane.add(resetButton, 2, 0);
         gridPane.add(allStocksTable,3,1);
-        profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
-        resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
+        profileButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
+        resetButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
 
-        gridPane.setStyle("-fx-background-color: BEIGE;");
+        gridPane.setStyle("-fx-background-color: #f5f5f5;");
 
 
         TableColumn <AllStocksTable, String> shortNameColumn = new TableColumn("shortName");
