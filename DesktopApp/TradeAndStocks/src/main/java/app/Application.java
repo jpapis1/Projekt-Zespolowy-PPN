@@ -23,6 +23,7 @@ import app.config.Config;
 import app.repository.*;
 import app.service.*;
 import app.view.table.MyStocksTable;
+import app.view.window.LoginWindow;
 import app.view.window.MyStocksWindow;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,10 +64,10 @@ public class Application {
 
             String webAddress = ctx.getBean(String.class);
             System.out.println(webAddress);
-            //LoginWindow.launch(LoginWindow.class);
+            LoginWindow.launch(LoginWindow.class);
             //MyStocksWindow.launch(MyStocksWindow.class);
-            ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
-            table.stream().forEach(System.out::println);
+            //ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
+            //table.stream().forEach(System.out::println);
             //new LoginWindow().start(new Stage());
             /*User user = new User.UserBuilder("us1zazxaeer")
                     .fullName("Jeragzy","Pek")

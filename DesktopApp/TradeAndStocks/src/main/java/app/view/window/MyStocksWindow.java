@@ -21,6 +21,7 @@ import java.util.Date;
 
 public class MyStocksWindow extends Application {
     private TableView allStocksTable = new TableView();
+    public static GridPane myStocksPane = new GridPane();
     public static void main(String[] args) {
         launch(args);
     }
@@ -31,7 +32,7 @@ public class MyStocksWindow extends Application {
         Button resetButton = new Button("RESET ACCOUNT");
 
         //Creating a Grid Pane
-        GridPane myStocksPane = new GridPane();
+        //GridPane myStocksPane = new GridPane();
 
         //Setting size for the pane
         myStocksPane.setMinSize(1500, 750);

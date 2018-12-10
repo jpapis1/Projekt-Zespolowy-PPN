@@ -60,7 +60,7 @@ public class HomeWindow extends Application{
 
 
         //Creating a Group object
-        Group root = new Group(gridPane , myStocksPane);
+        Group root = new Group(gridPane , MyStocksWindow.myStocksPane);
 
         //Creating a scene object
         Scene scene = new Scene(root, 1500, 750);
