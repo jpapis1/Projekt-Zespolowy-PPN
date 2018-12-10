@@ -20,12 +20,12 @@ public class HomeWindow extends Application{
         Button myAccountButton = new Button("MY ACCOUNT");
         Button allStocksButton = new Button("ALL STOCKS");
         Button myStocksButton = new Button("MY STOCKS");
-
+        Button testButton = new Button("Test");
         //Creating a Grid Pane
         GridPane gridPane = new GridPane();
 
         //Setting size for the pane
-        gridPane.setMinSize(2000, 1000);
+        gridPane.setMinSize(1500, 750);
 
         //Setting the padding
         gridPane.setPadding(new Insets(10, 10, 10, 10));
@@ -47,13 +47,22 @@ public class HomeWindow extends Application{
         gridPane.setStyle("-fx-background-color: #f5f5f5;");
 
 
+        //test
+        GridPane gridPane2 = new GridPane();
+        gridPane2.setPadding(new Insets(10, 10, 10, 10));
+
+        //Setting the vertical and horizontal gaps between the columns
+        gridPane2.setVgap(5);
+        gridPane2.setHgap(5);
+        gridPane2.setAlignment(Pos.TOP_LEFT);
+        gridPane2.add(testButton, 0, 10);
 
 
         //Creating a Group object
-        Group root = new Group(gridPane);
+        Group root = new Group(gridPane,gridPane2);
 
         //Creating a scene object
-        Scene scene = new Scene(root, 2000, 1000);
+        Scene scene = new Scene(root, 1500, 750);
         //Setting title to the Stage
         stage.setTitle("Trade and Stocks");
 
