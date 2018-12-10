@@ -31,27 +31,27 @@ public class MyStocksWindow extends Application {
         Button resetButton = new Button("RESET ACCOUNT");
 
         //Creating a Grid Pane
-        GridPane gridPane = new GridPane();
+        GridPane myStocksPane = new GridPane();
 
         //Setting size for the pane
-        gridPane.setMinSize(2000, 1000);
+        myStocksPane.setMinSize(1500, 750);
 
         //Setting the padding
-        gridPane.setPadding(new Insets(10, 0, 0, 10));
+        myStocksPane.setPadding(new Insets(10, 0, 0, 10));
 
         //Setting the vertical and horizontal gaps between the columns
-        gridPane.setVgap(5);
-        gridPane.setHgap(5);
-        gridPane.setAlignment(Pos.TOP_LEFT);
+        myStocksPane.setVgap(5);
+        myStocksPane.setHgap(5);
+        myStocksPane.setAlignment(Pos.TOP_LEFT);
 
         //Arranging all the nodes in the grid
-        gridPane.add(profileButton, 1, 0);
-        gridPane.add(resetButton, 2, 0);
-        gridPane.add(allStocksTable,3,1);
+        //gridPane.add(profileButton, 1, 0);
+        //gridPane.add(resetButton, 2, 0);
+        myStocksPane.add(allStocksTable,3,10);
         profileButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
         resetButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
 
-        gridPane.setStyle("-fx-background-color: #f5f5f5;");
+        //gridPane.setStyle("-fx-background-color: #f5f5f5;");
 
 
         TableColumn <AllStocksTable, String> shortNameColumn = new TableColumn("shortName");
@@ -75,15 +75,15 @@ public class MyStocksWindow extends Application {
         allStocksTable.getColumns().addAll(shortNameColumn, nameColumn,priceColumn, dateColumn,sectorColumn);
         allStocksTable.setPrefSize(800,500);
         //Creating a Group object
-        Group root = new Group(gridPane);
+        //Group root = new Group(gridPane);
 
         //Creating a scene object
-        Scene scene = new Scene(root, 2000, 1000);
+        //Scene scene = new Scene(root, 2000, 1000);
         //Setting title to the Stage
         stage.setTitle("My Stocks");
 
         //Adding scene to the stage
-        stage.setScene(scene);
+        //stage.setScene(scene);
 
         //Displaying the contents of the stage
         stage.show();

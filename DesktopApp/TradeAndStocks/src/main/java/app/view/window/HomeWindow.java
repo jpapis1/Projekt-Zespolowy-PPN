@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
+import app.view.window.MyStocksWindow;
 
 public class HomeWindow extends Application{
     @Override
@@ -59,7 +60,7 @@ public class HomeWindow extends Application{
 
 
         //Creating a Group object
-        Group root = new Group(gridPane,gridPane2);
+        Group root = new Group(gridPane , myStocksPane);
 
         //Creating a scene object
         Scene scene = new Scene(root, 1500, 750);
