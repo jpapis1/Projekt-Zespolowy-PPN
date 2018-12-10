@@ -22,6 +22,8 @@ public class LoginWindow extends Application {
         //creating label password
         Text passwordText = new Text("Password");
 
+        Text wrongPassword = new Text("Wrong Password");
+
         //Creating Text Filed for email
         TextField emailOrUsernameField = new TextField();
 
@@ -33,6 +35,8 @@ public class LoginWindow extends Application {
         Button clearButton = new Button("Clear");
         DropShadow shadow = new DropShadow();
 
+
+        GridPane gridPane = new GridPane();
         //Adding the shadow when the mouse cursor is on
         submitButton.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
         {
@@ -56,14 +60,20 @@ public class LoginWindow extends Application {
             {
                 submitButton.setEffect(shadow);
                 submitButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
-                if(UserService.isPasswordCorrect(emailOrUsernameField.getText(),passwordTextField.getText())) {
-                    stage.hide();
-                    //new HomeWindow().start(new Stage());
-                    new MyStocksWindow().start(new Stage());
-                } else {
-                    System.out.println("WRONG CREDENTIALS");
+                try {
+                    if (UserService.isPasswordCorrect(emailOrUsernameField.getText(), passwordTextField.getText())) {
+                        stage.hide();
+                        //new HomeWindow().start(new Stage());
+                        new MyStocksWindow().start(new Stage());
+                    } else {
+                        gridPane.add(wrongPassword, 1, 3);
+                    }
                 }
-
+                catch(Exception exc)
+                {
+                    gridPane.add(wrongPassword, 1, 3);
+                    wrongPassword.setStyle("-fx-background-color:#f5f5f5; -fx-font: normal 15px 'sans-serif';-fx-text-fill: red");
+                }
             }
         });
 
@@ -95,9 +105,6 @@ public class LoginWindow extends Application {
             }
         });
 
-
-        //Creating a Grid Pane
-        GridPane gridPane = new GridPane();
 
         //Setting size for the pane
         gridPane.setMinSize(2000, 1000);
