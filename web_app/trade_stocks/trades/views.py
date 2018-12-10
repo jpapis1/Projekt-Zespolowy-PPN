@@ -22,7 +22,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing, cross_validation, svm
 from iexfinance import get_historical_data
 from sklearn.model_selection import train_test_split
-
+from trades.logic import monte_carlo
+import plotly
 # Debugging
 import sys
 
@@ -44,7 +45,11 @@ def chart(request):
 # TODO: Make sure that post call to this from the desktop app can go through(csrf_exempt maybe token authentication)
 @csrf_exempt
 def company(request):
-    return render(request,'company_form.html')
+    if request.method == 'GET':
+        return render(request,'company_form.html')
+    elif request.method == 'POST':
+        ticker = request.POST.get('ticker')
+        return redirect('/company/'+ticker) 
 
 def company_ticker(request,ticker):
     print("TICKER")
@@ -275,6 +280,51 @@ def linear_regression(request):
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
 
     return render(request, 'linear.html')
+
+def monte_carlo_sim(request):
+    if request.method == 'GET':
+        return render(request,'montecarlo.html')
+        # print("GET")
+    elif request.method == 'POST':
+        # TODO: implement input validation/errors
+        # TODO: option to get tickers from users portfolios
+        # TODO: plots
+        
+        ticker = request.POST.get('ticker')
+
+        start = request.POST.get('start')
+        if(int(start[:4]) < 2013):
+            start = "2013-01-01"
+        end = request.POST.get('end')
+        # end = datetime.today().strftime('%Y-%m-%d')
+        print(ticker)
+        try:
+            # Calling the API through the module
+
+            # df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
+            sim = monte_carlo(start, end)
+ 
+            #symbols = ['AAPL', 'KO', 'HD', 'PM']
+            #weights = [1000,1000,2000,3000]
+            
+            #sim.get_portfolio(symbols, weights)
+            sim.get_asset(ticker)
+        
+            sim.monte_carlo_sim(1000, 200)
+            response = sim.line_graph()
+            # sim.histogram()
+            sim.key_stats()
+        except:
+            print(sys.exc_info()[0])
+            return render(request,'montecarlo.html',{'error_msg':error_msg})
+    
+        return render(request, 'montecarlo.html',{})
+
+    return render(request,'montecarlo.html')
+
+
+
+# ==================================================================================================================================================================    
 
 # def markowitz(request):
 #     if request.method == 'GET':
