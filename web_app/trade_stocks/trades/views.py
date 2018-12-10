@@ -284,12 +284,10 @@ def linear_regression(request):
 def monte_carlo_sim(request):
     if request.method == 'GET':
         return render(request,'montecarlo.html')
-        # print("GET")
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers from users portfolios
         # TODO: plots
-        
         ticker = request.POST.get('ticker')
 
         start = request.POST.get('start')
@@ -299,9 +297,6 @@ def monte_carlo_sim(request):
         # end = datetime.today().strftime('%Y-%m-%d')
         print(ticker)
         try:
-            # Calling the API through the module
-
-            # df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
             sim = monte_carlo(start, end)
  
             #symbols = ['AAPL', 'KO', 'HD', 'PM']
@@ -311,14 +306,15 @@ def monte_carlo_sim(request):
             sim.get_asset(ticker)
         
             sim.monte_carlo_sim(1000, 200)
-            response = sim.line_graph()
-            # sim.histogram()
+            graph = sim.line_graph()
+            # TODO: Fix histogram
+            histogram = sim.histogram()
             sim.key_stats()
         except:
             print(sys.exc_info()[0])
             return render(request,'montecarlo.html',{'error_msg':error_msg})
     
-        return render(request, 'montecarlo.html',{})
+        return render(request, 'montecarlo.html',{'graph':graph,'histogram':histogram})
 
     return render(request,'montecarlo.html')
 

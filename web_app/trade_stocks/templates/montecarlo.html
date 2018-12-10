@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<h1>Linear Regression</h1>
+<h1>Monte Carlo Simulation</h1>
 
 <h2>{{ user.username }}</h2>
 <hr>
@@ -25,6 +25,9 @@
         <input type="submit" class="btn btn-primary">
     </form>
 {% else %}
+    <img src="data:image/png;base64, {{ graph }}" alt="">
+    <hr>
+    <img src="data:image/png;base64, {{ histogram }}" alt="">
     {% comment %} <p>Beggining date: {{ start }}</p>
     <p>End date: {{ end }}</p>
     <p>Prediction accuracy: {{ confidence }}%</p>

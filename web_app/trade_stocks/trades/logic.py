@@ -9,6 +9,8 @@ from iexfinance import get_historical_data
 from matplotlib import pylab
 from django.http import HttpResponse
 from matplotlib.backends.backend_agg import FigureCanvasAgg
+from io import BytesIO
+import base64
 #See Styles
 #print(plt.style.available)
      
@@ -141,10 +143,15 @@ class monte_carlo:
         plt.grid(True,color='grey')
         plt.axhline(y=last_price, color='r', linestyle='-')
 
-        response = HttpResponse(content_type = 'image/png')
-        canvas = FigureCanvasAgg(fig)
-        canvas.print_png(response)
-        return response
+        buf = BytesIO()
+        plt.savefig(buf, format='png')
+        image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+        buf.close()
+        return image_base64
+        # response = HttpResponse(content_type = 'image/png')
+        # canvas = FigureCanvasAgg(fig)
+        # canvas.print_png(response)
+        # return response
         # plt.show()
 
     def histogram(self):
@@ -168,7 +175,13 @@ class monte_carlo:
  
         # Tweak spacing to prevent clipping of ylabel
         plt.subplots_adjust(left=0.15)
-        plt.show()
+        
+        buf2 = BytesIO()
+        plt.savefig(buf2, format='png')
+        image_base64 = base64.b64encode(buf2.getvalue()).decode('utf-8').replace('\n', '')
+        buf2.close()
+        return image_base64
+        # plt.show()
         
     def key_stats(self):
         simulation_df = self.simulation_df
