@@ -24,6 +24,7 @@ from iexfinance import get_historical_data
 from sklearn.model_selection import train_test_split
 from trades.logic import monte_carlo
 import plotly
+
 # Debugging
 import sys
 
@@ -52,8 +53,8 @@ def company(request):
         return redirect('/company/'+ticker) 
 
 def company_ticker(request,ticker):
-    print("TICKER")
-    print(ticker)
+    # print("TICKER")
+    # print(ticker)
     try:
         # ticker = request.POST.get('ticker')
         company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
@@ -80,7 +81,7 @@ def rate_single(request):
         return render(request,'rate_single_form.html')
     elif request.method == 'POST':
         # TODO: implement input validation/errors
-        ticker = request.POST.get('short')
+        ticker = request.POST.get('ticker')
         start = request.POST.get('start')
         end = request.POST.get('end')
 
@@ -111,7 +112,6 @@ def signup(request):
         if (form.is_valid()):
             user = form.save(commit=False)
             pw = form.cleaned_data['password']
-            # print(pw)
             user.password = make_password(pw)
             user.idbroker = 1
             user.funds = 3000
@@ -163,24 +163,19 @@ def profile(request):
 
     return render(request, 'profile.html')
 
-@login_required    
+# @login_required    
 def rate_portfolio(request):
     if request.method == 'GET':
         return render(request,'rate_portfolio.html')
-        # print("GET")
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers and weights from users portfolios
         # TODO: plots
-        # tickers = []
         tickers = request.POST.getlist('tickers[]')
 
         start = request.POST.get('start')
         end = request.POST.get('end')
         try:
-            # Calling the API through the module and calculating log RoR
-            # start = datetime(2017, 11, 1)
-            # end = datetime(2018, 11, 20)
 
             # tickers = ['PG','MSFT','F','GE']
 
@@ -234,8 +229,8 @@ def linear_regression(request):
         ticker = request.POST.get('ticker')
 
         start = request.POST.get('start')
-        if(int(start[:4]) < 2013):
-            start = "2013-01-01"
+        if(int(start[:4]) < int(datetime.now().year)-5):
+            start = str(datetime.now().year-5)+"-01-01"
         end = request.POST.get('end')
         # end = datetime.today().strftime('%Y-%m-%d')
         print(ticker)
@@ -259,8 +254,6 @@ def linear_regression(request):
 
             # X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size = 0.2)
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
-
-
 
             # Training
             clf = LinearRegression()
@@ -294,8 +287,6 @@ def monte_carlo_sim(request):
         if(int(start[:4]) < 2013):
             start = "2013-01-01"
         end = request.POST.get('end')
-        # end = datetime.today().strftime('%Y-%m-%d')
-        print(ticker)
         try:
             sim = monte_carlo(start, end)
  
@@ -305,81 +296,19 @@ def monte_carlo_sim(request):
             #sim.get_portfolio(symbols, weights)
             sim.get_asset(ticker)
         
-            sim.monte_carlo_sim(1000, 200)
+            sim.monte_carlo_sim(500, 180)
             graph = sim.line_graph()
-            # TODO: Fix histogram
-            histogram = sim.histogram()
-            sim.key_stats()
+            # TODO: Fix histogram - or not.
+            # histogram = sim.histogram()
+            
+            mean, maximum, minimum, std, describe = sim.key_stats()
         except:
+            # Print for debugging purposes - delete in prod.
             print(sys.exc_info()[0])
             return render(request,'montecarlo.html',{'error_msg':error_msg})
-    
-        return render(request, 'montecarlo.html',{'graph':graph,'histogram':histogram})
+
+        # Get values from describe like from an array ie. to get count value use 'desc.0'
+        return render(request, 'montecarlo.html',{'graph':graph,'mean':mean,'max':maximum,'min':minimum,'std':std,
+        'desc':describe,'start':start,'end':end,'ticker':ticker})
 
     return render(request,'montecarlo.html')
-
-
-
-# ==================================================================================================================================================================    
-
-# def markowitz(request):
-#     if request.method == 'GET':
-#         return render(request,'rate_portfolio.html')
-#         # print("GET")
-#     elif request.method == 'POST':
-#         # TODO: implement input validation/errors
-#         # TODO: option to get tickers and weights from users portfolios
-#         # TODO: plots
-#         print("POSTMARKOWITZ")
-#         tickers = request.POST.getlist('tickers[]')
-
-#         num_assets = len(tickers)
-        
-#         start = request.POST.get('start')
-#         end = request.POST.get('end')
-#         try:
-#             # Calling the API through the module and calculating log RoR
-#             start = datetime(2017, 11, 1)
-#             end = datetime(2018, 11, 20)
-
-#             mydata = pd.DataFrame()
-#             for t in tickers:
-#                 mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
-
-            
-#             # Calculate percentage from amount of stocks that user has. - even by default
-#             log_returns = np.log(mydata / mydata.shift(1))
-#             pfolio_returns = []
-#             pfolio_volatilities = []
-
-#             for x in range (1000):
-#                 weights = np.random.random(num_assets)
-#                 weights /= np.sum(weights)
-#                 pfolio_returns.append(np.sum(weights * log_returns.mean()) * 250)
-#                 pfolio_volatilities.append(np.sqrt(np.dot(weights.T, np.dot(log_returns.cov() * 250, weights))))
-                
-#             pfolio_returns = np.array(pfolio_returns)
-#             pfolio_volatilities = np.array(pfolio_volatilities)
-
-#             pfolio_returns, pfolio_volatilities
-
-#             portfolios = pd.DataFrame({'Return': pfolio_returns,'Volatility': pfolio_volatilities})
-
-#             all_rate_pfolio = []
-#             all_rate_pfolio = pfolio_returns/pfolio_volatilities
-#             for item in all_rate_pfolio:
-#                 print(item)
-#             best_rate_pfolio = max(all_rate_pfolio)
-
-#             # print(best_rate_pfolio.sort()[-1])
-
-#             # portfolios.plot(x='Volatility', y='Return',kind='scatter',figsize = (10,6));
-#             # plt.xlabel('Expected Volatility')
-#             # plt.ylabel('Expected Return')   
-            
-#         except:
-#             return render(request,'rate_portfolio.html',{'error_msg':error_msg})
-    
-#         return render(request, 'rate_portfolio.html',{'best_rate_pfolio':best_rate_pfolio,'start':start,'end':end})
-
-#     return render(request, 'rate_portfolio.html')

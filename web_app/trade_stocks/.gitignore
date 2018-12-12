@@ -16,4 +16,5 @@ tests/coverage_html/
 tests/.coverage
 build/
 tests/report/
-.vscode
+.vscode/
+trades/migrations/0001_initial.py

@@ -11,8 +11,6 @@ from django.http import HttpResponse
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from io import BytesIO
 import base64
-#See Styles
-#print(plt.style.available)
      
 class monte_carlo:
     def __init__(self, start, end):
@@ -62,7 +60,7 @@ class monte_carlo:
         
         simulation_df = pd.DataFrame()
 
-        #Create Each Simulation as a Column in df
+        #Create Each Simulation as a column
         for x in range(num_simulations):
             count = 0
             daily_vol = returns.std()
@@ -73,7 +71,7 @@ class monte_carlo:
             price = last_price * (1 + np.random.normal(0, daily_vol))
             price_series.append(price)
             
-            #Series for Preditcted Days
+            #Series for Predicted Days
             for i in range(predicted_days):
                 if count == 251:
                     break
@@ -146,6 +144,7 @@ class monte_carlo:
         buf = BytesIO()
         plt.savefig(buf, format='png')
         image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
+        # buf.flush()
         buf.close()
         return image_base64
         # response = HttpResponse(content_type = 'image/png')
@@ -178,9 +177,10 @@ class monte_carlo:
         
         buf2 = BytesIO()
         plt.savefig(buf2, format='png')
-        image_base64 = base64.b64encode(buf2.getvalue()).decode('utf-8').replace('\n', '')
+        image_base642 = base64.b64encode(buf2.getvalue()).decode('utf-8').replace('\n', '')
+        # buf2.flush()
         buf2.close()
-        return image_base64
+        return image_base642
         # plt.show()
         
     def key_stats(self):
@@ -208,3 +208,4 @@ class monte_carlo:
         print (price_array.describe())
  
         print ('\n')
+        return np.mean(simulation_df.iloc[-1,:]), np.max(simulation_df.iloc[-1,:]), np.min(simulation_df.iloc[-1,:]),np.std(simulation_df.iloc[-1,:]),price_array.describe()

@@ -29,9 +29,10 @@ body {
   line-height: 110px;
   text-align: center;
   font-family: sans-serif;
-  font-size: 1.5em;
+  /* font-size: 1.5em; */
+  font-size: medium;
   font-weight: bold;
-  letter-spacing: 4px;
+  /* letter-spacing: 2px; */
   color: #000;
   color: rgba(0, 0, 0, .5);
   cursor: pointer;
@@ -42,7 +43,9 @@ body {
   font: #888;
 }
 .hexagon a{
+  
   color: rgba(0, 0, 0, .5);
+  
 }
 
 .hexagon:hover {

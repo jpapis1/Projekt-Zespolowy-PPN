@@ -14,6 +14,14 @@
         {% csrf_token %}
         <h3>Company ticker:</h3>
         <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+        {% if user.is_authenticated %}
+            <h3>Tickers from Portfolio</h3>
+                <select name="ticker">
+                    {% for trans in user.transactions %}
+                        <option value="{{trans.shortname}}">{{trans.shortname}}</option>
+                    {% endfor %}
+                </select>
+        {% endif %}
         <h3>Start date:</h3>
         <input type="date" name="start" placeholder="Start date">
         <h3>End date:</h3>
@@ -27,39 +35,22 @@
 {% else %}
     <img src="data:image/png;base64, {{ graph }}" alt="">
     <hr>
-    <img src="data:image/png;base64, {{ histogram }}" alt="">
-    {% comment %} <p>Beggining date: {{ start }}</p>
+    <h4>Period of data used for simulation</h4>
+    <p>Beggining date: {{ start }}</p>
     <p>End date: {{ end }}</p>
-    <p>Prediction accuracy: {{ confidence }}%</p>
-    
-    <canvas id="myChart"></canvas>
-    <script type="text/javascript">
-        
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
 
-        // The data for our dataset
-        data: {
-            labels: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22",
-            "23","24","25","26","27","28","29","30"],
-            datasets: [{
-                label: "Volume",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [{% for pred in forecast_pred %}{{pred}},{% endfor %}],
-            },
-                ]
-        },
+    <h4>Last Price Statistics</h4>
+    <p>Mean Value: {{ mean }}</p>
+    <p>Maximum Value: {{ max }}</p>
+    <p>Minimum Value: {{ min }}</p>
+    <p>Standard Deviation: {{ std }}</p>
 
-        // Configuration options go here
-        options: {}
-    });
-    </script> {% endcomment %}
-    {% comment %} {% for pred in forecast_pred %}
-    <p>Prediction: {{pred}}</p>
-    {% endfor %} {% endcomment %}
+    <h4>Simulation Statistics</h4>
+    <p>Number of simulations: {{ desc.0 }}</p>
+    <p>Mean Value: {{ desc.1 }}</p>
+    <p>Standard Deviation: {{ desc.2 }}</p>
+    <p>Minimal Price: {{ desc.3 }}</p>
+    <p>Maximal Price: {{ desc.7 }}</p>
 {% endif %}
 
 {% if error_msg %}

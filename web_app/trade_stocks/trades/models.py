@@ -74,6 +74,8 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'User'
+    def transactions(self):
+        return Transaction.objects.filter(iduser=self.id)
 
 
 class HibernateSequence(models.Model):

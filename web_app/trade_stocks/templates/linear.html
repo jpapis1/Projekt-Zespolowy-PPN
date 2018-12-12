@@ -14,6 +14,14 @@
         {% csrf_token %}
         <h3>Company ticker:</h3>
         <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+        {% if user.is_authenticated %}
+        <h3>Tickers from Portfolio</h3>
+            <select name="ticker">
+                {% for trans in user.transactions %}
+                    <option value="{{trans.shortname}}">{{trans.shortname}}</option>
+                {% endfor %}
+            </select>
+        {% endif %}
         <h3>Start date:</h3>
         <input type="date" name="start" placeholder="Start date">
         <h3>End date:</h3>

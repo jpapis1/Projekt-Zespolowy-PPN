@@ -7,6 +7,14 @@
 <form action="{% url 'company' %}" method="post">
     {% comment %} {% csrf_token %} {% endcomment %}
     <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+    {% if user.is_authenticated %}
+    <h3>Tickers from Portfolio</h3>
+        <select name="ticker">
+            {% for trans in user.transactions %}
+                <option value="{{trans.shortname}}">{{trans.shortname}}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
     <input type="submit" class="btn btn-primary">
 </form>
 
