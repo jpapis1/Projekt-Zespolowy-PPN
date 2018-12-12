@@ -1,7 +1,7 @@
 package app.view.window;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.*;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
