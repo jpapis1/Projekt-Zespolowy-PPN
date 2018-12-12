@@ -11,12 +11,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2155d89df523a916793fcbc9257c04314fb6d262
 public class MainWindow extends Application {
 
-    private ConfigurableApplicationContext context;
+    //private ConfigurableApplicationContext context;
     private Parent rootNode;
 
+    /*
     @Override
     public void init() throws Exception {
         SpringApplicationBuilder builder = new SpringApplicationBuilder(MainWindow.class);
@@ -26,10 +30,15 @@ public class MainWindow extends Application {
         loader.setControllerFactory(context::getBean);
         rootNode = loader.load();
     }
+    */
 
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+        //loader.setControllerFactory(context::getBean);
+        rootNode = loader.load();
+
         Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
         double width = visualBounds.getWidth();
         double height = visualBounds.getHeight();
@@ -41,6 +50,6 @@ public class MainWindow extends Application {
 
     @Override
     public void stop() throws Exception {
-        context.close();
+        //context.close();
     }
 }
