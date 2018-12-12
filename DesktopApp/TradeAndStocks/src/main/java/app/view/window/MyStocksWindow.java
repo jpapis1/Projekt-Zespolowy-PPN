@@ -48,7 +48,7 @@ public class MyStocksWindow extends Application {
         //Arranging all the nodes in the grid
         //gridPane.add(profileButton, 1, 0);
         //gridPane.add(resetButton, 2, 0);
-        myStocksPane.add(allStocksTable,3,10);
+        myStocksPane.add(allStocksTable,10,0);
         profileButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
         resetButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
 

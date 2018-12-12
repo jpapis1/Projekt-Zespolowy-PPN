@@ -11,15 +11,22 @@ import javafx.stage.Stage;
 import app.view.window.MyStocksWindow;
 
 public class HomeWindow extends Application{
+    public static Scene mainScene2;
+    public static Scene getScene() {
+        return mainScene2;
+    }
+
     @Override
-    public void start(Stage stage) {
+    public void start(Stage homeStage) {
 
 
         //Creating Buttons
 
         Button aboutButton = new Button("ABOUT");
         Button myAccountButton = new Button("MY ACCOUNT");
+        myAccountButton.setOnAction(event -> homeStage.setScene(MyAccountWindow.getScene()));
         Button allStocksButton = new Button("ALL STOCKS");
+        allStocksButton.setOnAction(event -> homeStage.setTitle("Test"));
         Button myStocksButton = new Button("MY STOCKS");
         Button testButton = new Button("Test");
         //Creating a Grid Pane
@@ -60,18 +67,18 @@ public class HomeWindow extends Application{
 
 
         //Creating a Group object
-        Group root = new Group(gridPane , MyStocksWindow.myStocksPane);
+        Group root = new Group(gridPane);
+        //Group root = new Group(gridPane , MyStocksWindow.myStocksPane);
 
         //Creating a scene object
-        Scene scene = new Scene(root, 1500, 750);
+        Scene mainScene = new Scene(root, 1500, 750);
         //Setting title to the Stage
-        stage.setTitle("Trade and Stocks");
-
-        //Adding scene to the stage
-        stage.setScene(scene);
-
-        //Displaying the contents of the stage
-        stage.show();
+        homeStage.setTitle("Trade and Stocks");
+        mainScene2 = mainScene;
+        //Adding scene to the homeStage
+        homeStage.setScene(mainScene);
+        //Displaying the contents of the homeStage
+        homeStage.show();
     }
 
 }

@@ -71,8 +71,9 @@ public class LoginWindow extends Application {
                 }
                 catch(Exception exc)
                 {
-                    gridPane.add(wrongPassword, 1, 3);
+
                     wrongPassword.setStyle("-fx-background-color:#f5f5f5; -fx-font: normal 15px 'sans-serif';-fx-text-fill: red");
+                    gridPane.add(wrongPassword, 1, 3);
                 }
             }
         });
