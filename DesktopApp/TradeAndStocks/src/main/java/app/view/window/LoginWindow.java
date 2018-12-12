@@ -61,10 +61,19 @@ public class LoginWindow extends Application {
                 submitButton.setEffect(shadow);
                 submitButton.setStyle("-fx-background-color: #cb2514; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
                 try {
+                    MainWindow main = new MainWindow();
+                    main.init();
+                    main.start(new Stage());
+                    new MainWindow().start(new Stage());
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                /*try {
                     if (UserService.isPasswordCorrect(emailOrUsernameField.getText(), passwordTextField.getText())) {
                         stage.hide();
                         //new HomeWindow().start(new Stage());
-                        new MyStocksWindow().start(new Stage());
+                        //new MyStocksWindow().start(new Stage());
+                        new MainWindow().start(new Stage());
                     } else {
                         gridPane.add(wrongPassword, 1, 3);
                     }
@@ -75,6 +84,7 @@ public class LoginWindow extends Application {
                     wrongPassword.setStyle("-fx-background-color:#f5f5f5; -fx-font: normal 15px 'sans-serif';-fx-text-fill: red");
                     gridPane.add(wrongPassword, 1, 3);
                 }
+                */
             }
         });
 

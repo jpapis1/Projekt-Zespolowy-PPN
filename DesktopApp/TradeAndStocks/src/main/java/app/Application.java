@@ -25,6 +25,7 @@ import app.service.*;
 import app.view.table.MyStocksTable;
 import app.view.window.LoginWindow;
 import app.view.window.MyStocksWindow;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -64,7 +65,10 @@ public class Application {
 
             String webAddress = ctx.getBean(String.class);
             System.out.println(webAddress);
-            LoginWindow.launch(LoginWindow.class);
+            //LoginWindow.launch(LoginWindow.class);
+            ApplicationRunner runMe = new ApplicationRunner();
+            runMe.run(args);
+            //runMe.start(new Stage());
             //MyStocksWindow.launch(MyStocksWindow.class);
             //ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
             //table.stream().forEach(System.out::println);
@@ -84,7 +88,4 @@ public class Application {
             //maps.forEach(System.out::println);
         };
     }
-
-
-
 }
