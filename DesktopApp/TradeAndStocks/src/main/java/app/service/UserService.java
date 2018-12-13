@@ -2,10 +2,13 @@ package app.service;
 
 import app.model.Transaction;
 import app.model.User;
+import app.repository.BrokerRepository;
 import app.repository.UserRepository;
 import app.view.table.AllStocksTable;
 import app.view.table.MyStocksTable;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -21,28 +24,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.Math.round;
-
+@Service
 public class UserService {
-    private static UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private TransactionService transactionService;
+
     private static User activeUser;
-    private static boolean initialized = false;
-    public static void initialize(UserRepository repo) {
-        if(!initialized) {
-            userRepository = repo;
-            initialized = true;
-        }
-    }
 
-    public static UserRepository getRepo() {
-        return userRepository;
-    }
-
-    public static boolean isPasswordCorrect(String usernameOrEmail, String password) {
+    public boolean isPasswordCorrect(String usernameOrEmail, String password) {
         User user = userRepository.findFirstByUsername(usernameOrEmail);
         if(user == null ) { // username not found
             user = userRepository.findFirstByEmail(usernameOrEmail);
         }
         if(user == null) return false; // neither username nor email was found
+        System.out.println(user);
         String[] pass = user.getPassword().split("\\$");
         KeySpec spec = new PBEKeySpec(password.toCharArray(),pass[2].getBytes(),Integer.valueOf(pass[1]),256);
         try {
@@ -65,8 +63,8 @@ public class UserService {
 
 
 
-    public static ArrayList<MyStocksTable> getUserTransactions (User user) {
-        List<Transaction> list = TransactionService.getRepo().findByUser(user);
+    public ArrayList<MyStocksTable> getUserTransactions (User user) {
+        List<Transaction> list = transactionService.getTransactionRepository().findByUser(user);
         ArrayList<MyStocksTable> myStocksTable = new ArrayList<>();
         Set<String> names = new HashSet<String>();
         for (Transaction t : list) {

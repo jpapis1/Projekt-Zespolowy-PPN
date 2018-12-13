@@ -2,21 +2,15 @@ package app.service;
 
 import app.model.Country;
 import app.repository.CountryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CountryService {
-    private static CountryRepository countryRepository;
-    private static boolean initialized = false;
-    public static void initialize(CountryRepository repo) {
-        if(!initialized) {
-            countryRepository = repo;
-            //countryRepository.save(new Country("Poland",0.19));
-            //countryRepository.save(new Country("United States",0.15));
-            //countryRepository.save(new Country("Germany",0.25));
-            initialized = true;
-        }
-    }
+    @Autowired
+    private CountryRepository countryRepository;
 
-    public static CountryRepository getRepo() {
+    public CountryRepository getRepo() {
         return countryRepository;
     }
 }

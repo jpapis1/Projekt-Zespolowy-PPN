@@ -22,52 +22,51 @@ package app;
 import app.config.Config;
 import app.repository.*;
 import app.service.*;
-import app.view.table.MyStocksTable;
-import app.view.window.LoginWindow;
-import app.view.window.MyStocksWindow;
-import javafx.stage.Stage;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-
-import static app.service.UserService.getUserTransactions;
 
 
 @SpringBootApplication
 public class Application {
+    @Autowired
+    UserService userService;
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
 
-
-
     }
-
     @Bean
-    public CommandLineRunner run(UserRepository userRepository, PermissionRepository permissionRepository,
-                                 TransactionRepository transactionRepository, CountryRepository countryRepository,
-                                 BrokerRepository brokerRepository) {
+    public CommandLineRunner run() {
         return (args) -> {
-            PermissionService.initialize(permissionRepository);
-            CountryService.initialize(countryRepository);
-            BrokerService.initialize(brokerRepository);
-            TransactionService.initialize(transactionRepository);
-            UserService.initialize(userRepository);
-            ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+            //BrokerService brokerService = new BrokerService();
 
-            String webAddress = ctx.getBean(String.class);
-            System.out.println(webAddress);
+            //BrokerService.initialize(brokerRepository);
+            //brokerService.dosth();
+            //TestService testService = new TestService();
+            //testService.getBrokerById("PKO");
+           // UserService.initialize(userRepository);
+//            ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
+
+  //          String webAddress = ctx.getBean(String.class);
+   //         System.out.println(webAddress);
             //LoginWindow.launch(LoginWindow.class);
-            ApplicationRunner runMe = new ApplicationRunner();
-            runMe.run(args);
+            //ApplicationRunner runMe = new ApplicationRunner();
+            //System.out.println(userService.isPasswordCorrect("Test6","password"));
+
+            System.out.println(userService.isPasswordCorrect("Test6","geag"));
+          //  System.out.println(testService.getBrokerById("PKO"));
+            //runMe.run(args);
             //runMe.start(new Stage());
             //MyStocksWindow.launch(MyStocksWindow.class);
             //ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
@@ -88,11 +87,5 @@ public class Application {
             //maps.forEach(System.out::println);
         };
     }
-<<<<<<< HEAD
 
-
-
-
-=======
->>>>>>> 2155d89df523a916793fcbc9257c04314fb6d262
 }

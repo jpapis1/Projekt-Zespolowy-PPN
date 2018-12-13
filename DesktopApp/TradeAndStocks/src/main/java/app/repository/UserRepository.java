@@ -25,7 +25,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface UserRepository extends CrudRepository<User,Integer>{
     List<User> findByPassword(String password);
     List<User> findByFirstName(String firstName);

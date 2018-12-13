@@ -22,6 +22,8 @@ package app.model;
 import app.repository.BrokerRepository;
 import app.service.BrokerService;
 import app.service.PermissionService;
+import app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
@@ -231,8 +233,41 @@ public class User {
     public void setIs_authenticated(int is_authenticated) {
         this.is_authenticated = is_authenticated;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "idUser=" + idUser +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", permission=" + permission +
+                ", funds=" + funds +
+                ", broker=" + broker +
+                ", date_joined=" + date_joined +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", is_active=" + is_active +
+                ", is_staff=" + is_staff +
+                ", is_superuser=" + is_superuser +
+                ", is_anonymous=" + is_anonymous +
+                ", is_authenticated=" + is_authenticated +
+                '}';
+    }
+
     //
     public static class UserBuilder {
+        @Autowired
+        private UserService userService;
+
+        @Autowired
+        private BrokerService brokerService;
+
+        @Autowired
+        private PermissionService permissionService;
+
         private String username;
         private String password;
         private String email;
@@ -258,11 +293,11 @@ public class User {
             return this;
         }
         public UserBuilder perm(PermissionEnum permissionEnum) {
-            this.permission = PermissionService.getRepo().findFirstByName(permissionEnum);
+            this.permission = permissionService.getRepo().findFirstByName(permissionEnum);
             return this;
         }
         public UserBuilder broker(String broker) {
-            this.broker = BrokerService.getRepo().findFirstByName(broker);
+            this.broker = brokerService.getBrokerRepository().findFirstByName(broker);
             return this;
         }
         public UserBuilder fullName(String firstName,String lastName) {

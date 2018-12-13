@@ -11,10 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 2155d89df523a916793fcbc9257c04314fb6d262
 public class MainWindow extends Application {
 
     //private ConfigurableApplicationContext context;

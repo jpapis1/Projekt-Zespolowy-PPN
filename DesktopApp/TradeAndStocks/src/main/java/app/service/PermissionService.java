@@ -1,22 +1,15 @@
 package app.service;
 
-import app.model.Permission;
-import app.model.PermissionEnum;
 import app.repository.PermissionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PermissionService {
-    private static boolean initialized = false;
-    private static PermissionRepository permissionRepository;
-    public static void initialize(PermissionRepository repo) {
-        if(!initialized) {
-            permissionRepository = repo;
-            //permissionRepository.save(new Permission(PermissionEnum.admin));
-            //permissionRepository.save(new Permission(PermissionEnum.client));
-            initialized = true;
-        }
-    }
+    @Autowired
+    private PermissionRepository permissionRepository;
 
-    public static PermissionRepository getRepo() {
+    public PermissionRepository getRepo() {
         return permissionRepository;
     }
 }
