@@ -293,11 +293,11 @@ public class User {
             return this;
         }
         public UserBuilder perm(PermissionEnum permissionEnum) {
-            this.permission = permissionService.getRepo().findFirstByName(permissionEnum);
+            this.permission = permissionService.getPermissionByEnum(permissionEnum);
             return this;
         }
         public UserBuilder broker(String broker) {
-            this.broker = brokerService.getBrokerRepository().findFirstByName(broker);
+            this.broker = brokerService.getBrokerByName(broker);
             return this;
         }
         public UserBuilder fullName(String firstName,String lastName) {

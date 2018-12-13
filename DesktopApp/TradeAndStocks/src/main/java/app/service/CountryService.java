@@ -9,8 +9,4 @@ import org.springframework.stereotype.Service;
 public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
-
-    public CountryRepository getRepo() {
-        return countryRepository;
-    }
 }

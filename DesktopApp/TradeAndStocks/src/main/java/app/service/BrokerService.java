@@ -12,11 +12,7 @@ public class BrokerService {
     @Autowired
     private BrokerRepository brokerRepository;
 
-    public BrokerRepository getBrokerRepository() {
-        return brokerRepository;
-    }
-
-    public void setBrokerRepository(BrokerRepository brokerRepository) {
-        this.brokerRepository = brokerRepository;
+    public Broker getBrokerByName(String name) {
+        return brokerRepository.findFirstByName(name);
     }
 }

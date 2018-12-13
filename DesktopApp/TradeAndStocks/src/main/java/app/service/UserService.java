@@ -64,7 +64,7 @@ public class UserService {
 
 
     public ArrayList<MyStocksTable> getUserTransactions (User user) {
-        List<Transaction> list = transactionService.getTransactionRepository().findByUser(user);
+        List<Transaction> list = transactionService.getUsersTransactionList(user);
         ArrayList<MyStocksTable> myStocksTable = new ArrayList<>();
         Set<String> names = new HashSet<String>();
         for (Transaction t : list) {
