@@ -12,7 +12,7 @@ public class MenuWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/menu.fxml"));
         Scene scene = new Scene(root, 1000, 750);
 
         stage.setTitle("Trade and Stocks");

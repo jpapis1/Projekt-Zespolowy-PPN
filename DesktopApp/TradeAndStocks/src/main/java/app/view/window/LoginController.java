@@ -18,7 +18,7 @@ public class LoginController {
     @FXML protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
 
         actiontarget.setText("You are logging in");
-        Parent loginParent = FXMLLoader.load(getClass().getResource("menu.fxml"));
+        Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/menu.fxml"));
         Scene menu = new Scene(loginParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(menu);

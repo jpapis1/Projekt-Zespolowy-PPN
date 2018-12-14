@@ -10,7 +10,7 @@ public class LoginWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Scene scene = new Scene(root, 1000, 750);
 
         stage.setTitle("Trade and Stocks");
