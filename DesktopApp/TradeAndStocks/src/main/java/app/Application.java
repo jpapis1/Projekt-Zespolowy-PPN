@@ -19,9 +19,11 @@
 
 package app;
 
+import app.api.StockDataService;
 import app.config.Config;
 import app.repository.*;
 import app.service.*;
+import app.view.window.LoginWindow;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +43,10 @@ import org.springframework.context.annotation.Bean;
 public class Application {
     @Autowired
     UserService userService;
+    @Autowired
+    ApplicationContext applicationContext;
+
+
     private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
@@ -49,8 +56,8 @@ public class Application {
     @Bean
     public CommandLineRunner run() {
         return (args) -> {
+            //System.out.println(userService);
             //BrokerService brokerService = new BrokerService();
-
             //BrokerService.initialize(brokerRepository);
             //brokerService.dosth();
             //TestService testService = new TestService();
@@ -63,8 +70,9 @@ public class Application {
             //LoginWindow.launch(LoginWindow.class);
             //ApplicationRunner runMe = new ApplicationRunner();
             //System.out.println(userService.isPasswordCorrect("Test6","password"));
-
-            System.out.println(userService.isPasswordCorrect("Test6","geag"));
+            LoginWindow.run(applicationContext);
+            //System.out.println(userService.isPasswordCorrect("Test6","iegap"));
+            //StockDataService.getAllStockDataList().forEach(System.out::println);
           //  System.out.println(testService.getBrokerById("PKO"));
             //runMe.run(args);
             //runMe.start(new Stage());

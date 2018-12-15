@@ -5,12 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.context.ApplicationContext;
 
 public class LoginWindow extends Application {
-
+    static public ApplicationContext appContext;
     @Override
     public void start(Stage stage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+        loader.setControllerFactory(appContext::getBean);
+        Parent root = loader.load();
+
+        //Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Scene scene = new Scene(root, 1000, 750);
 
         stage.setTitle("Trade and Stocks");
@@ -19,7 +25,8 @@ public class LoginWindow extends Application {
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void run(ApplicationContext context) {
+        appContext = context;
+        launch();
     }
 }
