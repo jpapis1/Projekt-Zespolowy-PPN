@@ -19,7 +19,7 @@
  */
 
 package app.model;
-import app.repository.BrokerRepository;
+
 import app.service.BrokerService;
 import app.service.PermissionService;
 import app.service.UserService;
@@ -33,18 +33,18 @@ import java.util.Date;
 public class User {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idUser;
 
     @NonNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String username;
 
     @NonNull
     private String password;
 
     @NonNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String email;
 
     @NonNull
@@ -53,16 +53,16 @@ public class User {
     private String lastName;
 
     @NonNull
-    @ManyToOne(targetEntity=Permission.class )
-    @JoinColumn(name="idPermission")
+    @ManyToOne(targetEntity = Permission.class)
+    @JoinColumn(name = "idPermission")
     private Permission permission;
 
     @NonNull
     private double funds;
 
     @NonNull
-    @ManyToOne(targetEntity=app.model.Broker.class)
-    @JoinColumn(name="idBroker")
+    @ManyToOne(targetEntity = app.model.Broker.class)
+    @JoinColumn(name = "idBroker")
     private Broker broker;
 
 
@@ -83,8 +83,10 @@ public class User {
     private int is_anonymous;
     @Transient
     private int is_authenticated;
+
     //
-    public User(){ }
+    public User() {
+    }
 
     public User(String username, String password, String email, String firstName, String lastName, Permission permission, double funds, Broker broker) {
         this.username = username;
@@ -280,34 +282,41 @@ public class User {
         public UserBuilder(String username) {
             this.username = username;
         }
+
         public UserBuilder pass(String password) {
             this.password = password;
             return this;
         }
+
         public UserBuilder mail(String email) {
             this.email = email;
             return this;
         }
+
         public UserBuilder funds(double funds) {
             this.funds = funds;
             return this;
         }
+
         public UserBuilder perm(PermissionEnum permissionEnum) {
             this.permission = permissionService.getPermissionByEnum(permissionEnum);
             return this;
         }
+
         public UserBuilder broker(String broker) {
             this.broker = brokerService.getBrokerByName(broker);
             return this;
         }
-        public UserBuilder fullName(String firstName,String lastName) {
+
+        public UserBuilder fullName(String firstName, String lastName) {
             this.firstName = firstName;
             this.lastName = lastName;
             return this;
         }
+
         public User build() {
             User user = new User(username, password, email, firstName, lastName,
-                    permission, funds,broker);
+                    permission, funds, broker);
             user.setFirst_name("");
             user.setLast_name("");
             user.setDate_joined(new Date());

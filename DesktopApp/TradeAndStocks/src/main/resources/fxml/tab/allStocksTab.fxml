@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx"
+      fx:controller="app.view.controller.AllStocksController">
+    <TableView prefHeight="200.0" prefWidth="200.0">
+        <columns>
+            <TableColumn prefWidth="105.0" text="SECTOR"/>
+            <TableColumn prefWidth="120.0" text="SHORT NAME"/>
+            <TableColumn prefWidth="115.0" text="NAME"/>
+            <TableColumn prefWidth="125.0" text="PRICE"/>
+            <TableColumn prefWidth="135.0" text="DATE"/>
+        </columns>
+    </TableView>
+</VBox>

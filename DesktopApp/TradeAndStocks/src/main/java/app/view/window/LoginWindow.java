@@ -9,10 +9,16 @@ import org.springframework.context.ApplicationContext;
 
 public class LoginWindow extends Application {
     static public ApplicationContext appContext;
-    @Override
-    public void start(Stage stage) throws Exception{
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+    public static void run(ApplicationContext context) {
+        appContext = context;
+        launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/login.fxml"));
         loader.setControllerFactory(appContext::getBean);
         Parent root = loader.load();
 
@@ -22,11 +28,5 @@ public class LoginWindow extends Application {
         stage.setTitle("Trade and Stocks");
         stage.setScene(scene);
         stage.show();
-    }
-
-
-    public static void run(ApplicationContext context) {
-        appContext = context;
-        launch();
     }
 }

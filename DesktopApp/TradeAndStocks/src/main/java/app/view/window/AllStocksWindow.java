@@ -6,14 +6,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class AllStocksWindow extends Application {
 
     private TableView allStocksTable = new TableView();
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -41,7 +42,7 @@ public class AllStocksWindow extends Application {
         //Arranging all the nodes in the grid
         gridPane.add(profileButton, 1, 0);
         gridPane.add(resetButton, 2, 0);
-        gridPane.add(allStocksTable,3,1);
+        gridPane.add(allStocksTable, 3, 1);
         profileButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
         resetButton.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white;");
 
@@ -59,8 +60,6 @@ public class AllStocksWindow extends Application {
         TableColumn priceColumn = new TableColumn("Price");
 
         allStocksTable.getColumns().addAll(sectorColumn, shortNameColumn, nameColumn, priceColumn, dateColumn);
-
-
 
 
         //Creating a Group object

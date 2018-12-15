@@ -21,13 +21,15 @@ package app.repository;
 
 import app.model.User;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<User,Integer>{
+public interface UserRepository extends CrudRepository<User, Integer> {
     List<User> findByPassword(String password);
+
     List<User> findByFirstName(String firstName);
-    User findFirstByUsername (String username);
-    User findFirstByEmail (String email);
+
+    User findFirstByUsername(String username);
+
+    User findFirstByEmail(String email);
 }

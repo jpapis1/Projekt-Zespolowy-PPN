@@ -1,4 +1,5 @@
 package app.view.window;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -6,12 +7,11 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
-import app.view.window.MyStocksWindow;
 
-public class HomeWindow extends Application{
+public class HomeWindow extends Application {
     public static Scene mainScene2;
+
     public static Scene getScene() {
         return mainScene2;
     }

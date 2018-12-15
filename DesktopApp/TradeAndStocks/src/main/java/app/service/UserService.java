@@ -2,9 +2,7 @@ package app.service;
 
 import app.model.Transaction;
 import app.model.User;
-import app.repository.BrokerRepository;
 import app.repository.UserRepository;
-import app.view.table.AllStocksTable;
 import app.view.table.MyStocksTable;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,38 +13,37 @@ import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.lang.Math.round;
 @Service
 public class UserService {
+    private static User activeUser;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private TransactionService transactionService;
 
-    private static User activeUser;
+    public static void setActiveUser(User user) {
+        activeUser = user;
+    }
 
     public boolean isPasswordCorrect(String usernameOrEmail, String password) {
         User user = userRepository.findFirstByUsername(usernameOrEmail);
-        if(user == null ) { // username not found
+        if (user == null) { // username not found
             user = userRepository.findFirstByEmail(usernameOrEmail);
         }
-        if(user == null) return false; // neither username nor email was found
+        if (user == null) return false; // neither username nor email was found
         System.out.println(user);
         String[] pass = user.getPassword().split("\\$");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(),pass[2].getBytes(),Integer.valueOf(pass[1]),256);
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
         try {
             SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             String passHash = Base64.encode(f.generateSecret(spec).getEncoded());
-            if(pass[3].equals(passHash)) {
+            if (pass[3].equals(passHash)) {
                 setActiveUser(user);
                 return true;
             } else {
@@ -57,13 +54,8 @@ public class UserService {
         }
         return false;
     }
-    public static void setActiveUser(User user) {
-        activeUser = user;
-    }
 
-
-
-    public ArrayList<MyStocksTable> getUserTransactions (User user) {
+    public ArrayList<MyStocksTable> getUserTransactions(User user) {
         List<Transaction> list = transactionService.getUsersTransactionList(user);
         ArrayList<MyStocksTable> myStocksTable = new ArrayList<>();
         Set<String> names = new HashSet<String>();
@@ -77,13 +69,13 @@ public class UserService {
             double unitPrice = transactionsByShortName.get(0).getUnitPrice(); // FIX!! tu powinna być aktualna cena
             double value = transactionsByShortName.stream().mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
             double realValue = unitSum * unitPrice;
-            double profitLoss = ((1-(realValue/value)));
+            double profitLoss = ((1 - (realValue / value)));
             String str = String.format("%.2f", profitLoss);
             profitLoss = Double.valueOf(str);
-            for(Transaction transaction : transactionsByShortName) {
+            for (Transaction transaction : transactionsByShortName) {
                 System.out.println(transaction);
             }
-            myStocksTable.add(new MyStocksTable(shortName,unitPrice,unitSum,realValue,profitLoss));
+            myStocksTable.add(new MyStocksTable(shortName, unitPrice, unitSum, realValue, profitLoss));
         }
         return myStocksTable;
     }

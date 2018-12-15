@@ -25,13 +25,14 @@ import javax.persistence.*;
 @Entity
 public class Permission {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idPermission;
-    @Column(unique=true)
+    @Column(unique = true)
     @Enumerated(EnumType.STRING)
     private PermissionEnum name;
 
-    public Permission() { }
+    public Permission() {
+    }
 
     public Permission(PermissionEnum name) {
         this.name = name;

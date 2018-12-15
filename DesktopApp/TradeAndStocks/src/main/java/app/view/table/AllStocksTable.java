@@ -1,4 +1,5 @@
 package app.view.table;
+
 import app.api.StockData;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public class AllStocksTable {
     private Date date;
     //
 
-    public AllStocksTable (StockData data) {
+    public AllStocksTable(StockData data) {
         HashMap map = data.map;
         this.sector = (String) map.get("sector");
         this.shortName = (String) map.get("shortName");

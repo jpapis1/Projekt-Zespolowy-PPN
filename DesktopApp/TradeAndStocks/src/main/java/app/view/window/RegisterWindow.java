@@ -14,6 +14,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class RegisterWindow extends Application {
+    public static void main(String args[]) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage stage) {
 
@@ -72,18 +76,17 @@ public class RegisterWindow extends Application {
         DropShadow shadow = new DropShadow();
 
         //Adding the shadow when the mouse cursor is on
-        buttonRegister.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>()
-        {
-            @Override public void handle(MouseEvent e)
-            {
+        buttonRegister.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
                 buttonRegister.setEffect(shadow);
                 buttonRegister.setStyle("-fx-background-color: #16a6b6; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
             }
         });
         //Removing the shadow when the mouse cursor is off
         buttonRegister.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e)
-            {
+            @Override
+            public void handle(MouseEvent e) {
                 buttonRegister.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
                 buttonRegister.setEffect(null);
             }
@@ -157,8 +160,5 @@ public class RegisterWindow extends Application {
 
         //Displaying the contents of the stage
         stage.show();
-    }
-    public static void main(String args[]){
-        launch(args);
     }
 }

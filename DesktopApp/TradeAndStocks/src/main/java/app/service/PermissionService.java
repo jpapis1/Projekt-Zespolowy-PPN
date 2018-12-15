@@ -12,6 +12,6 @@ public class PermissionService {
     private PermissionRepository permissionRepository;
 
     public Permission getPermissionByEnum(PermissionEnum name) {
-       return permissionRepository.findFirstByName(name);
+        return permissionRepository.findFirstByName(name);
     }
 }

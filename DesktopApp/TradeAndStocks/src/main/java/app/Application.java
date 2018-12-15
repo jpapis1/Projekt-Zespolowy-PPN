@@ -19,13 +19,8 @@
 
 package app;
 
-import app.api.StockDataService;
-import app.config.Config;
-import app.repository.*;
-import app.service.*;
+import app.service.UserService;
 import app.view.window.LoginWindow;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,66 +28,26 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 
 @SpringBootApplication
 public class Application {
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
     @Autowired
     UserService userService;
     @Autowired
     ApplicationContext applicationContext;
 
-
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
 
     }
+
     @Bean
     public CommandLineRunner run() {
         return (args) -> {
-            //System.out.println(userService);
-            //BrokerService brokerService = new BrokerService();
-            //BrokerService.initialize(brokerRepository);
-            //brokerService.dosth();
-            //TestService testService = new TestService();
-            //testService.getBrokerById("PKO");
-           // UserService.initialize(userRepository);
-//            ApplicationContext ctx = new AnnotationConfigApplicationContext(Config.class);
-
-  //          String webAddress = ctx.getBean(String.class);
-   //         System.out.println(webAddress);
-            //LoginWindow.launch(LoginWindow.class);
-            //ApplicationRunner runMe = new ApplicationRunner();
-            //System.out.println(userService.isPasswordCorrect("Test6","password"));
             LoginWindow.run(applicationContext);
-            //System.out.println(userService.isPasswordCorrect("Test6","iegap"));
-            //StockDataService.getAllStockDataList().forEach(System.out::println);
-          //  System.out.println(testService.getBrokerById("PKO"));
-            //runMe.run(args);
-            //runMe.start(new Stage());
-            //MyStocksWindow.launch(MyStocksWindow.class);
-            //ArrayList<MyStocksTable> table  = UserService.getUserTransactions(userRepository.findFirstByUsername("us1zazxaeer"));
-            //table.stream().forEach(System.out::println);
-            //new LoginWindow().start(new Stage());
-            /*User user = new User.UserBuilder("us1zazxaeer")
-                    .fullName("Jeragzy","Pek")
-                    .pass("H@sło").mail("jerzy@efaefs.pl")
-                    .funds(3000.0).perm(PermissionEnum.client)
-                    .broker("Bank Of America").build();
-            UserService.getRepo().save(user);
-            TransactionService.getRepo().save(new Transaction("aapl", 1.94882, 255.23, new Date(), true, true,
-                    user.getBroker(), user));
-
-*/
-            //log.warn(Boolean.toString(UserService.isPasswordCorrect("Test1","password")));
-            //ArrayList<StockData> maps = StockDataService.getAllStocksList();
-            //maps.forEach(System.out::println);
         };
     }
 

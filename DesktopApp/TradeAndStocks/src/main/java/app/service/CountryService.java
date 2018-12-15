@@ -1,6 +1,5 @@
 package app.service;
 
-import app.model.Country;
 import app.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
