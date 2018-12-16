@@ -4,16 +4,15 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutY="194.0" prefHeight="206.0" prefWidth="600.0">
+      <TableView layoutY="347.0" prefHeight="396.0" prefWidth="1000.0">
         <columns>
-          <TableColumn prefWidth="130.0" text="USER" />
-          <TableColumn prefWidth="112.0" text="UNITS" />
-            <TableColumn prefWidth="114.0" text="VALUE" />
-            <TableColumn prefWidth="123.0" text="PROFIT LOSS" />
-            <TableColumn prefWidth="120.0" text="EARNED" />
+          <TableColumn prefWidth="188.00001525878906" text="USER" />
+          <TableColumn prefWidth="175.0" text="UNITS" />
+            <TableColumn prefWidth="182.0" text="VALUE" />
+            <TableColumn prefWidth="232.0" text="PROFIT LOSS" />
+            <TableColumn prefWidth="222.0" text="EARNED" />
         </columns>
       </TableView>
    </children>
