@@ -17,7 +17,7 @@ public class LoginWindow extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-
+        System.out.println(appContext);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/login.fxml"));
         loader.setControllerFactory(appContext::getBean);
         Parent root = loader.load();

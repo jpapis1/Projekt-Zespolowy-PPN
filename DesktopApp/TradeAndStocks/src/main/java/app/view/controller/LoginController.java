@@ -26,11 +26,10 @@ public class LoginController {
     TextField passwordField;
     @FXML
     private Text actionTarget;
-    @FXML
-    private Text ppn;
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
+        System.out.println(userService);
         actionTarget.setText("You are logging in");
         if (userService.isPasswordCorrect(loginOrPasswordField.getText(), passwordField.getText())) {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/window/menu.fxml"));
@@ -41,11 +40,6 @@ public class LoginController {
         } else {
             actionTarget.setText("Wrong credentials!");
         }
-    }
-
-    @FXML
-    protected void aboutAction(ActionEvent event) {
-        ppn.setText("PAPIS PIĄTEK NAPIERAŁA");
     }
 
 
