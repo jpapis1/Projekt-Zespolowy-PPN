@@ -36,12 +36,12 @@ public class Transaction {
     private boolean isBuy;
     private boolean doesExists;
 
-    @ManyToOne(targetEntity=Broker.class )
-    @JoinColumn(name="idBroker")
+    @ManyToOne(targetEntity = Broker.class)
+    @JoinColumn(name = "idBroker")
     private Broker broker;
 
-    @ManyToOne(targetEntity=User.class )
-    @JoinColumn(name="idUser")
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "idUser")
     private User user;
 
     public Transaction() {
@@ -166,22 +166,27 @@ public class Transaction {
             isBuy = true;
             return this;
         }
+
         public TransactionBuilder setToSell() {
             isBuy = false;
             return this;
         }
+
         public TransactionBuilder units(double units) {
             this.units = units;
             return this;
         }
+
         public TransactionBuilder price(double unitPrice) {
             this.unitPrice = unitPrice;
             return this;
         }
+
         public TransactionBuilder date(Date date) {
             this.date = date;
             return this;
         }
+
         public Transaction build() {
             return new Transaction(shortName, units, unitPrice, date, isBuy, doesExists, broker, user);
         }

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?language javascript?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<GridPane fx:controller="app.view.window.LoginController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
+<?import javafx.scene.text.Text?>
+<GridPane xmlns:fx="http://javafx.com/fxml"
+          fx:controller="app.view.controller.LoginController" alignment="center" hgap="10" vgap="10"
           styleClass="root">
 
-    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
+    <padding>
+        <Insets top="25" right="25" bottom="10" left="25"/>
+    </padding>
 
     <Text id="welcome-text" text="Trade and Stocks"
           GridPane.columnIndex="0" GridPane.rowIndex="0"
@@ -18,8 +19,8 @@
     <Label text="User Name:"
            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
 
-    <TextField
-            GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+    <TextField fx:id="loginOrPasswordField"
+               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <Label text="Password:"
            GridPane.columnIndex="0" GridPane.rowIndex="2"/>

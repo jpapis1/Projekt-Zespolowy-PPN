@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity"
+         prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/8.0.172-ea">
+    <tabs>
+        <Tab text="Main">
+            <fx:include fx:id="mainTab" source="../tab/mainTab.fxml"/>
+        </Tab>
+        <Tab text="All Stocks">
+            <fx:include fx:id="allStocksTab" source="../tab/allStocksTab.fxml"/>
+        </Tab>
+        <Tab text="My Stocks">
+            <fx:include fx:id="myStocksTab" source="../tab/myStocksTab.fxml"/>
+        </Tab>
+        <Tab text="My Profile">
+            <fx:include fx:id="myProfileTab" source="../tab/myProfileTab.fxml"/>
+        </Tab>
+        <Tab text="About">
+            <fx:include fx:id="aboutTab" source="../tab/aboutTab.fxml"/>
+        </Tab>
+    </tabs>
+</TabPane>

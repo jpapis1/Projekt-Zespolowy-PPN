@@ -6,9 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
-
 public class ApplicationRunner extends Application {
+    public static void run(String[] args) {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("hello");
@@ -17,8 +19,5 @@ public class ApplicationRunner extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
 
-    }
-    public static void run(String[] args) {
-        launch(args);
     }
 }

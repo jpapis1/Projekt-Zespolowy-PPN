@@ -7,24 +7,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MyStocksWindow extends Application {
-    private TableView allStocksTable = new TableView();
     public static GridPane myStocksPane = new GridPane();
+    private TableView allStocksTable = new TableView();
+
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     //Creating Buttons
     public void start(Stage stage) {
@@ -48,18 +48,18 @@ public class MyStocksWindow extends Application {
         //Arranging all the nodes in the grid
         //gridPane.add(profileButton, 1, 0);
         //gridPane.add(resetButton, 2, 0);
-        myStocksPane.add(allStocksTable,10,0);
+        myStocksPane.add(allStocksTable, 10, 0);
         profileButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
         resetButton.setStyle("-fx-background-color: #C5C5C5; -fx-text-fill: white; -fx-font: normal 15px 'sans-serif' ");
 
         //gridPane.setStyle("-fx-background-color: #f5f5f5;");
 
 
-        TableColumn <AllStocksTable, String> shortNameColumn = new TableColumn("shortName");
-        TableColumn <AllStocksTable, String> nameColumn = new TableColumn("name");
-        TableColumn <AllStocksTable, String> sectorColumn = new TableColumn("sector");
-        TableColumn <AllStocksTable, Date> dateColumn = new TableColumn("date");
-        TableColumn <AllStocksTable, Double> priceColumn = new TableColumn("price");
+        TableColumn<AllStocksTable, String> shortNameColumn = new TableColumn("shortName");
+        TableColumn<AllStocksTable, String> nameColumn = new TableColumn("name");
+        TableColumn<AllStocksTable, String> sectorColumn = new TableColumn("sector");
+        TableColumn<AllStocksTable, Date> dateColumn = new TableColumn("date");
+        TableColumn<AllStocksTable, Double> priceColumn = new TableColumn("price");
         ArrayList<AllStocksTable> data = StockDataService.getAllStocksTableList();
         ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
 
@@ -72,9 +72,8 @@ public class MyStocksWindow extends Application {
         allStocksTable.setItems(observableData);
 
 
-
-        allStocksTable.getColumns().addAll(shortNameColumn, nameColumn,priceColumn, dateColumn,sectorColumn);
-        allStocksTable.setPrefSize(800,500);
+        allStocksTable.getColumns().addAll(shortNameColumn, nameColumn, priceColumn, dateColumn, sectorColumn);
+        allStocksTable.setPrefSize(800, 500);
         //Creating a Group object
         //Group root = new Group(gridPane);
 

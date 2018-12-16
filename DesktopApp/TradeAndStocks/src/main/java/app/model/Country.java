@@ -8,12 +8,14 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idCountry;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
 
     private double taxRate;
 
-    public Country() { }
+    public Country() {
+    }
+
     public Country(String name, double taxRate) {
         this.name = name;
         this.taxRate = taxRate;

@@ -26,6 +26,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PermissionRepository extends CrudRepository<Permission,Integer> {
+public interface PermissionRepository extends CrudRepository<Permission, Integer> {
     public Permission findFirstByName(PermissionEnum name);
 }

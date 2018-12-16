@@ -8,17 +8,19 @@ public class Broker {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idBroker;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String name;
 
     private double profitMargin;
     private double handlingFee;
 
-    @ManyToOne(targetEntity=Country.class )
-    @JoinColumn(name="idCountry")
+    @ManyToOne(targetEntity = Country.class)
+    @JoinColumn(name = "idCountry")
     private Country country;
 
-    public Broker() { }
+    public Broker() {
+    }
+
     public Broker(String name, double profitMargin, double handlingFee, Country country) {
         this.name = name;
         this.profitMargin = profitMargin;
