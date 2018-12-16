@@ -5,54 +5,12 @@
 <h1>Portfolio</h1>
 
 <h2>{{ user.username }}</h2>
-<!-- This script probably should go to the separate file.-->
-<script>
-$(document).ready(function() {
-	var max_fields      = 10; //maximum input boxes allowed
-	var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-	var add_button      = $(".add_field_button"); //Add button ID
-	
-	var x = 1; //initlal text box count
-	$(add_button).click(function(e){ //on add input button click
-		e.preventDefault();
-		if(x < max_fields){ //max input box allowed
-			x++; //text box increment
-			$(wrapper).append('<div><input type="text" name="tickers[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
-		}
-	});
-	
-	$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-		e.preventDefault(); $(this).parent('div').remove(); x--;
-	})
-});
-</script>
 
-{% if request.method == 'GET' %} 
-    <form action="{% url 'rate_portfolio' %}" method="post">
-        {% csrf_token %}
-        <h3>Companies tickers:</h3>
-                <button class="add_field_button">Add More Fields</button>
-        <div class="input_fields_wrap">
-            
-            <div><input type="text" name="tickers[]"></div>
 
-        </div>
-        <!--<input type="text" name="short" placeholder="Ticker eg. AAPL"> -->
-        <h3>Start date:</h3>
-        <input type="date" name="start" placeholder="Start date">
-        <h3>End date:</h3>
-        <input type="date" name="end" placeholder="End date">
 
-        {% comment %} {{ the_div|safe }}
-
-        {{ the_script|safe }} {% endcomment %}
-        <input type="submit" class="btn btn-primary">
-    </form>
-{% else %}
     <p>Beggining date: {{ start }}</p>
     <p>Ending date: {{ end }}</p>
     <p>Portfolio rate of return: {{ pfolio }}</p>
-{% endif %}
 
 
 

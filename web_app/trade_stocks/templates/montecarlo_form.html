@@ -9,10 +9,6 @@
 <h2>{{ ticker }}</h2>
 <hr>
 
-{% if error_msg %}
-    <p>{{error_msg}}</p>
-{% else %}
-{% if request.method == 'GET' %} 
     <form action="{% url 'monte_carlo_sim' %}" method="post">
         {% csrf_token %}
         <h3>Company ticker:</h3>
@@ -35,29 +31,9 @@
         {{ the_script|safe }} {% endcomment %}
         <input type="submit" class="btn btn-primary">
     </form>
-{% else %}
-    <img src="data:image/png;base64, {{ graph }}" alt="">
-    <hr>
-    <h4>Period of data used for simulation</h4>
-    <p>Beggining date: {{ start }}</p>
-    <p>End date: {{ end }}</p>
 
-    <h4>Last Price Statistics</h4>
-    <p>Mean Value: {{ mean }}</p>
-    <p>Maximum Value: {{ max }}</p>
-    <p>Minimum Value: {{ min }}</p>
-    <p>Standard Deviation: {{ std }}</p>
-
-    <h4>Simulation Statistics</h4>
-    <p>Number of simulations: {{ desc.0 }}</p>
-    <p>Mean Value: {{ desc.1 }}</p>
-    <p>Standard Deviation: {{ desc.2 }}</p>
-    <p>Minimal Price: {{ desc.3 }}</p>
-    <p>Maximal Price: {{ desc.7 }}</p>
+{% if error_msg %}
+    <p>{{error_msg}}</p>
 {% endif %}
-{% endif %}
-
-
-
 
 {% endblock content %}

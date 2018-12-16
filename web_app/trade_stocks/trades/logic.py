@@ -22,7 +22,7 @@ class monte_carlo:
         start = self.start 
         end = self.end 
 
-        prices = get_historical_data('AAPL',start=start, end=end, output_format='pandas')['close']
+        prices = get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
         returns = prices.pct_change()
 
         self.returns = returns

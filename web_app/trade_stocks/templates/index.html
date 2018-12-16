@@ -57,21 +57,22 @@
             </li>
             </ul>
                 {% if user.is_authenticated %}
-                  <span class="nav-item">
-                    Hello<a href="{% url 'profile' %}">{{ user.username }}</a>
+                  <span class="nav-item navbar-text">
+                    <a class="nav-link" href="{% url 'profile' %}">Hello {{ user.username }}</a>
                   </span>
                   <span class="nav-item">
-                    <a href="{% url 'logout_view' %}">Logout </a>
+                    <a class="nav-link" href="{% url 'logout_view' %}">Logout </a>
                   </span>
                 {% else %}
-                  <span class="nav-item">
+                  <span class="nav-item navbar-text">
                     Not logged in.
                   </span>
                   <span class="nav-item">
-                    <a href="{% url 'loginuser' %}">Login</a>
+                    <a class="nav-link" href="{% url 'loginuser' %}">Login</a>
                   </span>
+
                   <span class="nav-item">
-                    <a href="{% url 'signup' %}">Signup </a>
+                    <a class="nav-link" href="{% url 'signup' %}">Signup </a>
                   </span>                
                 {% endif %}
         </div>
@@ -80,7 +81,7 @@
 {% block content %}
 <div class="jumbotron">
   <h1 class="display-4">Welcome to Trades and Stocks.</h1>
-  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <p class="lead">Welcome to Trades and Stocks. Place where you can perform advanced stock market analysis and test them in our simulator.</p>
 
 </div>
 <div class="mx-auto" style="width:80%">
@@ -92,7 +93,7 @@ tak jak we wzorze(builtbybuffalo) {% endcomment %}
   <div class="hex-wrapper">
     <div class="hex-row shift">
       <div class="hexagon" id="nav-home">
-        Home
+        <a href="{% url 'tickers' %}" >Tickers</a>
         <div class="face1"></div>
         <div class="face2"></div>
       </div>

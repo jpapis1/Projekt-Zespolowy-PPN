@@ -28,9 +28,10 @@ import plotly
 # Debugging
 import sys
 
-error_msg = "Invalid Parameters"
+error_msg = "Invalid Parameters."
 
 user_id_counter = 0
+
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -113,7 +114,7 @@ def signup(request):
             user = form.save(commit=False)
             pw = form.cleaned_data['password']
             user.password = make_password(pw)
-            user.idbroker = 1
+            user.idbroker = 6
             user.funds = 3000
             user.idpermission = 2
             user.is_authenticated = False
@@ -166,7 +167,7 @@ def profile(request):
 # @login_required    
 def rate_portfolio(request):
     if request.method == 'GET':
-        return render(request,'rate_portfolio.html')
+        return render(request,'rate_portfolio_form.html')
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers and weights from users portfolios
@@ -209,17 +210,17 @@ def rate_portfolio(request):
             # plot.line(x='date', y='close', source=source)
             # script, div = components(plot)
         except:
-            return render(request,'rate_portfolio.html',{'error_msg':error_msg})
+            return render(request,'rate_portfolio_form.html',{'error_msg':error_msg})
     
         return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end})
 
-    return render(request, 'rate_portfolio.html')
+    # return render(request, 'rate_portfolio.html')
 
 
 
 def linear_regression(request):
     if request.method == 'GET':
-        return render(request,'linear.html')
+        return render(request,'linear_form.html')
         # print("GET")
     elif request.method == 'POST':
         # TODO: implement input validation/errors
@@ -231,9 +232,12 @@ def linear_regression(request):
         start = request.POST.get('start')
         if(int(start[:4]) < int(datetime.now().year)-5):
             start = str(datetime.now().year-5)+"-01-01"
+        
         end = request.POST.get('end')
         # end = datetime.today().strftime('%Y-%m-%d')
         print(ticker)
+        print(start[5:7])
+        print(end)
         try:
             # Calling the API through the module
 
@@ -267,16 +271,16 @@ def linear_regression(request):
             print(forecast_prediction)
             # TODO: Calculate general direction of the stock prices.
         except:
-            print(sys.exc_info()[0])
-            return render(request,'linear.html',{'error_msg':error_msg})
+            print(sys.exc_info())
+            return render(request,'linear_form.html',{'error_msg':error_msg})
     
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
 
-    return render(request, 'linear.html')
+    # return render(request, 'linear.html')
 
 def monte_carlo_sim(request):
     if request.method == 'GET':
-        return render(request,'montecarlo.html')
+        return render(request,'montecarlo_form.html')
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers from users portfolios
@@ -289,11 +293,7 @@ def monte_carlo_sim(request):
         end = request.POST.get('end')
         try:
             sim = monte_carlo(start, end)
- 
-            #symbols = ['AAPL', 'KO', 'HD', 'PM']
-            #weights = [1000,1000,2000,3000]
-            
-            #sim.get_portfolio(symbols, weights)
+
             sim.get_asset(ticker)
         
             sim.monte_carlo_sim(500, 180)
@@ -305,10 +305,16 @@ def monte_carlo_sim(request):
         except:
             # Print for debugging purposes - delete in prod.
             print(sys.exc_info()[0])
-            return render(request,'montecarlo.html',{'error_msg':error_msg})
+            return render(request,'montecarlo_form.html',{'error_msg':error_msg})
 
         # Get values from describe like from an array ie. to get count value use 'desc.0'
         return render(request, 'montecarlo.html',{'graph':graph,'mean':mean,'max':maximum,'min':minimum,'std':std,
         'desc':describe,'start':start,'end':end,'ticker':ticker})
 
-    return render(request,'montecarlo.html')
+    # return render(request,'montecarlo.html')
+
+
+def tickers(request):
+    tickers_json = requests.get("https://api.iextrading.com/1.0/ref-data/symbols")
+    tickers = json.loads(tickers_json.content)
+    return render(request,'tickers.html',{'tickers':tickers})

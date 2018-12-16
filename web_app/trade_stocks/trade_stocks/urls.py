@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'rate_portfolio', views.rate_portfolio, name='rate_portfolio'),
     url(r'linear_regression',views.linear_regression, name='linear_regression'),
     url(r'monte_carlo',views.monte_carlo_sim, name='monte_carlo_sim'),
+    url(r'tickers', views.tickers, name='tickers'),
     # url(r'markowitz', views.markowitz, name='markowitz'),
 
 
