@@ -24,11 +24,5 @@ public class LoginController {
         stage.setScene(menu);
         stage.show();
     }
-    @FXML private Text ppn;
-
-    @FXML protected void aboutAction(ActionEvent event) {
-        ppn.setText("PAPIS PIĄTEK NAPIERAŁA");
-    }
-
 
 }
