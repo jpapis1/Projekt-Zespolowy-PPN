@@ -1,6 +1,7 @@
 package app.view.controller;
 
 import app.api.StockDataService;
+import app.service.UserService;
 import app.view.table.AllStocksTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +26,8 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AllStocksController implements Initializable {
-
+    @Autowired
+    UserService userService;
     @FXML
     private TableView<AllStocksTable> allStockTableView;
     @FXML
@@ -39,6 +42,15 @@ public class AllStocksController implements Initializable {
     private TableColumn<AllStocksTable, Double> price;
     @FXML
     private TableColumn<AllStocksTable, Button> action;
+    @FXML
+    protected void handleTransactionAction(ActionEvent event) throws IOException {
+        System.out.println(userService);
+            Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/window/transaction.fxml"));
+            Scene menu = new Scene(loginParent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(menu);
+            stage.show();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

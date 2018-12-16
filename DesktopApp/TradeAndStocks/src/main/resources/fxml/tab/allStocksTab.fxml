@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
 
+
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.AllStocksController">
     <TableView fx:id="allStockTableView" prefHeight="750.0" prefWidth="1000.0">
         <columns>
@@ -12,7 +13,8 @@
             <TableColumn fx:id="name" prefWidth="115.0" text="name" />
             <TableColumn fx:id="price" prefWidth="125.0" text="price" />
             <TableColumn fx:id="date" prefWidth="135.0" text="date" />
-         <TableColumn fx:id="date1" prefWidth="135.0" text="ACTION" />
+            <TableColumn fx:id="action" prefWidth="135.0" text="ACTION" >
+            </TableColumn>
         </columns>
     </TableView>
 </VBox>
