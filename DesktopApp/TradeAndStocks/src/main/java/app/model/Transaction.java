@@ -36,7 +36,6 @@ public class Transaction {
     private Date date;
     private boolean isBuy;
     private boolean doesExists;
-    private Button button;
 
     @ManyToOne(targetEntity = Broker.class)
     @JoinColumn(name = "idBroker")
