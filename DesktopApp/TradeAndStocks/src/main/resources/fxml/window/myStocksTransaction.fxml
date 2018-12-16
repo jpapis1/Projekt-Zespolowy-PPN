@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="fxml.window.MyStocksTransaction"
+            prefHeight="400.0" prefWidth="600.0">
+    <TableView layoutY="347.0" prefHeight="396.0" prefWidth="1000.0">
+        <columns>
+            <TableColumn prefWidth="188.00001525878906" text="USER" />
+            <TableColumn prefWidth="175.0" text="UNITS" />
+            <TableColumn prefWidth="182.0" text="VALUE" />
+            <TableColumn prefWidth="232.0" text="PROFIT LOSS" />
+            <TableColumn prefWidth="222.0" text="EARNED" />
+        </columns>
+    </TableView>
+</AnchorPane>
