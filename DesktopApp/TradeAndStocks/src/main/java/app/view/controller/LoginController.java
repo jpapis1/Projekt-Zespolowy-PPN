@@ -25,13 +25,13 @@ public class LoginController {
     @FXML
     TextField passwordField;
     @FXML
-    private Text actiontarget;
+    private Text actionTarget;
     @FXML
     private Text ppn;
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-        actiontarget.setText("You are logging in");
+        actionTarget.setText("You are logging in");
         if (userService.isPasswordCorrect(loginOrPasswordField.getText(), passwordField.getText())) {
             Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/window/menu.fxml"));
             Scene menu = new Scene(loginParent);
@@ -39,7 +39,7 @@ public class LoginController {
             stage.setScene(menu);
             stage.show();
         } else {
-            actiontarget.setText("Wrong credentials!");
+            actionTarget.setText("Wrong credentials!");
         }
     }
 
