@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      xmlns="http://javafx.com/javafx"
-      fx:controller="app.view.controller.MyStocksController">
-    <TableView prefHeight="400.0" prefWidth="200.0">
+
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.MyStocksController">
+    <TableView prefHeight="750.0" prefWidth="1000.0">
         <columns>
-            <TableColumn prefWidth="121.0" text="SHORT NAME"/>
-            <TableColumn prefWidth="122.0" text="UNIT PRICE"/>
-            <TableColumn prefWidth="126.0" text="PRICE"/>
-            <TableColumn prefWidth="113.0" text="UNITS"/>
-            <TableColumn prefWidth="118.0" text="PROFIT LOSS"/>
+            <TableColumn prefWidth="189.00001525878906" text="SHORT NAME" />
+            <TableColumn prefWidth="200.0" text="UNIT PRICE" />
+            <TableColumn prefWidth="210.0" text="PRICE" />
+            <TableColumn prefWidth="183.0" text="UNITS" />
+            <TableColumn prefWidth="219.0" text="PROFIT LOSS" />
         </columns>
     </TableView>
 </VBox>
