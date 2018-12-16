@@ -52,6 +52,14 @@ public class AllStocksController implements Initializable {
             stage.show();
     }
 
+
+    @FXML
+    protected void addingToMemoryStock(ActionEvent event) throws IOException{
+
+        //tutaj wypisuje short name
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
