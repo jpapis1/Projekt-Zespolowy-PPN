@@ -5,13 +5,13 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       xmlns="http://javafx.com/javafx"
       fx:controller="app.view.controller.AllStocksController">
-    <TableView prefHeight="200.0" prefWidth="200.0">
+    <TableView fx:id="allStockTableView" prefHeight="200.0" prefWidth="200.0">
         <columns>
-            <TableColumn prefWidth="105.0" text="SECTOR"/>
-            <TableColumn prefWidth="120.0" text="SHORT NAME"/>
-            <TableColumn prefWidth="115.0" text="NAME"/>
-            <TableColumn prefWidth="125.0" text="PRICE"/>
-            <TableColumn prefWidth="135.0" text="DATE"/>
+            <TableColumn fx:id="sector" prefWidth="105.0" text="sector"/>
+            <TableColumn fx:id="shortName" prefWidth="120.0" text="shortName"/>
+            <TableColumn fx:id="name" prefWidth="115.0" text="name"/>
+            <TableColumn fx:id="price" prefWidth="125.0" text="price"/>
+            <TableColumn fx:id="date" prefWidth="135.0" text="date"/>
         </columns>
     </TableView>
 </VBox>

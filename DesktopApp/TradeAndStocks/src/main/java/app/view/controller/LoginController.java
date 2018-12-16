@@ -1,4 +1,4 @@
-package app.view.window;
+package app.view.controller;
 
 import app.service.UserService;
 import javafx.event.ActionEvent;
@@ -11,11 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Service
+@Controller
 public class LoginController {
     @Autowired
     UserService userService;

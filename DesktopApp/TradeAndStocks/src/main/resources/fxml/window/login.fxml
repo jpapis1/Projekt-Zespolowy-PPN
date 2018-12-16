@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 <GridPane xmlns:fx="http://javafx.com/fxml"
-          fx:controller="app.view.window.LoginController" alignment="center" hgap="10" vgap="10"
+          fx:controller="app.view.controller.LoginController" alignment="center" hgap="10" vgap="10"
           styleClass="root">
 
     <padding>
