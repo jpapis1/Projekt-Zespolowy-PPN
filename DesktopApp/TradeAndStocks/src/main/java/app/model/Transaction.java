@@ -133,7 +133,7 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
+        return "TransactionWindow{" +
                 "idTransaction=" + idTransaction +
                 ", shortName='" + shortName + '\'' +
                 ", units=" + units +

@@ -8,10 +8,10 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.TransactionController">
    <children>
-      <Button layoutX="921.0" layoutY="14.0" mnemonicParsing="false" text="Back" />
-      <Label layoutX="118.0" layoutY="81.0" />
+      <Button layoutX="921.0" layoutY="14.0" mnemonicParsing="false" text="Back" onAction="#handleBackButtonAction"/>
+      <Label layoutX="118.0" layoutY="81.0" fx:id="nameLabel"/>
       <TextField layoutX="118.0" layoutY="127.0" />
-      <Button layoutX="118.0" layoutY="279.0" mnemonicParsing="false" text="ACCEPT" onAction="#handleBackButtonAction"/>
+      <Button layoutX="118.0" layoutY="279.0" mnemonicParsing="false" text="ACCEPT" />
       <Label layoutX="31.0" layoutY="86.0" text="NAME" />
       <Label layoutX="31.0" layoutY="132.0" text="UNITS" />
       <Label layoutX="31.0" layoutY="184.0" text="ACTION" />

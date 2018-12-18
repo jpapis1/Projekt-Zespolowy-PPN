@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,13 +41,20 @@ public class AllStocksController implements Initializable {
     private TableColumn<AllStocksTable, Date> date;
     @FXML
     private TableColumn<AllStocksTable, Double> price;
-    @FXML
-    private TableColumn<AllStocksTable, Button> action;
+
+
     @FXML
     protected void handleTransactionAction(ActionEvent event) throws IOException {
         System.out.println(userService);
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/window/transaction.fxml"));
-            Scene menu = new Scene(loginParent);
+        AllStocksTable table = allStockTableView.getSelectionModel().getSelectedItem();
+        System.out.println(table.getName());
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/transaction.fxml"));
+
+        Parent root = fxmlLoader.load();
+        TransactionController controller = fxmlLoader.<TransactionController>getController();
+        controller.setNameLabel(table.getName());
+        Scene menu = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(menu);
             stage.show();
