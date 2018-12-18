@@ -1,8 +1,9 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
+<div class="login-div">
 <h1>Login</h1>
+<hr>
 {% if reg_message %}
     <p>{{reg_message}}</p>
 {% endif %}
@@ -24,5 +25,5 @@
 {% if error_msg %}
     <p>{{error_msg}}</p>
 {% endif %}
-
+</div>
 {% endblock content %}

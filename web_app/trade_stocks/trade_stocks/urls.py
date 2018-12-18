@@ -35,6 +35,9 @@ urlpatterns = [
     url(r'linear_regression',views.linear_regression, name='linear_regression'),
     url(r'monte_carlo',views.monte_carlo_sim, name='monte_carlo_sim'),
     url(r'tickers', views.tickers, name='tickers'),
+    url(r'about', views.about, name='about'),
+    url(r'simulator', views.simulator, name='simulator'),
+    url(r'features', views.features, name='features'),
     # url(r'markowitz', views.markowitz, name='markowitz'),
 
 

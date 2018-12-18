@@ -30,11 +30,20 @@ import sys
 
 error_msg = "Invalid Parameters."
 
-user_id_counter = 0
+# user_id_counter = 0
 
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def simulator(request):
+    return render(request, 'simulator.html')
+
+def features(request):
+    return render(request, 'features.html')
 
 def chart(request):
 
