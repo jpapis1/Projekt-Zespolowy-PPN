@@ -68,7 +68,6 @@ public class AllStocksController implements Initializable {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        action.setCellValueFactory(new PropertyValueFactory<>("action"));
         ArrayList<AllStocksTable> data = StockDataService.getAllStocksTableList();
         ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
         allStockTableView.setItems(observableData);
