@@ -19,6 +19,7 @@
 
 package app;
 
+import app.config.Config;
 import app.service.UserService;
 import app.view.window.LoginWindow;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 
@@ -39,6 +41,8 @@ public class Application {
     @Autowired
     ApplicationContext applicationContext;
 
+    public static ApplicationContext app;
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
 
@@ -47,7 +51,8 @@ public class Application {
     @Bean
     public CommandLineRunner run() {
         return (args) -> {
-            LoginWindow.run(applicationContext);
+            app = applicationContext;
+            LoginWindow.run();
         };
     }
 
