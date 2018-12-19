@@ -16,4 +16,7 @@ public class TransactionService {
     public List<Transaction> getUsersTransactionList(User user) {
         return transactionRepository.findByUser(user);
     }
+    public void makeTransaction(Transaction transaction) {
+        transactionRepository.save(transaction);
+    }
 }

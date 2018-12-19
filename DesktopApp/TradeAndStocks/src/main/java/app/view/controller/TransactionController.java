@@ -1,6 +1,7 @@
 package app.view.controller;
 
 import app.api.StockData;
+import app.model.Transaction;
 import app.service.TransactionService;
 import app.service.UserService;
 import javafx.event.ActionEvent;
@@ -10,15 +11,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Controller
 public class TransactionController {
+    @FXML
+    public RadioButton radioBuy;
+    @FXML
+    public RadioButton radioSell;
     @FXML
     private Label nameLabel;
     @FXML
@@ -33,6 +40,8 @@ public class TransactionController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    TransactionService transactionService;
 
     @FXML
     protected void writingOnUnits() throws IOException{
@@ -82,4 +91,21 @@ public class TransactionController {
     }
 
 
+    public void handleAcceptButtonAction(ActionEvent actionEvent) {
+        Transaction.TransactionBuilder transaction = new Transaction.TransactionBuilder(nameLabel.getText(),UserService.getActiveUser());
+        transaction = transaction.date(new Date()).price(Double.parseDouble(unitPrice.getText())).units(Double.parseDouble(units.getText()));
+        boolean err = false;
+        if(radioBuy.isSelected()) {
+            transaction = transaction.setToBuy();
+        } else if (radioSell.isSelected()) {
+            transaction = transaction.setToSell();
+        } else {
+            err = true;
+            System.out.println("NOTHING IS SELECTED");
+        }
+        if(!err) {
+            transactionService.makeTransaction(transaction.build());
+            System.out.println("TRANSACTION SUCCESSFUL");
+        }
+    }
 }

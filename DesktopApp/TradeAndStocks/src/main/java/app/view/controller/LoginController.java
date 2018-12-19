@@ -1,7 +1,6 @@
 package app.view.controller;
 
 import app.Application;
-import app.SpringFxmlLoader;
 import app.service.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,8 +41,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/menu.fxml"));
             loader.setControllerFactory(Application.app::getBean);
             Parent root = loader.load();
-
-
+            UserService.setActiveUser(userService.getUser(loginOrPasswordField.getText()));
             progressBar.setProgress(100);
             Scene menu = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

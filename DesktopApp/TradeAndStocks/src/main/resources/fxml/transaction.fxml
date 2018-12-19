@@ -11,13 +11,13 @@
       <Label fx:id="nameLabel" layoutX="118.0" layoutY="86.0" prefHeight="21.0"/>
       <Label fx:id="unitPrice" layoutX="118.0" layoutY="86.0" prefHeight="51.0"/>
       <TextField layoutX="118.0" layoutY="127.0" fx:id="units" onKeyTyped="#writingOnUnits"/>
-      <Button layoutX="118.0" layoutY="279.0" mnemonicParsing="false" text="ACCEPT" />
+      <Button fx:id="acceptButton" layoutX="118.0" layoutY="279.0" mnemonicParsing="false" text="ACCEPT" onAction="#handleAcceptButtonAction" />
       <Label layoutX="31.0" layoutY="86.0" text="NAME" />
       <Label layoutX="31.0" layoutY="132.0" text="UNITS" />
       <Label layoutX="31.0" layoutY="184.0" text="ACTION" />
       <Label layoutX="31.0" layoutY="232.0" text="VALUE" />
-      <RadioButton layoutX="118.0" layoutY="184.0" mnemonicParsing="false" text="BUY" />
-      <RadioButton layoutX="247.0" layoutY="184.0" mnemonicParsing="false" text="SELL" />
+      <RadioButton fx:id="radioBuy" layoutX="118.0" layoutY="184.0" mnemonicParsing="false" text="BUY" />
+      <RadioButton fx:id="radioSell" layoutX="247.0" layoutY="184.0" mnemonicParsing="false" text="SELL" />
       <TextField layoutX="118.0" layoutY="227.0" fx:id="value" onKeyTyped="#writingOnValue"/>
 
 </Pane>
