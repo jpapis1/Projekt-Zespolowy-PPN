@@ -8,17 +8,17 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.TransactionController">
    <children>
-      <Button layoutX="921.0" layoutY="14.0" mnemonicParsing="false" text="Back" onAction="#handleBackButtonAction"/>
-      <Label layoutX="118.0" layoutY="81.0" fx:id="nameLabel"/>
-      <TextField layoutX="118.0" layoutY="127.0" />
+      <Button layoutX="921.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButtonAction" text="Back" />
+      <Label fx:id="nameLabel" layoutX="118.0" layoutY="86.0" prefHeight="21.0" prefWidth="11.0" />
+      <TextField layoutX="118.0" layoutY="127.0" fx:id="units" onMouseExited="#writingOnValue"/>
       <Button layoutX="118.0" layoutY="279.0" mnemonicParsing="false" text="ACCEPT" />
       <Label layoutX="31.0" layoutY="86.0" text="NAME" />
       <Label layoutX="31.0" layoutY="132.0" text="UNITS" />
       <Label layoutX="31.0" layoutY="184.0" text="ACTION" />
-      <Label layoutX="118.0" layoutY="232.0" />
       <Label layoutX="31.0" layoutY="232.0" text="VALUE" />
       <RadioButton layoutX="118.0" layoutY="184.0" mnemonicParsing="false" text="BUY" />
       <RadioButton layoutX="247.0" layoutY="184.0" mnemonicParsing="false" text="SELL" />
+      <TextField layoutX="118.0" layoutY="227.0" fx:id="value" onMouseExited="#writingOnUnits"/>
    </children>
 
 </Pane>
