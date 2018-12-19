@@ -26,14 +26,12 @@ public class TransactionController {
 
     @FXML
     protected void writingOnUnits() throws IOException{
-        units.clear();
-        units.setText(value.getText());
+        value.setText(units.getText());
     }
 
     @FXML
     protected void writingOnValue() throws IOException{
-        value.clear();
-        value.setText(units.getText());
+        units.setText(value.getText());
     }
 
     @FXML

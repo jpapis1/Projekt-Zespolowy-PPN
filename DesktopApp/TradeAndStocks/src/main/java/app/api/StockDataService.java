@@ -5,8 +5,9 @@ import app.view.table.AllStocksTable;
 import java.util.ArrayList;
 
 public class StockDataService {
-    static public final String[] usedStocks = {"AAPL", "HPQ", "INTC", "MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS",
-            "MCD", "MET", "NFLX", "NKE", "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", "FOX", "VZ", "XRX"};
+    static public final String[] usedStocks = {"AAPL", "HPQ", "INTC"};
+    //"MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS",
+    //            "MCD", "MET", "NFLX", "NKE", "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", "FOX", "VZ", "XRX"
 
     static public ArrayList<StockData> getAllStockDataList() {
         ArrayList<StockData> stockData = new ArrayList<>();
