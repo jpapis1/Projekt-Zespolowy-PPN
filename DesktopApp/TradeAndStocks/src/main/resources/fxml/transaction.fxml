@@ -20,7 +20,7 @@
       <fx:define>
             <ToggleGroup fx:id="buyOrSell"/>
       </fx:define>
-      <RadioButton fx:id="radioBuy" layoutX="118.0" layoutY="184.0" mnemonicParsing="false" text="BUY" toggleGroup="$buyOrSell" />
+      <RadioButton fx:id="radioBuy" layoutX="118.0" layoutY="184.0" mnemonicParsing="false" text="BUY" toggleGroup="$buyOrSell" selected="true"/>
       <RadioButton fx:id="radioSell" layoutX="247.0" layoutY="184.0" mnemonicParsing="false" text="SELL" toggleGroup="$buyOrSell" />
       <TextField layoutX="118.0" layoutY="227.0" fx:id="value" onKeyTyped="#writingOnValue"/>
 

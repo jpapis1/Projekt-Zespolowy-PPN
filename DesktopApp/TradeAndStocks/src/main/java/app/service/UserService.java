@@ -36,6 +36,9 @@ public class UserService {
     public User getUser(String nameOrEmail) {
         return userRepository.findFirstByUsernameOrEmail(nameOrEmail,nameOrEmail);
     }
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
     public boolean isPasswordCorrect(String usernameOrEmail, String password) {
         User user = userRepository.findFirstByUsername(usernameOrEmail);
         if (user == null) { // username not found

@@ -99,13 +99,15 @@ public class TransactionController {
             transaction = transaction.setToBuy();
         } else if (radioSell.isSelected()) {
             transaction = transaction.setToSell();
-        } else {
-            err = true;
-            System.out.println("NOTHING IS SELECTED");
         }
-        if(!err) {
-            transactionService.makeTransaction(transaction.build());
-            System.out.println("TRANSACTION SUCCESSFUL");
+        switch (transactionService.makeTransaction(transaction.build(),radioBuy.isSelected()))
+        {
+            case Success:
+                System.out.println("SUCCESS");break;
+            case NotEnoughFunds:
+                System.out.println("You have not enough funds!"); break;
+            case NothingToSell: System.out.println("You have not enough stocks to sell!"); break;
         }
+
     }
 }

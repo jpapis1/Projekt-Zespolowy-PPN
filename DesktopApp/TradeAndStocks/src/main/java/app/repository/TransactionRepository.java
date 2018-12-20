@@ -22,7 +22,9 @@ package app.repository;
 
 import app.model.Transaction;
 import app.model.User;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,4 +32,12 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Integer> {
     List<Transaction> findByUser(User user);
+    List<Transaction> findByUserAndShortName(User user, String shortName);
+
+
+    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=true")
+    Double getSumOfBuyTransactions(@Param("shortName") String shortName);
+
+    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=false")
+    Double getSumOfSellTransactions(@Param("shortName") String shortName);
 }
