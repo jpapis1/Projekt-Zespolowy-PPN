@@ -1,12 +1,69 @@
 {% extends 'index.html' %}
 
 {% block content %}
+<script>
+    // TODO: Move that to separate file. and add Vue
+    // For parsing json response
+    let True = true
+    let False = false
+    
+    
+    let jsonObject = {{ tickers | safe }};
+</script>
 
 <h1>Tickers</h1>
-<p>Test</p>
-<script></script>
-<h5>Symbol: {{tickers.0.symbol}}</h5>
-<h5>Name: {{tickers.0.name}}</h5>
+
+<button class="btn btn-default"><</button>
+<button class="btn btn-default">></button>
+
+<div id="app-3">
+    
+    <div v-for='i in range'>
+        [[ getData(i) ]]
+        <div v-if="seen">
+        Ticker: [[ message.symbol ]] <br/>
+        Name: [[ message.name ]] <br/>
+        Last Updated: [[ message.date ]] <br/>
+        <hr/>
+        <div>
+    </div>
+</div>
+
+<script>
+
+
+var app3 = new Vue({
+    delimiters: ['[[', ']]'],
+    el: '#app-3',
+    data: {
+        seen: true,
+        message: jsonObject[0],
+        begg: 0,
+        end: 20,
+        // TODO: Change that
+        range: [0,1,2,3,4,5,6,7,8,9,10,11,12,13
+                ,14,15,16,17,18,19,20]
+    },
+    methods: {
+    getData: function (i) {
+      
+      this.message = jsonObject[i]
+    },
+
+    changeRange: function(beg, end) {
+        var list = [];
+        for (var i = lowEnd; i <= highEnd; i++) {
+            list.push(i);
+        }
+        this.range = list
+    }
+  }
+})
+</script>
+
+
+
+
 
 
 {% endblock content %}

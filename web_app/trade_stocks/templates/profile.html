@@ -11,7 +11,8 @@
 <h3>Simulator Transactions History</h3>
         {% for trans in user.transactions %}
             <hr>
-            <p>Units: {{trans.units}}</p>
+            <p>Company: {{trans.shortname}}</p>
+            <p>No. of stocks: {{trans.units}}</p>
             <p>Price Per Unit: {{trans.unitprice}}</p>
         {% endfor %}
 

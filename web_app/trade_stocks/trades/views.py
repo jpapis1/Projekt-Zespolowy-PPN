@@ -82,11 +82,6 @@ def company_ticker(request,ticker):
         return render(request,'company_form.html',{'error_msg':"error_occured"})       
 
 def rate_single(request):
-    # Pick and stay with one - logarythmic for single asset over time
-    # Simple if multiple assets over the same timeframe
-    # Simple Rate of return = (ending price (+dividend) - beg. price) / beg.price
-    # Logarythmic ror = log (ending price / beg. price)
-    # Annual return = [daily return+1]^365]*100
     if request.method == 'GET':
         return render(request,'rate_single_form.html')
     elif request.method == 'POST':
@@ -148,11 +143,6 @@ def loginuser(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            # Redirect to a success page.
-            # print(user.id)
-            # print(User.objects.get(pk=user.id))
-
-            # return render(request,'index.html', {'u': username, 'p':password})
             return redirect('index')
         else:
             # Return an 'invalid login' error message.           
@@ -325,5 +315,6 @@ def monte_carlo_sim(request):
 
 def tickers(request):
     tickers_json = requests.get("https://api.iextrading.com/1.0/ref-data/symbols")
-    tickers = json.loads(tickers_json.content)
+    tickers = tickers_json.json()
+    # tickers = tickers[1:-1]
     return render(request,'tickers.html',{'tickers':tickers})
