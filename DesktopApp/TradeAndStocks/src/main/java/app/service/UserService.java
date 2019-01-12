@@ -30,7 +30,15 @@ public class UserService {
     public static void setActiveUser(User user) {
         activeUser = user;
     }
-
+    public static User getActiveUser() {
+        return activeUser;
+    }
+    public User getUser(String nameOrEmail) {
+        return userRepository.findFirstByUsernameOrEmail(nameOrEmail,nameOrEmail);
+    }
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
     public boolean isPasswordCorrect(String usernameOrEmail, String password) {
         User user = userRepository.findFirstByUsername(usernameOrEmail);
         if (user == null) { // username not found

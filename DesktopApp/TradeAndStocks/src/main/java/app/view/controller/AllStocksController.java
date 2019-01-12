@@ -1,5 +1,6 @@
 package app.view.controller;
 
+import app.Application;
 import app.api.StockDataService;
 import app.service.UserService;
 import app.view.table.AllStocksTable;
@@ -13,11 +14,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+@Controller
 public class AllStocksController implements Initializable {
     @Autowired
     UserService userService;
@@ -40,13 +44,22 @@ public class AllStocksController implements Initializable {
     private TableColumn<AllStocksTable, Date> date;
     @FXML
     private TableColumn<AllStocksTable, Double> price;
-    @FXML
-    private TableColumn<AllStocksTable, Button> action;
+
+
     @FXML
     protected void handleTransactionAction(ActionEvent event) throws IOException {
         System.out.println(userService);
-            Parent loginParent = FXMLLoader.load(getClass().getResource("/fxml/window/transaction.fxml"));
-            Scene menu = new Scene(loginParent);
+        AllStocksTable table = allStockTableView.getSelectionModel().getSelectedItem();
+        System.out.println(table.getShortName());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/transaction.fxml"));
+        loader.setControllerFactory(Application.app::getBean);
+        Parent root = loader.load();
+
+        TransactionController controller = loader.<TransactionController>getController();
+        controller.setNameLabel(table.getShortName());
+        controller.setUnitPrice(table.getPrice());
+        Scene menu = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(menu);
             stage.show();
@@ -68,7 +81,6 @@ public class AllStocksController implements Initializable {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        action.setCellValueFactory(new PropertyValueFactory<>("action"));
         ArrayList<AllStocksTable> data = StockDataService.getAllStocksTableList();
         ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
         allStockTableView.setItems(observableData);

@@ -8,18 +8,14 @@ import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 
 public class LoginWindow extends Application {
-    static public ApplicationContext appContext;
-
-    public static void run(ApplicationContext context) {
-        appContext = context;
+    public static void run() {
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println(appContext);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/login.fxml"));
-        loader.setControllerFactory(appContext::getBean);
+        loader.setControllerFactory(app.Application.app::getBean);
         Parent root = loader.load();
 
         //Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
