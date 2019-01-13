@@ -19,7 +19,7 @@ import bcrypt
 from trades.models import User
 from django.contrib.auth.decorators import login_required
 from sklearn.linear_model import LinearRegression
-from sklearn import preprocessing, cross_validation, svm
+from sklearn import preprocessing, svm
 from iexfinance import get_historical_data
 from sklearn.model_selection import train_test_split
 from trades.logic import monte_carlo
@@ -30,7 +30,6 @@ import sys
 
 error_msg = "Invalid Parameters."
 
-# user_id_counter = 0
 
 # Create your views here.
 def index(request):
@@ -53,7 +52,6 @@ def chart(request):
 
     return render(request,'chart.html',{'data':data})
 
-# TODO: Make sure that post call to this from the desktop app can go through(csrf_exempt maybe token authentication)
 @csrf_exempt
 def company(request):
     if request.method == 'GET':
@@ -63,10 +61,7 @@ def company(request):
         return redirect('/company/'+ticker) 
 
 def company_ticker(request,ticker):
-    # print("TICKER")
-    # print(ticker)
     try:
-        # ticker = request.POST.get('ticker')
         company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
         news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
         try:
@@ -136,10 +131,7 @@ def loginuser(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        print(username)
-        print(password)
-        print(make_password('password'))
-        print(make_password('password'))
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -170,7 +162,6 @@ def rate_portfolio(request):
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickers and weights from users portfolios
-        # TODO: plots
         tickers = request.POST.getlist('tickers[]')
 
         start = request.POST.get('start')
@@ -224,7 +215,6 @@ def linear_regression(request):
     elif request.method == 'POST':
         # TODO: implement input validation/errors
         # TODO: option to get tickersfrom users portfolios
-        # TODO: plots
         
         ticker = request.POST.get('ticker')
 
@@ -234,9 +224,7 @@ def linear_regression(request):
         
         end = request.POST.get('end')
         # end = datetime.today().strftime('%Y-%m-%d')
-        print(ticker)
-        print(start[5:7])
-        print(end)
+
         try:
             # Calling the API through the module
 
@@ -263,14 +251,10 @@ def linear_regression(request):
             clf.fit(X_train,y_train)
             # Testing
             confidence = clf.score(X_test, y_test)
-            print("confidence: ", confidence)
 
             # Predictions for next 30 days.
             forecast_prediction = clf.predict(X_forecast)
-            print(forecast_prediction)
-            # TODO: Calculate general direction of the stock prices.
         except:
-            print(sys.exc_info())
             return render(request,'linear_form.html',{'error_msg':error_msg})
     
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
@@ -297,13 +281,11 @@ def monte_carlo_sim(request):
         
             sim.monte_carlo_sim(500, 180)
             graph = sim.line_graph()
-            # TODO: Fix histogram - or not.
-            # histogram = sim.histogram()
             
             mean, maximum, minimum, std, describe = sim.key_stats()
         except:
             # Print for debugging purposes - delete in prod.
-            print(sys.exc_info()[0])
+            # print(sys.exc_info()[0])
             return render(request,'montecarlo_form.html',{'error_msg':error_msg})
 
         # Get values from describe like from an array ie. to get count value use 'desc.0'
@@ -316,5 +298,4 @@ def monte_carlo_sim(request):
 def tickers(request):
     tickers_json = requests.get("https://api.iextrading.com/1.0/ref-data/symbols")
     tickers = tickers_json.json()
-    # tickers = tickers[1:-1]
     return render(request,'tickers.html',{'tickers':tickers})

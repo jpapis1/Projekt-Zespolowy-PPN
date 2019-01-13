@@ -138,3 +138,29 @@ footer {
   transform-origin: right top;
   transform: rotate(60deg) translate(110px, 0);
 }
+
+.clink{
+  color: white;
+}
+
+.clink:hover{
+  color: white;
+  text-shadow: 0 0 10px white;
+  /* background-color: #888; */
+  text-decoration: none;
+}
+
+.cblock{
+  background-color: rgba(0, 0, 0, .5)
+}
+
+.content{
+  padding-top: 5%;
+  text-align: center;
+}
+.btn-spacing{
+  margin: 2%;
+}
+
+.input_fields_wrap{
+}

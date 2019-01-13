@@ -20,12 +20,10 @@
     <button v-on:click="addRange" class="btn btn-default" >></button>
     <div v-for='i in range'>
         [[ getData(i) ]]
-        <div v-if="seen">
         Ticker: [[ message.symbol ]] <br/>
         Name: [[ message.name ]] <br/>
         Last Updated: [[ message.date ]] <br/>
         <hr/>
-        <div>
     </div>
 </div>
 

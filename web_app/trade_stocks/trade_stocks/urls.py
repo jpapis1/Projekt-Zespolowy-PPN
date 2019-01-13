@@ -23,7 +23,7 @@ from django.conf.urls import url
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$',views.index, name='index'),
-    url(r'chart',views.chart, name='chart'),
+    url(r'markets',views.chart, name='markets'),
     url(r'company/form',views.company, name='company'),
     re_path(r'^company/(?P<ticker>[A-Z]+)',views.company_ticker, name='company_ticker'),
     url(r'rate_single',views.rate_single, name='rate_single'),

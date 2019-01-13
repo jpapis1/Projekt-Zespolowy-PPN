@@ -4,7 +4,6 @@ var app3 = new Vue({
     delimiters: ['[[', ']]'],
     el: '#app-3',
     data: {
-        seen: true,
         message: jsonObject[0],
         beg: 0,
         end: 20,
@@ -18,6 +17,7 @@ var app3 = new Vue({
     },
 
     addRange: function() {
+        // jsonObject.length
         if( this.end <= 8725-20){
             this.beg += 20
             this.end += 20
