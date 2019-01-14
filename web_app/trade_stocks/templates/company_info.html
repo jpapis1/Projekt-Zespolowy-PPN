@@ -1,30 +1,31 @@
 {% extends 'index.html' %}
 
 {% block content %}
+<div class="company-info">
 <!-- TODO: Layout change -->
 {% if company %}
     <h1>Company information</h1>
 
-    <p>Name: {{company.companyName}}</p> 
-    <p>Company symbol: {{company.symbol}}</p> 
-    <p>Description: {{company.description}}</p> 
-    <p>Exchange: {{company.exchange}}</p> 
-    <p>CEO: {{company.CEO}}</p>
-    <p>Sector: {{company.sector}}</p>
+    <p><div class="company-info section">Name:</div> {{company.companyName}}</p> 
+    <p><div class="company-info section">Company symbol:</div> {{company.symbol}}</p> 
+    <p><div class="company-info section">Description:</div> {{company.description}}</p> 
+    <p><div class="company-info section">Exchange:</div> {{company.exchange}}</p> 
+    <p><div class="company-info section">CEO:</div> {{company.CEO}}</p>
+    <p><div class="company-info section">Sector:</div> {{company.sector}}</p>
 
 {% endif %}
 
 
 {% if news %}
-    <h3>News</h3>
+    <h1>News about the company</h1>
     <hr>
     {% for story in news %}
         <h4>{{story.headline}}</h4>
-        Summary: <p>{{story.summary}}</p>
-        Source: {{story.source}}
+        <div class="company-info section">Summary:</div> <p>{{story.summary}}</p>
+        <div class="company-info section">Source:</div> <p>{{story.source}}</p>
         <hr>
     {% endfor %}
 {% endif %}
 
-
+</div>
 {% endblock content %}

@@ -155,12 +155,45 @@ footer {
 }
 
 .content{
-  padding-top: 5%;
+  padding-top: 2%;
   text-align: center;
+  align-items: center;
+}
+.content h1{
+  font-weight: bold;
 }
 .btn-spacing{
   margin: 2%;
 }
 
-.input_fields_wrap{
+/* .input_fields_wrap{
+} */
+.company-info{
+  margin-top: 2%;
 }
+
+.company-info .section{
+  font-weight: bold;
+}
+
+.company-info h1{
+  font-weight: bold;
+  text-align: center;
+}
+
+.company-info h4{
+  font-weight: bold;
+  text-align: center;
+}
+/* .bk-root{
+  text-align: center;
+  position: fixed;
+} */
+.centered {
+  display : block;
+  margin : 0 auto;
+  align-items: center;
+  /* padding-left: 7%; */
+  text-align: center;
+  width: 600px;
+  }

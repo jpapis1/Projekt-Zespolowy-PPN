@@ -1,13 +1,15 @@
 {% extends 'index.html' %}
 
 {% block content %}
-
+<div class="content">
 <h1>Annual Single Rate of Return</h1>
 <h2>Period: {{ start }} to {{ end }}</h2>
-{{ annual_return }}
+<h2>Annual rate of return: {{ annual_return }}</h2> 
+<div class="centered">
+    <p>{{ div|safe }}</p>
+</div>
 
-{{ div|safe }}
 
 {{ script|safe }}
-
+</div>
 {% endblock content %}
