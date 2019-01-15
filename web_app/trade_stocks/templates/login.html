@@ -1,8 +1,9 @@
-{% extends 'index.html' %}
+{% extends 'layout.html' %}
 
 {% block content %}
+<div class="content">
 <div class="login-div">
-<h1>Login</h1>
+<h1 class="name">Login</h1>
 <hr>
 {% if reg_message %}
     <p>{{reg_message}}</p>
@@ -16,14 +17,19 @@
     <p>{{u}}</p>
 {% endif %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Login</button>
-</form>
+
 
 {% if error_msg %}
     <p>{{error_msg}}</p>
+    <a href="{% url 'loginuser' %}" class="save btn btn-dark">Login Page</a>
+{% else %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-dark">Login</button>
+    </form>
 {% endif %}
+
+</div>
 </div>
 {% endblock content %}

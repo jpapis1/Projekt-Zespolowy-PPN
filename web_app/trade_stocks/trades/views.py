@@ -47,7 +47,6 @@ def features(request):
 def chart(request):
 
     response = requests.get("https://api.iextrading.com/1.0/market")
-    # print(response.content)
     data = json.loads(response.content)
 
     return render(request,'chart.html',{'data':data})
@@ -80,11 +79,12 @@ def rate_single(request):
     if request.method == 'GET':
         return render(request,'rate_single_form.html')
     elif request.method == 'POST':
-        # TODO: implement input validation/errors
         ticker = request.POST.get('ticker')
         start = request.POST.get('start')
         end = request.POST.get('end')
-
+        print(ticker)
+        print(start)
+        print(end)
         try:
             # Calling the API through the module and calculating log RoR
             df = iex.get_historical_data(ticker, start=start, end=end, output_format='pandas')
@@ -109,6 +109,7 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         reg_message = "Registration failed."
+        
         if (form.is_valid()):
             user = form.save(commit=False)
             pw = form.cleaned_data['password']
@@ -118,11 +119,9 @@ def signup(request):
             user.idpermission = 2
             user.is_authenticated = False
             user.save()
-            # form = SignupForm()
-            reg_message = "Registration Successful!"
-        # return redirect('login.html', reg_message='bar')            
-        return render(request,'success.html',{'reg_message':reg_message})
-
+            suc_message = "Registration Successful!"
+            return render(request,'registration_result.html',{'suc_message':suc_message})
+        return render(request,'registration_result.html',{'reg_message':reg_message})
     elif request.method == 'GET':
         form = SignupForm()
         return render(request,'registration_form.html',{'form': form})
@@ -137,8 +136,9 @@ def loginuser(request):
             login(request, user)
             return redirect('index')
         else:
+            print(1)
             # Return an 'invalid login' error message.           
-            return render(request,'login.html')
+            return render(request,'login.html',{'error_msg':"Wrong Username or Password."})
 
     elif request.method == 'GET':
         form = LoginForm()
@@ -155,32 +155,18 @@ def profile(request):
 
     return render(request, 'profile.html')
 
-# @login_required    
 def rate_portfolio(request):
     if request.method == 'GET':
         return render(request,'rate_portfolio_form.html')
     elif request.method == 'POST':
-        # TODO: implement input validation/errors
-        # TODO: option to get tickers and weights from users portfolios
         tickers = request.POST.getlist('tickers[]')
 
         start = request.POST.get('start')
         end = request.POST.get('end')
         try:
-
-            # tickers = ['PG','MSFT','F','GE']
-
             mydata = pd.DataFrame()
             for t in tickers:
                 mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
-
-            # Normalization to 100 - displays the behavior of a stock
-            # (mydata / mydata.iloc[0] * 100).plot(figsize = (15,6));
-            # plt.show()
-
-            # Prices
-            # mydata.plot(figsize=(15,6))
-            # plt.show()
 
             returns = (mydata / mydata.shift(1)) - 1
             
@@ -192,29 +178,18 @@ def rate_portfolio(request):
             np.dot(annual_returns, weights)
             pfolio_1 = str(round(np.dot(annual_returns,weights), 5) * 100) + ' %'
             
-            # Plotting
-            # df.reset_index(inplace = True)
-            # df['date'] = pd.to_datetime(df['date'])
-            # source = ColumnDataSource(df)
-            # plot = figure(x_axis_type='datetime',title="Close prices")
-            # plot.line(x='date', y='close', source=source)
-            # script, div = components(plot)
         except:
             return render(request,'rate_portfolio_form.html',{'error_msg':error_msg})
     
-        return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end})
+        return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end,'tickers':tickers})
 
-    # return render(request, 'rate_portfolio.html')
 
 
 
 def linear_regression(request):
     if request.method == 'GET':
         return render(request,'linear_form.html')
-        # print("GET")
     elif request.method == 'POST':
-        # TODO: implement input validation/errors
-        # TODO: option to get tickersfrom users portfolios
         
         ticker = request.POST.get('ticker')
 
@@ -223,7 +198,6 @@ def linear_regression(request):
             start = str(datetime.now().year-5)+"-01-01"
         
         end = request.POST.get('end')
-        # end = datetime.today().strftime('%Y-%m-%d')
 
         try:
             # Calling the API through the module
@@ -259,40 +233,28 @@ def linear_regression(request):
     
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
 
-    # return render(request, 'linear.html')
 
 def monte_carlo_sim(request):
     if request.method == 'GET':
         return render(request,'montecarlo_form.html')
     elif request.method == 'POST':
-        # TODO: implement input validation/errors
-        # TODO: option to get tickers from users portfolios
-        # TODO: plots
         ticker = request.POST.get('ticker')
-
         start = request.POST.get('start')
-        if(int(start[:4]) < 2013):
-            start = "2013-01-01"
+        if(int(start[:4]) < 2015):
+            start = "2015-01-01"
         end = request.POST.get('end')
         try:
             sim = monte_carlo(start, end)
-
             sim.get_asset(ticker)
-        
             sim.monte_carlo_sim(500, 180)
             graph = sim.line_graph()
-            
             mean, maximum, minimum, std, describe = sim.key_stats()
         except:
-            # Print for debugging purposes - delete in prod.
-            # print(sys.exc_info()[0])
             return render(request,'montecarlo_form.html',{'error_msg':error_msg})
 
         # Get values from describe like from an array ie. to get count value use 'desc.0'
         return render(request, 'montecarlo.html',{'graph':graph,'mean':mean,'max':maximum,'min':minimum,'std':std,
         'desc':describe,'start':start,'end':end,'ticker':ticker})
-
-    # return render(request,'montecarlo.html')
 
 
 def tickers(request):

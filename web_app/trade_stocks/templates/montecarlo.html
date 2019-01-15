@@ -1,63 +1,38 @@
-{% extends 'index.html' %}
+{% extends 'layout.html' %}
 
 {% block content %}
-
+<div class="content">
 <h1>Monte Carlo Simulation</h1>
 
-<h2>{{ user.username }}</h2>
-<hr>
-<h2>{{ ticker }}</h2>
+
+<h2 class="name">{{ ticker }}</h2>
 <hr>
 
 {% if error_msg %}
     <p>{{error_msg}}</p>
 {% else %}
-{% if request.method == 'GET' %} 
-    <form action="{% url 'monte_carlo_sim' %}" method="post">
-        {% csrf_token %}
-        <h3>Company ticker:</h3>
-        <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
-        {% if user.is_authenticated %}
-            <h3>Tickers from Portfolio</h3>
-                <select name="ticker">
-                    {% for trans in user.transactions %}
-                        <option value="{{trans.shortname}}">{{trans.shortname}}</option>
-                    {% endfor %}
-                </select>
-        {% endif %}
-        <h3>Start date:</h3>
-        <input type="date" name="start" placeholder="Start date">
-        <h3>End date:</h3>
-        <input type="date" name="end" placeholder="End date">
 
-        {% comment %} {{ the_div|safe }}
-
-        {{ the_script|safe }} {% endcomment %}
-        <input type="submit" class="btn btn-primary">
-    </form>
-{% else %}
     <img src="data:image/png;base64, {{ graph }}" alt="">
     <hr>
-    <h4>Period of data used for simulation</h4>
-    <p>Beggining date: {{ start }}</p>
-    <p>End date: {{ end }}</p>
+    <h4 class="name">Period of data used for simulation</h4>
+    <p><div class="name">Beggining date: </div>{{ start }}</p>
+    <p><div class="name">End date: </div>{{ end }}</p>
 
-    <h4>Last Price Statistics</h4>
-    <p>Mean Value: {{ mean }}</p>
-    <p>Maximum Value: {{ max }}</p>
-    <p>Minimum Value: {{ min }}</p>
-    <p>Standard Deviation: {{ std }}</p>
+    <h4 class="name">Last Price Statistics</h4>
+    <p><div class="name">Mean Value: </div>{{ mean }}</p>
+    <p><div class="name">Maximum Value: </div>{{ max }}</p>
+    <p><div class="name">Minimum Value: </div>{{ min }}</p>
+    <p><div class="name">Standard Deviation: </div>{{ std }}</p>
 
-    <h4>Simulation Statistics</h4>
-    <p>Number of simulations: {{ desc.0 }}</p>
-    <p>Mean Value: {{ desc.1 }}</p>
-    <p>Standard Deviation: {{ desc.2 }}</p>
-    <p>Minimal Price: {{ desc.3 }}</p>
-    <p>Maximal Price: {{ desc.7 }}</p>
+    <h4 class="name">Simulation Statistics</h4>
+    <p><div class="name">Number of Simulations: </div>{{ desc.0 }}</p>
+    <p><div class="name">Mean Value: </div>{{ desc.1 }}</p>
+    <p><div class="name">Standard Deviation: </div>{{ desc.2 }}</p>
+    <p><div class="name">Minimal Price: </div>{{ desc.3 }}</p>
+    <p><div class="name">Maximal Price: </div>{{ desc.7 }}</p>
 {% endif %}
-{% endif %}
 
 
 
-
+</div>
 {% endblock content %}

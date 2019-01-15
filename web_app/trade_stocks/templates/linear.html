@@ -1,26 +1,24 @@
-{% extends 'index.html' %}
+{% extends 'layout.html' %}
 
 {% block content %}
-
+<div class="content">
 <h1>Linear Regression</h1>
 
-<h2>{{ user.username }}</h2>
-<hr>
-<h2>{{ ticker }}</h2>
-<hr>
-    <p>Beggining date: {{ start }}</p>
-    <p>End date: {{ end }}</p>
-    <p>Prediction accuracy: {{ confidence }}%</p>
-    
+<h2><div class="name">{{ ticker }}</div></h2>
+
+    <p><div class="name">Beginning date:</div> {{ start }}</p>
+    <p><div class="name">End date:</div> {{ end }}</p>
+    <p><div class="name">Prediction accuracy:</div>  {{ confidence }}%</p>
+
+    <h3 class="name">Price prediction for next 30 days.</h3>
+</div>
+
     <canvas id="myChart"></canvas>
     <script type="text/javascript">
-    {% comment %} TODO: Fix the chart labels and size. {% endcomment %}
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
-        // The type of chart we want to create
         type: 'line',
 
-        // The data for our dataset
         data: {
             labels: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22",
             "23","24","25","26","27","28","29","30"],
@@ -37,9 +35,6 @@
         options: {}
     });
     </script>
-    {% comment %} {% for pred in forecast_pred %}
-    <p>Prediction: {{pred}}</p>
-    {% endfor %} {% endcomment %}
 
 
 

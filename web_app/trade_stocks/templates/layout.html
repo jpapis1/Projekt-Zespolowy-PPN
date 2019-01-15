@@ -6,19 +6,17 @@
     <title>Trades and Stocks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Import Vue.js REPLACE THIS WITH A PRODUCTION VERSION WHEN DONE-->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    {% load static %}
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 
+    {% load static %}
     <link rel="stylesheet" href="{% static "css/main.css" %}">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>    
     <!-- Bootstrap JS dependencies -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
@@ -78,41 +76,8 @@
         </div>
     </nav>
 
-<div class="content">
-<h1>Monte Carlo Simulation</h1>
-<div class="jumbotron">
-    <p>Monte Carlo Simulation simulates behavior of stocks over next 180 days using Monte Carlo method.</p>
-    <h4 class="name">Usage</h4>
-    <p>Input the company symbol(ticker) and dates of a period you want to use as data for predictions. Longer periods increase accuracy of a simulation.</p>
-</div>
-    <form action="{% url 'monte_carlo_sim' %}" method="post">
-        {% csrf_token %}
-        <h3>Company ticker:</h3>
-        <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
-        {% if user.is_authenticated %}
-            <h3>Tickers from Portfolio</h3>
-                <select name="ticker">
-                    {% for trans in user.transactions %}
-                        <option value="{{trans.shortname}}">{{trans.shortname}}</option>
-                    {% endfor %}
-                </select>
-        {% endif %}
-        <h3>Start date:</h3>
-        <input type="date" name="start" placeholder="Start date">
-        <h3>End date:</h3>
-        <input type="date" name="end" placeholder="End date">
-
-        {% comment %} {{ the_div|safe }}
-
-        {{ the_script|safe }} {% endcomment %}
-        <br>
-        <input type="submit" class="btn btn-primary btn-spacing">
-    </form>
-
-{% if error_msg %}
-    <p>{{error_msg}}</p>
-{% endif %}
-</div>
+{% block content %}
+{% endblock content %}
 
 </body>
-</html>
+</html> 

@@ -17,9 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from trades import views
 from django.conf.urls import url
-# from django.contrib.auth import views as auth_views
 
-# TODO: Refactor urls maybe
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$',views.index, name='index'),
@@ -38,7 +36,5 @@ urlpatterns = [
     url(r'about', views.about, name='about'),
     url(r'simulator', views.simulator, name='simulator'),
     url(r'features', views.features, name='features'),
-    # url(r'markowitz', views.markowitz, name='markowitz'),
-
 
 ]

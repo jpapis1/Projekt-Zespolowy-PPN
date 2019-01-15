@@ -24,33 +24,8 @@ class monte_carlo:
 
         prices = get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
         returns = prices.pct_change()
-
         self.returns = returns
         self.prices = prices
-
-    # def get_portfolio(self, symbols, weights):
-    #     start = self.start
-    #     end = self.end
-
-    #     #Get Price Data
-    #     df = web.DataReader(symbols, 'google',start, end)['Close']
-    #     #Percent Change
-    #     returns = df.pct_change()
-    #     returns += 1
-
-    #     #Define dollar amount in each asset
-    #     port_val = returns * weights
-    #     port_val['Portfolio Value'] = port_val.sum(axis=1)
-
-    #     #Portfolio Dollar Values
-    #     prices = port_val['Portfolio Value']
-
-    #     #Portfolio Returns
-    #     returns = port_val['Portfolio Value'].pct_change()
-    #     returns = returns.replace([np.inf, -np.inf], np.nan)
-
-    #     self.returns = returns
-    #     self.prices = prices
 
     def monte_carlo_sim(self, num_simulations, predicted_days):
         returns = self.returns
@@ -147,11 +122,7 @@ class monte_carlo:
         # buf.flush()
         buf.close()
         return image_base64
-        # response = HttpResponse(content_type = 'image/png')
-        # canvas = FigureCanvasAgg(fig)
-        # canvas.print_png(response)
-        # return response
-        # plt.show()
+
 
     def histogram(self):
         simulation_df = self.simulation_df
@@ -187,11 +158,7 @@ class monte_carlo:
         simulation_df = self.simulation_df
  
         print ('#------------------Simulation Stats------------------#')
-#         count = 1
-#         for column in simulation_df:
-#             print ("Simulation", count, "Mean Price: ", simulation_df[column].mean())
-#             print ("Simulation", count, "Median Price: ", simulation_df[column].median()) 
-#             count += 1
+
         
         print ('\n')
         

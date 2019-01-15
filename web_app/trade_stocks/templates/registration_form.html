@@ -1,30 +1,21 @@
-{% extends 'index.html' %}
+{% extends 'layout.html' %}
 
 {% block content %}
+<div class="content">
 <div class="signup-div">
 <h1>Sign Up</h1>
 <hr>
-<!-- <h3></h3>
-<form action="{% url 'signup' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="username" placeholder="Username">
-    <input type="email" name="email" placeholder="Email">
-    <input type="text" name="first_name" placeholder="First Name">
-    <input type="text" name="last_name" placeholder="Last Name">
-    <input type="password" name="password" placeholder="Password">
-
-
-    <input type="submit" class="btn btn-primary">
-</form> -->
 
 <form method="POST" class="signup-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Submit</button>
+    <button type="submit" class="save btn btn-dark">Submit</button>
 </form>
 
 {% if error_msg %}
     <p>{{error_msg}}</p>
+    
 {% endif %}
+</div>
 </div>
 {% endblock content %}

@@ -159,6 +159,15 @@ footer {
   text-align: center;
   align-items: center;
 }
+.content .name{
+  font-weight: bold;
+  display: inline-block;
+}
+.name{
+  font-weight: bold;
+  display: inline-block;
+}
+
 .content h1{
   font-weight: bold;
 }
@@ -197,3 +206,27 @@ footer {
   text-align: center;
   width: 600px;
   }
+
+#myChart{
+  width: 50%;
+}
+
+.square {
+  float: left;
+  position: relative;
+  width: 12%;
+  padding-bottom : 12%; /* = width for a 1:1 aspect ratio */
+  margin:1.5%;
+  margin-left: 2.8%;
+  overflow:hidden;
+}
+
+.sq-content {
+  position:absolute;
+  text-align: center;
+  height:90%; /* = 100% - 2*5% padding */
+  width:90%; /* = 100% - 2*5% padding */
+  padding: 5%;
+  font-size: 14px;
+  
+}

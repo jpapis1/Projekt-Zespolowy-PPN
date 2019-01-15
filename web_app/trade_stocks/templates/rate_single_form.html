@@ -1,8 +1,13 @@
-{% extends 'index.html' %}
+{% extends 'layout.html' %}
 
 {% block content %}
 <div class="content">
 <h1>Single Stock Rate of Return </h1>
+<div class="jumbotron">
+    <p>Rate of return shows how stock price changed over the time period.</p>
+    <h4 class="name">Usage</h4>
+    <p>Input the company symbol(ticker) and dates of a period you want to analyze.</p>
+</div>
 <form action="{% url 'rate_single' %}" method="post">
     {% csrf_token %}
     <h3>Company ticker:</h3>
