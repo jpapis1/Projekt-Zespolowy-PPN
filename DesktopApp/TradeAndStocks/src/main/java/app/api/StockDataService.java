@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class StockDataService {
 
-    static public final String[] usedStocks = {"AAPL", "HPQ", "INTC"};
+    static public final String[] usedStocks = {"AAPL"}; //, "HPQ", "GOOGL"
     //"MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS",
     //            "MCD", "MET", "NFLX", "NKE", "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", "FOX", "VZ", "XRX"
 

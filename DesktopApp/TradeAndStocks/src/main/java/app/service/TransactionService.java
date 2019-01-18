@@ -45,11 +45,12 @@ public class TransactionService {
                 return CustomMessages.NotEnoughFunds;
             }
         } else {
-            Double buyValue = transactionRepository.getSumOfBuyTransactions(transaction.getShortName());
-            Double sellValue = transactionRepository.getSumOfSellTransactions(transaction.getShortName());
+            Double buyValue = transactionRepository.getSumOfBuyTransactions(transaction.getShortName(),myUser);
+            Double sellValue = transactionRepository.getSumOfSellTransactions(transaction.getShortName(),myUser);
 
             if(buyValue==null){buyValue=0.0;}
             if(sellValue==null){sellValue=0.0;}
+            System.out.println("Buy value: " + buyValue + " Sell value: " + sellValue + " Transaction value: " + transactionValue);
             if((buyValue-sellValue)>=transactionValue) {
                 myUser.setFunds(myUser.getFunds() + transactionValue);
                 userService.updateUser(myUser);

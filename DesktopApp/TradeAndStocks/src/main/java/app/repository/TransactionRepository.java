@@ -37,9 +37,9 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
     List<Transaction> findByUserAndShortName(User user, String shortName);
     public List<Transaction> findAll();
 
-    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=true")
-    Double getSumOfBuyTransactions(@Param("shortName") String shortName);
+    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=true AND t.user=:myUser")
+    Double getSumOfBuyTransactions(@Param("shortName") String shortName, @Param("myUser") User user); //t.user.idUser=:myUser
 
-    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=false")
-    Double getSumOfSellTransactions(@Param("shortName") String shortName);
+    @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=false AND t.user=:myUser")
+    Double getSumOfSellTransactions(@Param("shortName") String shortName, @Param("myUser") User user);
 }
