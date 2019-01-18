@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -74,13 +75,9 @@ public class TransactionController {
     }
 
     @FXML
-    protected void handleBackButtonAction(ActionEvent event) throws IOException {
-        System.out.println("lolo");
-            Parent menuParent = FXMLLoader.load(getClass().getResource("/fxml/window/menu.fxml"));
-            Scene menu = new Scene(menuParent);
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(menu);
-            stage.show();
+    protected void handleBackButtonAction(ActionEvent event) {
+        System.out.println("Back button pressed");
+        goBack(event);
     }
 
     public void setNameLabel(String text) {
@@ -103,11 +100,52 @@ public class TransactionController {
         switch (transactionService.makeTransaction(transaction.build(),radioBuy.isSelected()))
         {
             case Success:
-                System.out.println("SUCCESS");break;
+                System.out.println("SUCCESS");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Transaction has been successful!");
+                alert.showAndWait();
+
+                break;
             case NotEnoughFunds:
-                System.out.println("You have not enough funds!"); break;
-            case NothingToSell: System.out.println("You have not enough stocks to sell!"); break;
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Information Dialog");
+                alert2.setHeaderText(null);
+                alert2.setContentText("You have not enough funds!");
+                alert2.showAndWait();
+                System.out.println("You have not enough funds!");
+                break;
+            case NothingToSell:
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setTitle("Information Dialog");
+                alert3.setHeaderText(null);
+                alert3.setContentText("You have nothing to sell!");
+                alert3.showAndWait();
+                break;
         }
 
+    }
+    public void goBack(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/menu.fxml"));
+            loader.setControllerFactory(app.Application.app::getBean);
+            Parent root = loader.load();
+
+            //Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+            Scene scene = new Scene(root, 800, 400);
+
+
+
+            //Parent menuParent = FXMLLoader.load(getClass().getResource("/fxml/window/menu.fxml"));
+            //Scene menu = new Scene(menuParent);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Trade and Stocks");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("ERROR");
+        }
     }
 }

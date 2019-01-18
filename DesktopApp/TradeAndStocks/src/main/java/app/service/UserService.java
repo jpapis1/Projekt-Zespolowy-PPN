@@ -63,8 +63,8 @@ public class UserService {
         return false;
     }
 
-    public ArrayList<MyStocksTable> getUserTransactions(User user) {
-        List<Transaction> list = transactionService.getUsersTransactionList(user);
+    public ArrayList<MyStocksTable> getUserActiveTransactions(User user) {
+        List<Transaction> list = transactionService.getUsersActiveTransactionList(user);
         ArrayList<MyStocksTable> myStocksTable = new ArrayList<>();
         Set<String> names = new HashSet<String>();
         for (Transaction t : list) {
@@ -72,18 +72,23 @@ public class UserService {
         }
         for (String shortName : names) {
             List<Transaction> transactionsByShortName = list.stream().filter(x -> x.getShortName().equals(shortName)).collect(Collectors.toList());
-            double unitSum = transactionsByShortName.stream().mapToDouble(Transaction::getUnits).sum();
-
+            double unitSumBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(Transaction::getUnits).sum();
+            double unitSumSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
+            double unitSum = unitSumBuy - unitSumSell;
             double unitPrice = transactionsByShortName.get(0).getUnitPrice(); // FIX!! tu powinna być aktualna cena
-            double value = transactionsByShortName.stream().mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+            double valueBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+            double valueSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+            double value = valueBuy - valueSell;
             double realValue = unitSum * unitPrice;
+
             double profitLoss = ((1 - (realValue / value)));
             String str = String.format("%.2f", profitLoss);
+            System.out.print("Profit loss: " + profitLoss);
             profitLoss = Double.valueOf(str);
-            for (Transaction transaction : transactionsByShortName) {
-                System.out.println(transaction);
+            System.out.println(" | Double profit lost: " + profitLoss + " | realVal: " + realValue + " | Value: " + value);
+            if(unitSum!=0) {
+                myStocksTable.add(new MyStocksTable(shortName, unitPrice, unitSum, realValue, profitLoss));
             }
-            myStocksTable.add(new MyStocksTable(shortName, unitPrice, unitSum, realValue, profitLoss));
         }
         return myStocksTable;
     }

@@ -16,14 +16,25 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private UserService userService;
-
     public List<Transaction> getUsersTransactionList(User user) {
         return transactionRepository.findByUser(user);
+    }
+    public List<Transaction> getUsersActiveTransactionList(User user) {
+        return transactionRepository.findByUserAndDoesExistsTrue(user);
+    }
+
+    public void clearUsersTransactions(User user) {
+        List<Transaction> list = transactionRepository.findByUserAndDoesExistsTrue(user);
+        list.forEach(transaction->{
+            transaction.setDoesExists(false);
+            transactionRepository.save(transaction);
+        });
     }
     public CustomMessages makeTransaction(Transaction transaction, boolean isBuy) {
         User myUser = UserService.getActiveUser();
         double availableFunds = myUser.getFunds();
         double transactionValue = transaction.getUnitPrice() * transaction.getUnits();
+        transactionValue = Math.round(transactionValue * 100.0) / 100.0;
         if (isBuy) {
             if (transactionValue <= availableFunds) {
                 myUser.setFunds(myUser.getFunds() - transactionValue);

@@ -32,8 +32,10 @@ import java.util.List;
 @Repository
 public interface TransactionRepository extends CrudRepository<Transaction, Integer> {
     List<Transaction> findByUser(User user);
-    List<Transaction> findByUserAndShortName(User user, String shortName);
+    List<Transaction> findByUserAndDoesExistsTrue(User user);
 
+    List<Transaction> findByUserAndShortName(User user, String shortName);
+    public List<Transaction> findAll();
 
     @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=true")
     Double getSumOfBuyTransactions(@Param("shortName") String shortName);

@@ -3,18 +3,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.HBox?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       xmlns="http://javafx.com/javafx"
       fx:controller="app.view.controller.MyProfileController">
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
         <children>
-            <Label layoutX="54.0" layoutY="46.0" text="Username"/>
-            <Label layoutX="56.0" layoutY="79.0" text="Password"/>
-            <Button layoutX="162.0" layoutY="74.0" mnemonicParsing="false" text="Change Password"/>
-            <Label layoutX="54.0" layoutY="14.0" text="E-mail"/>
-            <Button layoutX="31.0" layoutY="316.0" mnemonicParsing="false" text="Reset Account"/>
-            <TextField editable="false" layoutX="162.0" layoutY="9.0"/>
-            <TextField editable="false" layoutX="162.0" layoutY="41.0"/>
+            <HBox>
+                <Label text="Username"/>
+                <TextField editable="false" />
+            </HBox>
+            <HBox>
+                <Label text="Password"/>
+                <TextField editable="false" />
+            </HBox>
+
+            <Button mnemonicParsing="false" text="Change Password"/>
+
+
+            <ComboBox fx:id="brokerComboBox" promptText="Choose your broker" onAction="#updateBrokerSelection" />
+            <Label fx:id="handlingFeeLabel" text="Handling fee: "/>
+            <Label fx:id="profitMarginLabel" text="Profit margin: "/>
+            <Label fx:id="countryLabel" text="Country: "/>
+            <HBox>
+                <Label text="New balance"/>
+                <TextField fx:id="balanceTextField" />
+            </HBox>
+            <Button fx:id="resetButton" mnemonicParsing="false" text="Reset Account" onAction="#resetAccount" disable="true"/>
+
+            <TextField editable="false" />
         </children>
-    </AnchorPane>
 </VBox>

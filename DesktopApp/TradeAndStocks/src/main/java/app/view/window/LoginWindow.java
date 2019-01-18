@@ -19,7 +19,7 @@ public class LoginWindow extends Application {
         Parent root = loader.load();
 
         //Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
-        Scene scene = new Scene(root, 1000, 750);
+        Scene scene = new Scene(root, 800, 400);
 
         stage.setTitle("Trade and Stocks");
         stage.setScene(scene);

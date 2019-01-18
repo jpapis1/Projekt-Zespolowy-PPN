@@ -4,6 +4,7 @@ import app.Application;
 import app.api.StockDataService;
 import app.service.UserService;
 import app.view.table.AllStocksTable;
+import app.view.table.MyStocksTable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +31,7 @@ import java.util.ResourceBundle;
 
 @Controller
 public class AllStocksController implements Initializable {
+    public static ArrayList<AllStocksTable> loadedList = new ArrayList<>();
     @Autowired
     UserService userService;
     @FXML
@@ -64,15 +66,32 @@ public class AllStocksController implements Initializable {
             stage.setScene(menu);
             stage.show();
     }
-
-
     @FXML
-    protected void addingToMemoryStock(ActionEvent event) throws IOException{
-
-        //tutaj wypisuje short name
+    protected void refreshAction(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/menu.fxml"));
+            loader.setControllerFactory(Application.app::getBean);
+            Parent root = loader.load();
+            Scene menu = new Scene(root);
+            refreshTable();
+            MenuController menuController = (MenuController) loader.getController();
+            menuController.setSelectedTab(1);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(menu);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Refresh error");
+            e.printStackTrace();
+        }
+    }
+    public void refreshTable() {
+        ArrayList<AllStocksTable> data = new ArrayList<>();
+        data = StockDataService.getAllStocksTableList();
+        loadedList = data;
+        ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
+        allStockTableView.setItems(observableData);
 
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -81,11 +100,22 @@ public class AllStocksController implements Initializable {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        ArrayList<AllStocksTable> data = StockDataService.getAllStocksTableList();
+        ArrayList<AllStocksTable> data = new ArrayList<>();
+        System.out.println("LOADING");
+        if(loadedList.size() == 0) {
+            data = StockDataService.getAllStocksTableList();
+            loadedList = data;
+
+        }  else {
+            data = loadedList;
+        }
         ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
         allStockTableView.setItems(observableData);
 
+
+
     }
+
 
 
 }
