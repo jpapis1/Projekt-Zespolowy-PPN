@@ -143,6 +143,30 @@ public class StockData {
             }
             return null;
         }
+        public StockDataBuilder setLatestPrice() {
+            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/1d";
+            System.out.println(map.get("shortName"));
+            try {
+                URL url = new URL(sURL);
+                URLConnection request = url.openConnection();
+                request.connect();
+                JsonParser jp = new JsonParser();
+                JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+
+                JsonArray array = root.getAsJsonArray();
+                JsonObject latestElement = array.get(array.size() - 1).getAsJsonObject();
+                int i = 2;
+                while (latestElement.get("average").getAsDouble() == -1) {
+                    latestElement = array.get(array.size() - i).getAsJsonObject();
+                    i++;
+                }
+                map.put("price", latestElement.get("average").getAsDouble());
+                return this;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
         public StockData build() {
             return new StockData((String) map.get("shortName"), (String) map.get("name"),

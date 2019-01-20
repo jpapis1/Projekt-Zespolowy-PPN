@@ -33,12 +33,20 @@ import java.util.ResourceBundle;
 
 @Controller
 public class MyProfileController implements Initializable {
+
     @Autowired
     BrokerService brokerService;
     @Autowired
     TransactionService transactionService;
     @Autowired
     UserService userService;
+
+    @FXML
+    public PasswordField oldPasswordTextField;
+    @FXML
+    public PasswordField newPasswordTextField;
+    @FXML
+    public Label passwordStatusLabel;
     @FXML
     private ComboBox<Broker> brokerComboBox;
 
@@ -95,7 +103,7 @@ public class MyProfileController implements Initializable {
 
 
             try {
-                Parent menuParent = FXMLLoader.load(getClass().getResource("/fxml/window/menu.fxml"));
+                Parent menuParent = FXMLLoader.load(getClass().getResource("/fxml/client/window/menu.fxml"));
                 Scene menu = new Scene(menuParent);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(menu);
@@ -142,5 +150,18 @@ public class MyProfileController implements Initializable {
 
 
 
+    }
+
+    public void changePassword(ActionEvent actionEvent) {
+        User myUser = UserService.getActiveUser();
+
+        if(userService.isPasswordCorrect(myUser.getUsername(),oldPasswordTextField.getText())) {
+
+            myUser.setPassword(userService.hashPassword(newPasswordTextField.getText()));
+            userService.updateUser(myUser);
+            passwordStatusLabel.setText("Password has been reset!");
+        } else {
+            passwordStatusLabel.setText("Old password doesn't match!");
+        }
     }
 }

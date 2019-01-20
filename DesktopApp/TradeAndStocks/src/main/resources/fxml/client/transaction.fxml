@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns:fx="http://javafx.com/fxml"
+      xmlns="http://javafx.com/javafx" prefHeight="400.0" prefWidth="800.0" fx:controller="app.view.controller.TransactionController">
+      <children>
+            <Button mnemonicParsing="false" onAction="#handleBackButtonAction" text="Back" />
+            <HBox>
+                  <Label text="Name: "/>
+                  <Label fx:id="nameLabel" />
+            </HBox>
+            <HBox>
+                  <Label text="Unit price: "/>
+                  <Label fx:id="unitPrice" />
+            </HBox>
+            <HBox>
+                  <Label text="Value: "/>
+                  <TextField fx:id="value" onKeyTyped="#writingOnValue" text="0.00"/>
+            </HBox>
+            <HBox>
+                  <Label text="Units: "/>
+                  <TextField fx:id="units" onKeyTyped="#writingOnUnits" text="0.00"/>
+            </HBox>
+          <HBox>
+              <Label text="Tax rate (only if you sell): " fx:id="taxRatePercent"/>
+              <Label fx:id="taxRateValueLabel"/>
+          </HBox>
+          <HBox>
+              <Label text="Profit Margin: (only if you sell): " fx:id="profitMarginPercent"/>
+              <Label fx:id="profitMarginValueLabel"/>
+          </HBox>
+          <HBox>
+              <Label text="Handling fee (only if you buy): " fx:id="handlingFeePercent"/>
+              <Label fx:id="handlingFeeValueLabel"/>
+          </HBox>
+          <HBox>
+              <Label text="Total transaction value (including fees): "/>
+              <Label fx:id="totalTransactionValueLabel"/>
+          </HBox>
+
+      <Button fx:id="acceptButton"  mnemonicParsing="false" text="ACCEPT" onAction="#handleAcceptButtonAction" />
+
+      <fx:define>
+            <ToggleGroup fx:id="buyOrSell"/>
+      </fx:define>
+            <HBox>
+                  <RadioButton fx:id="radioBuy" mnemonicParsing="false" text="BUY" toggleGroup="$buyOrSell" selected="true" onAction="#radioButtonChanged"/>
+                  <RadioButton fx:id="radioSell" mnemonicParsing="false" text="SELL" toggleGroup="$buyOrSell" onAction="#radioButtonChanged"/>
+            </HBox>
+      </children>
+</VBox>

@@ -11,7 +11,7 @@ public class TransactionWindow extends Application {
     public void start(Stage stage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/transaction.fxml"));
-        Scene scene = new Scene(root, 1000, 750);
+        Scene scene = new Scene(root, 800, 400);
 
         stage.setTitle("Trade and Stocks");
         stage.setScene(scene);

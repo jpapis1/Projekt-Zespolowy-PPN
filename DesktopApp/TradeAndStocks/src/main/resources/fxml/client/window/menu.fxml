@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" fx:controller="app.view.controller.MenuController"
+      minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="900.0"
+      xmlns="http://javafx.com/javafx/8.0.172-ea">
+<TabPane fx:id="tabPanel" tabClosingPolicy="UNAVAILABLE">
+    <tabs>
+        <Tab text="Main">
+            <fx:include fx:id="mainTab" source="../tab/mainTab.fxml"/>
+        </Tab>
+        <Tab text="All Stocks">
+            <fx:include fx:id="allStocksTab" source="../tab/allStocksTab.fxml"/>
+        </Tab>
+        <Tab text="My Stocks">
+            <fx:include fx:id="myStocksTab" source="../tab/myStocksTab.fxml"/>
+        </Tab>
+        <Tab text="My Profile">
+            <fx:include fx:id="myProfileTab" source="../tab/myProfileTab.fxml"/>
+        </Tab>
+        <Tab text="About">
+            <fx:include fx:id="aboutTab" source="../tab/aboutTab.fxml"/>
+        </Tab>
+    </tabs>
+</TabPane>
+    <Label text="Current balance: " fx:id="infoLabel"/>
+</VBox>

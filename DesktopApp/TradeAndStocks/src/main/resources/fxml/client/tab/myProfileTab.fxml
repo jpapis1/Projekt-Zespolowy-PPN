@@ -10,16 +10,17 @@
       fx:controller="app.view.controller.MyProfileController">
         <children>
             <HBox>
-                <Label text="Username"/>
-                <TextField editable="false" />
+                <Label text="Old Password"/>
+                <PasswordField fx:id="oldPasswordTextField"/>
             </HBox>
             <HBox>
-                <Label text="Password"/>
-                <TextField editable="false" />
+                <Label text="New Password"/>
+                <PasswordField fx:id="newPasswordTextField"/>
             </HBox>
-
-            <Button mnemonicParsing="false" text="Change Password"/>
-
+            <HBox>
+            <Button mnemonicParsing="false" text="Change Password" onAction="#changePassword"/>
+                <Label fx:id="passwordStatusLabel" text="abcd"/>
+            </HBox>
 
             <ComboBox fx:id="brokerComboBox" promptText="Choose your broker" onAction="#updateBrokerSelection" />
             <Label fx:id="handlingFeeLabel" text="Handling fee: "/>

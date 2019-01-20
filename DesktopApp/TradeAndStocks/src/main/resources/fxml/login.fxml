@@ -32,21 +32,8 @@
         <Button onAction="#handleSubmitButtonAction" text="Log In" />
     </HBox>
 
-    <Text fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+    <Label fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
    <ProgressBar prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="progressBar"/>
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
 
 
 </GridPane>

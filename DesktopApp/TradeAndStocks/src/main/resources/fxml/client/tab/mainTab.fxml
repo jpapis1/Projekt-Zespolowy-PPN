@@ -2,8 +2,9 @@
 
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       xmlns="http://javafx.com/javafx"
       fx:controller="app.view.controller.MainTabController">
-    <TextArea prefHeight="200.0" prefWidth="200.0" text="Main Tab"/>
+    <Label prefHeight="200.0" prefWidth="200.0" text="Welcome to Trade and Stock!"/>
 </VBox>

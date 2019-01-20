@@ -8,13 +8,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ProgressBar?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.MyStocksController">
-    <TableView fx:id="myStocksTableView" prefHeight="750.0" prefWidth="1000.0">
+    <TableView fx:id="myStocksTableView">
         <columns>
-            <TableColumn fx:id="shortName" prefWidth="189.00001525878906" text="SHORT NAME" />
-            <TableColumn fx:id="unitPrice" prefWidth="200.0" text="UNIT PRICE" />
-            <TableColumn fx:id="price" prefWidth="210.0" text="PRICE" />
-            <TableColumn fx:id="units" prefWidth="183.0" text="UNITS" />
-            <TableColumn fx:id="profitLoss" prefWidth="219.0" text="PROFIT LOSS" />
+            <TableColumn fx:id="shortName" prefWidth="189.00001525878906" text="Short name" />
+            <TableColumn fx:id="unitPrice" prefWidth="200.0" text="Unit price" />
+            <TableColumn fx:id="price" prefWidth="210.0" text="Value" />
+            <TableColumn fx:id="units" prefWidth="183.0" text="Units" />
+            <TableColumn fx:id="profitLoss" prefWidth="219.0" text="Profit Loss" />
         </columns>
     </TableView>
     <GridPane hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" >

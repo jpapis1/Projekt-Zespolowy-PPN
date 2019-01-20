@@ -9,8 +9,7 @@ import java.util.ArrayList;
 
 public class StockDataService {
 
-    static public final String[] usedStocks = {"AAPL"}; //, "HPQ", "GOOGL"
-    //"MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS",
+    static public final String[] usedStocks = {"AAPL", "HPQ", "GOOGL","MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS"};
     //            "MCD", "MET", "NFLX", "NKE", "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", "FOX", "VZ", "XRX"
 
     static public ArrayList<StockData> getAllStockDataList() {
@@ -35,8 +34,18 @@ public class StockDataService {
         }
         return tables;
     }
+    static public StockData getLatestPrice(String shortName) {
+            return new StockData.StockDataBuilder(shortName).setLatestPrice().build();
+    }
 
     public static ArrayList<MyStocksTable> getMyStocksTableList(UserService userService) {
+        ArrayList<MyStocksTable> tables = new ArrayList<>();
+        tables = userService.getUserActiveTransactions(UserService.getActiveUser());
+
+        return tables;
+
+    }
+    public static ArrayList<MyStocksTable> getMyStocksTableListOnOneStock(UserService userService, String shortName) {
         ArrayList<MyStocksTable> tables = new ArrayList<>();
         tables = userService.getUserActiveTransactions(UserService.getActiveUser());
 

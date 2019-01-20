@@ -54,7 +54,7 @@ public class AllStocksController implements Initializable {
         AllStocksTable table = allStockTableView.getSelectionModel().getSelectedItem();
         System.out.println(table.getShortName());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/transaction.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/transaction.fxml"));
         loader.setControllerFactory(Application.app::getBean);
         Parent root = loader.load();
 
@@ -69,7 +69,7 @@ public class AllStocksController implements Initializable {
     @FXML
     protected void refreshAction(ActionEvent event) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/window/menu.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/window/menu.fxml"));
             loader.setControllerFactory(Application.app::getBean);
             Parent root = loader.load();
             Scene menu = new Scene(root);

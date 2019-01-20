@@ -5,9 +5,9 @@ public class MyStocksTable {
     private Double unitPrice;
     private double units;
     private double value;
-    private double profitLoss;
+    private String profitLoss;
 
-    public MyStocksTable(String shortName, Double unitPrice, double units, double value, double profitLoss) {
+    public MyStocksTable(String shortName, Double unitPrice, double units, double value, String profitLoss) {
         this.shortName = shortName;
         this.unitPrice = unitPrice;
         this.units = units;
@@ -47,11 +47,11 @@ public class MyStocksTable {
         this.value = value;
     }
 
-    public double getProfitLoss() {
+    public String getProfitLoss() {
         return profitLoss;
     }
 
-    public void setProfitLoss(double profitLoss) {
+    public void setProfitLoss(String profitLoss) {
         this.profitLoss = profitLoss;
     }
 
