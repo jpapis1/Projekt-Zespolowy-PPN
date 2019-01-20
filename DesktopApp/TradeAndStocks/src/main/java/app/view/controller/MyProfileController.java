@@ -40,13 +40,14 @@ public class MyProfileController implements Initializable {
     TransactionService transactionService;
     @Autowired
     UserService userService;
-
+/*
     @FXML
     public PasswordField oldPasswordTextField;
     @FXML
     public PasswordField newPasswordTextField;
     @FXML
     public Label passwordStatusLabel;
+    */
     @FXML
     private ComboBox<Broker> brokerComboBox;
 
@@ -71,6 +72,7 @@ public class MyProfileController implements Initializable {
 
 
     }
+
     @FXML
     protected void resetAccount(ActionEvent event) throws IOException {
 
@@ -118,6 +120,7 @@ public class MyProfileController implements Initializable {
             // ... user chose CANCEL or closed the dialog
         }
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(brokerService);
@@ -152,7 +155,7 @@ public class MyProfileController implements Initializable {
 
     }
 
-    public void changePassword(ActionEvent actionEvent) {
+    /*public void changePassword(ActionEvent actionEvent) {
         User myUser = UserService.getActiveUser();
 
         if(userService.isPasswordCorrect(myUser.getUsername(),oldPasswordTextField.getText())) {
@@ -163,5 +166,5 @@ public class MyProfileController implements Initializable {
         } else {
             passwordStatusLabel.setText("Old password doesn't match!");
         }
-    }
+    }*/
 }

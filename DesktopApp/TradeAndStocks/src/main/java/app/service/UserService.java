@@ -49,6 +49,7 @@ public class UserService {
         System.out.println(user);
         String[] pass = user.getPassword().split("\\$");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
+        System.out.println("LENGTH: " + pass[2].getBytes().length);
         try {
             SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             String passHash = Base64.encode(f.generateSecret(spec).getEncoded());
@@ -65,20 +66,24 @@ public class UserService {
     }
     public String hashPassword(String password) {
         try {
-            byte[] salt = new byte[11];
+            byte[] salt = new byte[8];
             Random srandom = new Random();
             srandom.nextBytes(salt);
             SecretKeyFactory factory =
                     SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 120000, 256);
-            SecretKey tmp = factory.generateSecret(spec);
-            byte[] passwordHash = tmp.getEncoded();
-            String s = Base64.encode(passwordHash);
-            String sSalt = Base64.encode(salt);
-            return "pbkdf2_sha256$" + "120000$" + sSalt + "$" + s;
-            //pbkdf2_sha256$120000$LxkByhf1k62j$LBDyAtY+ehMlpJLfVTlQElbZ6bGeK+BVJffcYpubGRg=
-            //SecretKeySpec skey = new SecretKeySpec(tmp.getEncoded(), "AES");
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+
+
+            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt,120000, 256);
+            String passHash = "";
+            try {
+                SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+                passHash = Base64.encode(f.generateSecret(spec).getEncoded());
+            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+                System.out.println("ERROR");
+            }
+            String sSalt = java.util.Base64.getEncoder().encodeToString(salt);
+            return "pbkdf2_sha256$" + "120000$" + sSalt + "$" + passHash;
+        } catch (NoSuchAlgorithmException e) {
             System.out.println("ERROR");
         }
         return null;

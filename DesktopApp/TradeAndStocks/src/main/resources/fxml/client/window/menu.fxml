@@ -25,5 +25,6 @@
         </Tab>
     </tabs>
 </TabPane>
+    <Separator/>
     <Label text="Current balance: " fx:id="infoLabel"/>
 </VBox>

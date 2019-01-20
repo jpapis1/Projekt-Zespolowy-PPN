@@ -44,4 +44,9 @@ public class Country {
     public void setTaxRate(double taxRate) {
         this.taxRate = taxRate;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

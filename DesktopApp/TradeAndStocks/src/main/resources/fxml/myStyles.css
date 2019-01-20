@@ -1,0 +1,19 @@
+.text-id {
+    -fx-font-smoothing-type: lcd;
+    -fx-fill: black;
+    -fx-font-size: 20pt;
+}
+
+.root {
+}
+.head{
+    -fx-font-smoothing-type: lcd;
+    -fx-fill: black;
+    -fx-font-size: 20pt;
+    -fx-alignment: center;
+}
+.warning-id {
+    -fx-font-smoothing-type: lcd;
+    -fx-fill: red;
+    -fx-font-size: 15pt;
+}

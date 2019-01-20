@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Separator?>
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.BrokersController">
+    <TableView fx:id="brokersTableView" prefHeight="200.0" prefWidth="1000.0">
+        <columns>
+            <TableColumn fx:id="name" prefWidth="105.0" text="name" />
+            <TableColumn fx:id="profitMargin" prefWidth="120.0" text="profitMargin" />
+            <TableColumn fx:id="handlingFee" prefWidth="115.0" text="handlingFee" />
+            <TableColumn fx:id="country" prefWidth="125.0" text="country" />
+        </columns>
+    </TableView>
+    <Separator/>
+    <GridPane hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" >
+        <Button onAction="#refreshAction" mnemonicParsing="false" text="Refresh list" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
+        <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" spacing="10">
+            <Label text="Name"/>
+            <TextField fx:id="nameTextField" />
+        </HBox>
+        <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="2" spacing="10">
+            <Label text="Profit margin"/>
+            <TextField fx:id="profitMarginTextField" />
+        </HBox>
+        <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3" spacing="10">
+            <Label text="Handling fee"/>
+            <TextField fx:id="handlingFeeTextField" />
+        </HBox>
+        <ComboBox fx:id="countryComboBox" promptText="Choose your country" onAction="#updateCountrySelection" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4"/>
+
+        <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5" spacing="10">
+        <Button onAction="#createBrokerAction" mnemonicParsing="false" text="Create broker" />
+        <Button onAction="#removeBrokerAction" mnemonicParsing="false" text="Remove broker"/>
+        </HBox>
+    </GridPane>
+
+
+
+
+
+</VBox>

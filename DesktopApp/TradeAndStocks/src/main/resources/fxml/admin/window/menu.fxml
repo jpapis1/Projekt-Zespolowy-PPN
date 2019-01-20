@@ -11,13 +11,17 @@
         <Tab text="Main">
             <fx:include fx:id="mainTab" source="../tab/mainTab.fxml"/>
         </Tab>
-        <Tab text="Users">
-            <fx:include fx:id="usersTab" source="../tab/usersTab.fxml"/>
+        <Tab text="Countries">
+            <fx:include fx:id="countryTab" source="../tab/countriesTab.fxml"/>
         </Tab>
-        <Tab text="About">
-            <fx:include fx:id="aboutTab" source="../tab/aboutTab.fxml"/>
+        <Tab text="Brokers">
+            <fx:include fx:id="brokerTab" source="../tab/brokersTab.fxml"/>
+        </Tab>
+        <Tab text="Users">
+            <fx:include fx:id="aboutTab" source="../tab/usersTab.fxml"/>
         </Tab>
     </tabs>
 </TabPane>
-    <Label text="Current balance: " fx:id="infoLabel"/>
+    <Separator/>
+    <Label text="Admin mode" fx:id="infoLabel"/>
 </VBox>

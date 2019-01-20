@@ -29,12 +29,9 @@ public class LoginController {
     @FXML
     TextField passwordField;
     @FXML
-    private Label actionTarget;
-    @FXML
-    private ProgressBar progressBar;
+    private Text actionTarget;
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-        progressBar.setProgress(0);
         System.out.println(userService);
         System.out.println("LOGGING IN");
         if (userService.isPasswordCorrect(loginOrPasswordField.getText(), passwordField.getText())) {
@@ -52,7 +49,6 @@ public class LoginController {
             loader.setControllerFactory(Application.app::getBean);
             Parent root = loader.load();
             UserService.setActiveUser(userService.getUser(loginOrPasswordField.getText()));
-            progressBar.setProgress(100);
             Scene menu = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(menu);

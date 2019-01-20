@@ -12,14 +12,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
-
-<GridPane alignment="center" hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="app.view.controller.LoginController">
-
+<?import java.net.URL?>
+<GridPane alignment="center" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" fx:controller="app.view.controller.LoginController">
+    <stylesheets>
+        <URL value="@myStyles.css" />
+    </stylesheets>
     <padding>
         <Insets bottom="10" left="25" right="25" top="25" />
     </padding>
 
-    <Text id="welcome-text" text="Trade and Stocks" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+    <Text layoutX="100" layoutY="200" styleClass="text-id" id="welcome-text" textAlignment="CENTER" text="Trade and Stocks"/>
 
     <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
 
@@ -32,8 +34,7 @@
         <Button onAction="#handleSubmitButtonAction" text="Log In" />
     </HBox>
 
-    <Label fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-   <ProgressBar prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="progressBar"/>
+    <Text GridPane.columnIndex="0" GridPane.rowIndex="4" styleClass="warning-id" fx:id="actionTarget"/>
 
 
 </GridPane>

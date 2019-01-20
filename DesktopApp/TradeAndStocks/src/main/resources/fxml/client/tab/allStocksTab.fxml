@@ -12,11 +12,11 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.AllStocksController">
     <TableView fx:id="allStockTableView" prefHeight="600.0" prefWidth="1000.0">
         <columns>
-            <TableColumn fx:id="sector" prefWidth="105.0" text="sector" />
-            <TableColumn fx:id="shortName" prefWidth="120.0" text="shortName" />
-            <TableColumn fx:id="name" prefWidth="115.0" text="name" />
-            <TableColumn fx:id="price" prefWidth="125.0" text="price" />
-            <TableColumn fx:id="date" prefWidth="135.0" text="date" />
+            <TableColumn fx:id="sector" text="Sector" />
+            <TableColumn fx:id="shortName"  text="Short Name" />
+            <TableColumn fx:id="name" text="Name" />
+            <TableColumn fx:id="price"  text="Price" />
+            <TableColumn fx:id="date"  text="Date" />
         </columns>
     </TableView>
     <GridPane hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" >
