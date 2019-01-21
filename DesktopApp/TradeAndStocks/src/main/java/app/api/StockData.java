@@ -134,7 +134,7 @@ public class StockData {
         }
 
         public StockDataBuilder setLatestPriceAndDate() {
-            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/dynamic";
+            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/1m";
             try {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();
@@ -142,19 +142,19 @@ public class StockData {
                 JsonParser jp = new JsonParser();
                 JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 
-                String range = root.getAsJsonObject().get("range").getAsString();
+                //String range = root.getAsJsonObject().get("range").getAsString();
                 Date date = new Date();
-                JsonArray array = root.getAsJsonObject().get("data").getAsJsonArray();
+                JsonArray array = root.getAsJsonArray();
                 JsonObject latestElement = new JsonObject();
 
                 double price = 0.0;
-                if(range.equals("1m")) {
+               // if(range.equals("1m")) {
                     latestElement = array.get(array.size() - 1).getAsJsonObject();
                     price = latestElement.get("close").getAsDouble();
                     String date_s = latestElement.get("date").getAsString();
                     SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
                     date = dt.parse(date_s);
-
+/*
                 } else if(range.equals("1d")) {
                     latestElement = array.get(array.size() - 1).getAsJsonObject();
                     int i = 2;
@@ -166,7 +166,7 @@ public class StockData {
                     String date_s = latestElement.get("date").getAsString() + latestElement.get("minute").getAsString();
                     SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddhh:mm");
                     date = dt.parse(date_s);
-                }
+                }*/
                 map.put("date", date);
                 map.put("price", price);
                 return this;
@@ -176,7 +176,7 @@ public class StockData {
             return null;
         }
         public StockDataBuilder setLatestPrice() {
-            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/dynamic";
+            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/chart/1m";
             try {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();
@@ -184,15 +184,15 @@ public class StockData {
                 JsonParser jp = new JsonParser();
                 JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 
-                String range = root.getAsJsonObject().get("range").getAsString();
-                JsonArray array = root.getAsJsonObject().get("data").getAsJsonArray();
+                //String range = root.getAsJsonObject().get("range").getAsString();
+                JsonArray array = root.getAsJsonArray();
                 JsonObject latestElement = new JsonObject();
 
                 double price = 0.0;
-                if(range.equals("1m")) {
+                //if(range.equals("1m")) {
                     latestElement = array.get(array.size() - 1).getAsJsonObject();
                     price = latestElement.get("close").getAsDouble();
-
+/*
                 } else if(range.equals("1d")) {
                     latestElement = array.get(array.size() - 1).getAsJsonObject();
                     int i = 2;
@@ -202,6 +202,7 @@ public class StockData {
                     }
                     price = latestElement.get("average").getAsDouble();
                 }
+                */
                 map.put("price", price);
                 return this;
             } catch (IOException e) {
