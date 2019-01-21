@@ -2,18 +2,20 @@
 
 {% block content %}
 <div class="content">
-<h1>Linear Regression</h1>
+    <h1>Linear Regression</h1>
 
-<h2><div class="name">{{ ticker }}</div></h2>
+    <h2><div class="name">{{ ticker }}</div></h2>
 
     <p><div class="name">Beginning date:</div> {{ start }}</p>
     <p><div class="name">End date:</div> {{ end }}</p>
     <p><div class="name">Prediction accuracy:</div>  {{ confidence }}%</p>
 
     <h3 class="name">Price prediction for next 30 days.</h3>
+    <br>
+    <div class="col-md-6" style="display:inline-block">
+        <canvas id="myChart"></canvas>
+    </div>
 </div>
-
-    <canvas id="myChart"></canvas>
     <script type="text/javascript">
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
@@ -32,7 +34,8 @@
         },
 
         // Configuration options go here
-        options: {}
+        options: {
+        }
     });
     </script>
 

@@ -3,26 +3,29 @@
 
 {% block content %}
 <div class="content">
-<h1>Trading volumes for Markets</h1>
-<canvas id="myChart"></canvas>
-<canvas id="marketPercent"></canvas>
+    <h1>Exchange trading volumes and market share.</h1>
+    <div class="jumbotron">
+        <p>Here you can see amounts of stocks traded daily for the last 2 weeks and also US Equity trade market share of IEX exchange.</p>
+    </div>
+    <div class="col-md-8" style="display:inline-block">
+        <canvas id="myChart"></canvas>
+        <br>
+        <hr>
+        <br>
+        <canvas id="marketPercent"></canvas>
+    </div>
+
 <script type="text/javascript">
 	
 var ctx = document.getElementById('myChart').getContext('2d');
 var chart = new Chart(ctx, {
-    // The type of chart we want to create
     type: 'line',
 
-    // The data for our dataset
     data: {
-        labels: ["{{data.0.venueName}}","{{data.1.venueName}}",
-         "{{data.2.venueName}}", "{{data.3.venueName}}",
-          "{{data.4.venueName}}", "{{data.5.venueName}}",
-           "{{data.6.venueName}}","{{data.7.venueName}}",
-           "{{data.8.venueName}}","{{data.9.venueName}}",
-           "{{data.10.venueName}}","{{data.11.venueName}}",
-            "{{data.12.venueName}}","{{data.13.venueName}}",
-            "{{data.14.venueName}}"],
+        labels: ["{{data.0.date}}","{{data.1.date}}",
+         "{{data.2.date}}", "{{data.3.date}}",
+          "{{data.4.date}}", "{{data.5.date}}",
+           "{{data.6.date}}", "{{data.7.date}}", "{{data.8.date}}", "{{data.9.date}}", "{{data.10.date}}", "{{data.11.date}}", "{{data.12.date}}", "{{data.13.date}}"],
         datasets: [{
             label: "Volume",
             backgroundColor: 'rgb(255, 99, 132)',
@@ -30,51 +33,49 @@ var chart = new Chart(ctx, {
             data: [{{data.0.volume}}, {{data.1.volume}},
             {{data.2.volume}}, {{data.3.volume}},
             {{data.4.volume}}, {{data.5.volume}},
-            {{data.6.volume}}, {{data.7.volume}},
-            {{data.8.volume}}, {{data.9.volume}},
+            {{data.6.volume}},{{data.7.volume}},
+            {{data.8.volume}},{{data.9.volume}},
             {{data.10.volume}},{{data.11.volume}},
-            {{data.12.volume}},{{data.12.volume}},
-            {{data.14.volume}}],
+            {{data.12.volume}},{{data.13.volume}}],
         },
             ]
     },
 
-    // Configuration options go here
-    options: {}
+    options: {
+        layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        }
+    }
 });
 var ctx2 = document.getElementById('marketPercent').getContext('2d');
 var chart2 = new Chart(ctx2, {
-    // The type of chart we want to create
     type: 'line',
 
-    // The data for our dataset
     data: {
-        // Maybe use django for loop for this
-        labels: ["{{data.0.venueName}}","{{data.1.venueName}}",
-         "{{data.2.venueName}}", "{{data.3.venueName}}",
-          "{{data.4.venueName}}", "{{data.5.venueName}}",
-           "{{data.6.venueName}}","{{data.7.venueName}}",
-           "{{data.8.venueName}}","{{data.9.venueName}}",
-           "{{data.10.venueName}}","{{data.11.venueName}}",
-            "{{data.12.venueName}}","{{data.13.venueName}}",
-            "{{data.14.venueName}}"],
+        labels: ["{{data.0.date}}","{{data.1.date}}",
+         "{{data.2.date}}", "{{data.3.date}}",
+          "{{data.4.date}}", "{{data.5.date}}",
+           "{{data.6.date}}", "{{data.7.date}}", "{{data.8.date}}", "{{data.9.date}}", "{{data.10.date}}", "{{data.11.date}}", "{{data.12.date}}", "{{data.13.date}}"],
         datasets: [{
-            label: "Market Percent",
+            label: "Market Share",
             backgroundColor: 'rgb(0, 0, 255)',
             borderColor: 'rgb(0, 0, 255)',
-            data: [{{data.0.marketPercent}}, {{data.1.marketPercent}},
-            {{data.2.marketPercent}}, {{data.3.marketPercent}},
-            {{data.4.marketPercent}}, {{data.5.marketPercent}},
-            {{data.6.marketPercent}}, {{data.7.marketPercent}},
-            {{data.8.marketPercent}}, {{data.9.marketPercent}},
-            {{data.10.marketPercent}},{{data.11.marketPercent}},
-            {{data.12.marketPercent}},{{data.12.marketPercent}},
-            {{data.14.marketPercent}}],
+            data: [{{data.0.marketShare}}, {{data.1.marketShare}},
+            {{data.2.marketShare}}, {{data.3.marketShare}},
+            {{data.4.marketShare}}, {{data.5.marketShare}},
+            {{data.6.marketShare}},{{data.7.marketShare}},
+            {{data.8.marketShare}},{{data.9.marketShare}},
+            {{data.10.marketShare}},{{data.11.marketShare}},
+            {{data.12.marketShare}},{{data.13.marketShare}}],
         },
             ]
     },
 
-    // Configuration options go here
     options: {}
 });
 

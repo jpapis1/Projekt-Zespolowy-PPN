@@ -46,7 +46,8 @@ def features(request):
 
 def chart(request):
 
-    response = requests.get("https://api.iextrading.com/1.0/market")
+    # response = requests.get("https://api.iextrading.com/1.0/market")
+    response = requests.get("https://api.iextrading.com/1.0/stats/historical/daily?last=14")
     data = json.loads(response.content)
 
     return render(request,'chart.html',{'data':data})
@@ -103,7 +104,7 @@ def rate_single(request):
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
     
         return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
-        'div':div,'start':start,'end':end})
+        'div':div,'start':start,'end':end,'ticker':ticker})
 
 def signup(request):
     if request.method == 'POST':

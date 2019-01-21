@@ -8,18 +8,53 @@
     <h4 class="name">Usage</h4>
     <p>Input the company symbol(ticker) and dates of a period you want to analyze.</p>
 </div>
+    {% if user.is_authenticated %}
+<button class="btn btn-primary btn-spacing manual_button">Toggle manual input</button>
+{% endif %}
 <form action="{% url 'rate_single' %}" method="post">
     {% csrf_token %}
     <h3>Company ticker:</h3>
     <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
     
     {% if user.is_authenticated %}
+                    <script>
+        	var add_button      = $(".manual_button"); //Add button ID
+	
+        var x = 1; //initlal text box count
+        $(add_button).click(function(e){ //on add input button click
+        if(document.getElementById("tickerSelect").disabled == true){
+            document.getElementById("tickerSelect").disabled = false;
+        }else{
+            document.getElementById("tickerSelect").disabled = true;
+        }
+        
+        });
+    </script>
+    <h4 style="margin-top: 1%">OR</h4>
     <h3>Tickers from Portfolio</h3>
-        <select name="ticker">
-            {% for trans in user.transactions %}
-                <option value="{{trans.shortname}}">{{trans.shortname}}</option>
-            {% endfor %}
-        </select>
+        <select name="ticker" id="tickerSelect"></select>
+            <script>
+                function onlyUnique(value, index, self) { 
+                    return self.indexOf(value) === index;
+                }
+
+                let shorts = [];
+                {% for trans in user.transactions %}
+                    shorts.push("{{trans.shortname}}")
+                {% endfor %}
+
+                let unique = [...new Set(shorts)]; 
+                let select, option;
+
+                select = document.getElementById('tickerSelect');
+
+                unique.forEach(element => {
+                    option = document.createElement('option');
+                    option.value = option.text = element;
+                    select.add( option );
+                });
+            </script>
+        
     {% endif %}
     <h3>Start date:</h3>
     <input type="date" name="start" placeholder="Start date">
