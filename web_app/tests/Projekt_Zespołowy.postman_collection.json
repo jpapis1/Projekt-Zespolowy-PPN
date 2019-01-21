@@ -1,0 +1,186 @@
+{
+	"info": {
+		"_postman_id": "4ca40e1a-ea9f-4846-883c-6c0b88824025",
+		"name": "Projekt_Zespołowy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Companies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-CSRFToken",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/company/MSFT",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"company",
+						"MSFT"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Monte Carlo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/monte_carlo",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"monte_carlo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Linear Regression",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/linear_regression",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"linear_regression"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Portfolio RoR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/rate_portfolio",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rate_portfolio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Single RoR",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/rate_single",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"rate_single"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tickers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://trades-and-stocks.herokuapp.com/tickers",
+					"protocol": "https",
+					"host": [
+						"trades-and-stocks",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Market",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://api.iextrading.com/1.0/market",
+					"protocol": "https",
+					"host": [
+						"api",
+						"iextrading",
+						"com"
+					],
+					"path": [
+						"1.0",
+						"market"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
