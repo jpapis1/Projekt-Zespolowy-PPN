@@ -32,6 +32,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Locale;
+
 
 @SpringBootApplication
 public class Application {
@@ -46,6 +48,7 @@ public class Application {
     public static void main(String[] args) {
         System.err.close();
         System.setErr(System.out);
+        Locale.setDefault(new Locale("en", "US"));
         SpringApplication.run(Application.class);
 
     }

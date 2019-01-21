@@ -123,7 +123,7 @@ public class UserService {
             double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
             System.out.println(profitLoss);
             String str = String.format("%.2f", profitLoss);
-            profitLoss = Double.valueOf(str);
+            profitLoss = Double.parseDouble(str);
             if(unitSum!=0) {
                 String realValueRound = String.format("%.2f", realValue);
                 myStocksTable.add(new MyStocksTable(shortName, currentUnitPrice, unitSum,Double.parseDouble(realValueRound), profitLoss+"%"));
