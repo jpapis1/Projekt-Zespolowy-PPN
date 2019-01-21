@@ -160,7 +160,7 @@ public class MyStocksController implements Initializable {
 
         Scene scene = new Scene(root, 850, 400);
         Stage stage = new Stage();
-        stage.setTitle("JavaFX Error Alert (o7planning.org)");
+        stage.setTitle("Stock info");
         stage.setScene(scene);
 
         stage.show();
