@@ -65,7 +65,6 @@ public class TransactionController {
         try
         {
 
-            System.out.println(Double.parseDouble(units.getText()));
             Double producedValue = Double.parseDouble(unitPrice.getText())* Double.parseDouble(units.getText());
             value.setText(producedValue.toString());
             updateFees();
@@ -145,7 +144,6 @@ public class TransactionController {
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        System.out.println("Back button pressed");
         goBack(event);
     }
 

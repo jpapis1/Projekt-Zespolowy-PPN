@@ -84,13 +84,9 @@ public class MyProfileController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
             transactionService.clearUsersTransactions(UserService.getActiveUser());
-            System.out.println("clear transactions ok");
             UserService.getActiveUser().setFunds(Double.parseDouble(balanceTextField.getText()));
-            System.out.println("set funds ok");
             UserService.getActiveUser().setBroker(brokerComboBox.getValue());
-            System.out.println("set broker ok");
             userService.updateUser(UserService.getActiveUser());
-            System.out.println("update user ok");
             User user = UserService.getActiveUser();
             MenuController.infoLabelP.setText("Current balance: $" + String.valueOf(user.getFunds()) +
                     " | Broker: " + user.getBroker() + " | Handling Fee: " + user.getBroker().getHandlingFee()*100 + "%" +
@@ -123,7 +119,6 @@ public class MyProfileController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(brokerService);
         List<Broker> allBrokers = brokerService.getAllBrokers();
         ObservableList<Broker> observableData = FXCollections.observableArrayList(allBrokers);
         brokerComboBox.setItems(observableData);
@@ -133,38 +128,5 @@ public class MyProfileController implements Initializable {
                 balanceTextField.setText(oldValue);
             }
         });
-        /*
-        sector.setCellValueFactory(new PropertyValueFactory<>("sector"));
-        shortName.setCellValueFactory(new PropertyValueFactory<>("shortName"));
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
-        price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        ArrayList<AllStocksTable> data = new ArrayList<>();
-        System.out.println("LOADING");
-        if(loadedList.size() == 0) {
-            data = StockDataService.getAllStocksTableList();
-            loadedList = data;
-
-        }  else {
-            data = loadedList;
-        }
-        ObservableList<AllStocksTable> observableData = FXCollections.observableArrayList(data);
-        allStockTableView.setItems(observableData);*/
-
-
-
     }
-
-    /*public void changePassword(ActionEvent actionEvent) {
-        User myUser = UserService.getActiveUser();
-
-        if(userService.isPasswordCorrect(myUser.getUsername(),oldPasswordTextField.getText())) {
-
-            myUser.setPassword(userService.hashPassword(newPasswordTextField.getText()));
-            userService.updateUser(myUser);
-            passwordStatusLabel.setText("Password has been reset!");
-        } else {
-            passwordStatusLabel.setText("Old password doesn't match!");
-        }
-    }*/
 }

@@ -33,7 +33,7 @@ public class MenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         User user = UserService.getActiveUser();
         if(user.getPermission().getName()== PermissionEnum.client) {
-            infoLabel.setText("Current balance: $" + String.valueOf(user.getFunds()) +
+            infoLabel.setText("Current balance: $" + String.format("%.2f",user.getFunds()) +
                     " | Broker: " + user.getBroker() + " | Handling Fee: " + user.getBroker().getHandlingFee() * 100 + "%" +
                     " | Profit Margin: " + user.getBroker().getProfitMargin() + "%" + " | Tax rate: " + user.getBroker().getCountry().getTaxRate() * 100 + "%");
             infoLabelP = infoLabel;

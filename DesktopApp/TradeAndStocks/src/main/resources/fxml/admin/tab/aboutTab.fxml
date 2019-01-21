@@ -8,7 +8,7 @@
       prefHeight="400.0" prefWidth="600.0">
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
         <children>
-            <Label text="Trade and Stocks 2018-2019 Jacek Papis, Michał Piątek"/>
+            <Label text="Trade and Stocks 2018-2019 Jacek Papis, Michał Piątek. This application is for educational purposes only."/>
             <Label text="All rights reserved"/>
         </children>
     </AnchorPane>

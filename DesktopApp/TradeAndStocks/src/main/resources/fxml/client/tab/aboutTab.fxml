@@ -13,6 +13,6 @@
         <padding>
             <Insets bottom="10" left="25" right="25" top="25" />
         </padding>
-            <Label text="Trade and Stocks 2018-2019 Jacek Papis, Michał Piątek"/>
+            <Label text="Trade and Stocks 2018-2019 Jacek Papis, Michał Piątek. This application is for educational purposes only."/>
             <Label text="All rights reserved"/>
 </VBox>

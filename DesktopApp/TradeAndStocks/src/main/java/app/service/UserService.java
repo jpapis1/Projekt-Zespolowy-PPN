@@ -1,3 +1,22 @@
+/*
+ *    Copyright 2018-2019 Jacek Papis, Michał Piątek
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ *
+ *    Data provided for free by IEX https://iextrading.com/developer/.
+ *    View IEX’s Terms of Use https://iextrading.com/api-exhibit-a/.
+ */
+
 package app.service;
 
 import app.api.StockDataService;
@@ -9,11 +28,8 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -46,10 +62,8 @@ public class UserService {
             user = userRepository.findFirstByEmail(usernameOrEmail);
         }
         if (user == null) return false; // neither username nor email was found
-        System.out.println(user);
         String[] pass = user.getPassword().split("\\$");
         KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
-        System.out.println("LENGTH: " + pass[2].getBytes().length);
         try {
             SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
             String passHash = Base64.encode(f.generateSecret(spec).getEncoded());
@@ -106,17 +120,13 @@ public class UserService {
             double valueSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
             double value = valueBuy - valueSell;
             double realValue = unitSum * currentUnitPrice;
-            System.out.println(realValue);
-
-            double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy);
-            System.out.println(1 + " - " + unitSumSell + "+" + currentUnitPrice + "*" + unitSum + "/" + unitSumBuy);
+            double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
+            System.out.println(profitLoss);
             String str = String.format("%.2f", profitLoss);
-            System.out.print("Profit loss: " + profitLoss);
             profitLoss = Double.valueOf(str);
-            System.out.println(" | Double profit lost: " + profitLoss + " | realVal: " + realValue + " | Value: " + value);
             if(unitSum!=0) {
                 String realValueRound = String.format("%.2f", realValue);
-                myStocksTable.add(new MyStocksTable(shortName, currentUnitPrice, unitSum,Double.parseDouble(realValueRound), profitLoss*100+"%"));
+                myStocksTable.add(new MyStocksTable(shortName, currentUnitPrice, unitSum,Double.parseDouble(realValueRound), profitLoss+"%"));
             }
         }
         return myStocksTable;

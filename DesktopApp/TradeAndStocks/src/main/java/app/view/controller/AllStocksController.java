@@ -50,9 +50,7 @@ public class AllStocksController implements Initializable {
 
     @FXML
     protected void handleTransactionAction(ActionEvent event) throws IOException {
-        System.out.println(userService);
         AllStocksTable table = allStockTableView.getSelectionModel().getSelectedItem();
-        System.out.println(table.getShortName());
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/transaction.fxml"));
         loader.setControllerFactory(Application.app::getBean);
@@ -101,7 +99,6 @@ public class AllStocksController implements Initializable {
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
         ArrayList<AllStocksTable> data = new ArrayList<>();
-        System.out.println("LOADING");
         if(loadedList.size() == 0) {
             data = StockDataService.getAllStocksTableList();
             loadedList = data;

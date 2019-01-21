@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018-2019 Jacek Papis, Michał Piątek, Zofia Napierała
+ *    Copyright 2018-2019 Jacek Papis, Michał Piątek
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -44,6 +44,8 @@ public class Application {
     public static ApplicationContext app;
 
     public static void main(String[] args) {
+        System.err.close();
+        System.setErr(System.out);
         SpringApplication.run(Application.class);
 
     }
@@ -51,6 +53,7 @@ public class Application {
     @Bean
     public CommandLineRunner run() {
         return (args) -> {
+
             app = applicationContext;
             LoginWindow.run();
         };

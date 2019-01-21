@@ -94,7 +94,6 @@ public class BrokersController implements Initializable {
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         List<Broker> data = new ArrayList<>();
-        System.out.println("LOADING");
         if(loadedList.size() == 0) {
             data = brokerService.getAllBrokers();
             loadedList = data;

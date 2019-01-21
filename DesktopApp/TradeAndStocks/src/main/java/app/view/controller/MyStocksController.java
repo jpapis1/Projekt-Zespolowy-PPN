@@ -67,7 +67,6 @@ public class MyStocksController implements Initializable {
         profitLoss.setCellValueFactory(new PropertyValueFactory<>("profitLoss"));
 
         ArrayList<MyStocksTable> data = new ArrayList<>();
-        System.out.println("LOADING");
         if(loadedList.size() == 0) {
             data = StockDataService.getMyStocksTableList(userService);
             loadedList = data;

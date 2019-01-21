@@ -17,9 +17,11 @@
         <Tab text="Brokers">
             <fx:include fx:id="brokerTab" source="../tab/brokersTab.fxml"/>
         </Tab>
+        <!--
         <Tab text="Users">
-            <fx:include fx:id="aboutTab" source="../tab/usersTab.fxml"/>
+            <fx:include fx:id="userTab" source="../tab/usersTab.fxml"/>
         </Tab>
+        -->
     </tabs>
 </TabPane>
     <Separator/>

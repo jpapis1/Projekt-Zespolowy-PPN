@@ -32,8 +32,6 @@ public class LoginController {
     private Text actionTarget;
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws IOException {
-        System.out.println(userService);
-        System.out.println("LOGGING IN");
         if (userService.isPasswordCorrect(loginOrPasswordField.getText(), passwordField.getText())) {
             String resource = "";
             if(UserService.getActiveUser().getPermission().getName()== PermissionEnum.client) {
