@@ -5,7 +5,9 @@
 <!-- TODO: Layout change -->
 {% if company %}
     <h1>Company information</h1>
-
+    <div class="content">
+        <img src="{{logo.url}}" alt="Logo" style="width: 10%;height: 10%">
+    </div>
     <p><div class="company-info section">Name:</div> {{company.companyName}}</p> 
     <p><div class="company-info section">Company symbol:</div> {{company.symbol}}</p> 
     <p><div class="company-info section">Description:</div> {{company.description}}</p> 
