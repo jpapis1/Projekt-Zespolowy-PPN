@@ -25,13 +25,9 @@ from sklearn.model_selection import train_test_split
 from trades.logic import monte_carlo
 import plotly
 
-# Debugging
-import sys
-
+# TODO: Delete unused imports by searching the package names
 error_msg = "Invalid Parameters."
 
-
-# Create your views here.
 def index(request):
     return render(request, 'index.html')
 
@@ -45,8 +41,6 @@ def features(request):
     return render(request, 'features.html')
 
 def chart(request):
-
-    # response = requests.get("https://api.iextrading.com/1.0/market")
     response = requests.get("https://api.iextrading.com/1.0/stats/historical/daily?last=14")
     data = json.loads(response.content)
 
@@ -63,15 +57,17 @@ def company(request):
 def company_ticker(request,ticker):
     try:
         company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
+        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
         news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
         try:
             company = json.loads(company_json.content)
+            logo = json.loads(logo_json.content)
             news = json.loads(news_json.content)
         except:
             error_msg = "Unknown Ticker"
             return render(request,'company_form.html',{'error_msg':error_msg})
             
-        return render(request,'company_info.html',{'company':company,'news':news})
+        return render(request,'company_info.html',{'company':company,'news':news,'logo':logo})
 
     except:
         return render(request,'company_form.html',{'error_msg':"error_occured"})       
@@ -83,10 +79,8 @@ def rate_single(request):
         ticker = request.POST.get('ticker')
         start = request.POST.get('start')
         end = request.POST.get('end')
-        print(ticker)
-        print(start)
-        print(end)
         try:
+            # TODO: Move to the separate file
             # Calling the API through the module and calculating log RoR
             df = iex.get_historical_data(ticker, start=start, end=end, output_format='pandas')
             df['log_return'] = np.log(df['close'] / df['close'].shift(1))
@@ -102,9 +96,19 @@ def rate_single(request):
             script, div = components(plot)
         except:
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
-    
+        
+        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
+
+        try:
+            logo = json.loads(logo_json.content)
+        except:
+            # Blank url for logo if there's an error.
+            data = {}
+            data['url'] = ''
+            logo = json.dumps(data)
+
         return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
-        'div':div,'start':start,'end':end,'ticker':ticker})
+        'div':div,'start':start,'end':end,'ticker':ticker,'logo':logo})
 
 def signup(request):
     if request.method == 'POST':
@@ -137,7 +141,6 @@ def loginuser(request):
             login(request, user)
             return redirect('index')
         else:
-            print(1)
             # Return an 'invalid login' error message.           
             return render(request,'login.html',{'error_msg':"Wrong Username or Password."})
 
@@ -165,13 +168,14 @@ def rate_portfolio(request):
         start = request.POST.get('start')
         end = request.POST.get('end')
         try:
+            # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
             mydata = pd.DataFrame()
             for t in tickers:
                 mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
 
             returns = (mydata / mydata.shift(1)) - 1
             
-            # Calculate percentage from amount of stocks that user has. - even by default
+            # Calculate weights of stocks in a portfolio - even by default
             weights = np.array([1/len(tickers)] * len(tickers))
 
             annual_returns = returns.mean() * 250
@@ -201,6 +205,7 @@ def linear_regression(request):
         end = request.POST.get('end')
 
         try:
+            # TODO: Move logic to the separate file
             # Calling the API through the module
 
             df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
@@ -232,7 +237,17 @@ def linear_regression(request):
         except:
             return render(request,'linear_form.html',{'error_msg':error_msg})
     
-        return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker})
+        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
+
+        try:
+            logo = json.loads(logo_json.content)
+        except:
+            # Blank url for logo if there's an error.
+            data = {}
+            data['url'] = ''
+            logo = json.dumps(data)
+
+        return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker,'logo':logo})
 
 
 def monte_carlo_sim(request):
@@ -241,6 +256,7 @@ def monte_carlo_sim(request):
     elif request.method == 'POST':
         ticker = request.POST.get('ticker')
         start = request.POST.get('start')
+        # Limiting date for API calls
         if(int(start[:4]) < 2015):
             start = "2015-01-01"
         end = request.POST.get('end')
@@ -253,9 +269,19 @@ def monte_carlo_sim(request):
         except:
             return render(request,'montecarlo_form.html',{'error_msg':error_msg})
 
+
+        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
+
+        try:
+            logo = json.loads(logo_json.content)
+        except:
+            # Blank url for logo if there's an error.
+            data = {}
+            data['url'] = ''
+            logo = json.dumps(data)
         # Get values from describe like from an array ie. to get count value use 'desc.0'
         return render(request, 'montecarlo.html',{'graph':graph,'mean':mean,'max':maximum,'min':minimum,'std':std,
-        'desc':describe,'start':start,'end':end,'ticker':ticker})
+        'desc':describe,'start':start,'end':end,'ticker':ticker,'logo':logo})
 
 
 def tickers(request):

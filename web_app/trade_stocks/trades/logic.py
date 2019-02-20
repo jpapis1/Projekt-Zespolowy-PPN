@@ -35,18 +35,22 @@ class monte_carlo:
         
         simulation_df = pd.DataFrame()
 
-        #Create Each Simulation as a column
+        # Create Each Simulation as a column
         for x in range(num_simulations):
             count = 0
+            # Daily Volatility - standard deviation of returns
             daily_vol = returns.std()
             
             price_series = []
             
-            #Append Start Value
+            # Append Start Value
+            # Start Value is the last price varying by random value from a range of 0 to daily volatility
             price = last_price * (1 + np.random.normal(0, daily_vol))
+
+            # First of the price series is starting price.
             price_series.append(price)
             
-            #Series for Predicted Days
+            # Series for Predicted Days - until count is 251 change price by random value withitn daily volatility
             for i in range(predicted_days):
                 if count == 251:
                     break
@@ -64,13 +68,13 @@ class monte_carlo:
 
         last_price = prices[-1]
 
-        #Note we are assuming drift here
+        # Note we are assuming drift here
         simulation_df = pd.DataFrame()
         
-        #Create Each Simulation as a Column in df
+        # Create Each Simulation as a Column in df
         for x in range(num_simulations):
             
-            #Inputs
+            # Inputs
             count = 0
             avg_daily_ret = returns.mean()
             variance = returns.var()
@@ -79,7 +83,7 @@ class monte_carlo:
             daily_drift = avg_daily_ret - (variance/2)
             drift = daily_drift - 0.5 * daily_vol ** 2
             
-            #Append Start Value    
+            # Append Start Value    
             prices = []
             
             shock = drift + daily_vol * np.random.normal()
@@ -93,7 +97,6 @@ class monte_carlo:
                 price = prices[count] * math.exp(shock)
                 prices.append(price)
                 
-        
                 count += 1
             simulation_df[x] = prices
             self.simulation_df = simulation_df
@@ -119,7 +122,6 @@ class monte_carlo:
         buf = BytesIO()
         plt.savefig(buf, format='png')
         image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8').replace('\n', '')
-        # buf.flush()
         buf.close()
         return image_base64
 
@@ -149,30 +151,10 @@ class monte_carlo:
         buf2 = BytesIO()
         plt.savefig(buf2, format='png')
         image_base642 = base64.b64encode(buf2.getvalue()).decode('utf-8').replace('\n', '')
-        # buf2.flush()
         buf2.close()
         return image_base642
-        # plt.show()
         
     def key_stats(self):
         simulation_df = self.simulation_df
- 
-        print ('#------------------Simulation Stats------------------#')
-
-        
-        print ('\n')
-        
-        print ('#----------------------Last Price Stats--------------------#')
-        print ("Mean Price: ", np.mean(simulation_df.iloc[-1,:]))
-        print ("Maximum Price: ",np.max(simulation_df.iloc[-1,:]))
-        print ("Minimum Price: ", np.min(simulation_df.iloc[-1,:]))
-        print ("Standard Deviation: ",np.std(simulation_df.iloc[-1,:]))
- 
-        print ('\n')
-       
-        print ('#----------------------Descriptive Stats-------------------#')
         price_array = simulation_df.iloc[-1, :]
-        print (price_array.describe())
- 
-        print ('\n')
         return np.mean(simulation_df.iloc[-1,:]), np.max(simulation_df.iloc[-1,:]), np.min(simulation_df.iloc[-1,:]),np.std(simulation_df.iloc[-1,:]),price_array.describe()
