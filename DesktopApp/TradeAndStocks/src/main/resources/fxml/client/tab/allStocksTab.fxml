@@ -10,6 +10,7 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.AllStocksController">
     <TableView fx:id="allStockTableView" prefHeight="600.0" prefWidth="1000.0">
         <columns>
+            <TableColumn fx:id="icon" text="Icon"/>
             <TableColumn fx:id="sector" text="Sector" />
             <TableColumn fx:id="shortName"  text="Short Name" />
             <TableColumn fx:id="name" text="Name" />

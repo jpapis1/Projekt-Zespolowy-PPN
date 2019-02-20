@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 public class StockDataService {
 
-    static public final String[] usedStocks = {"AAPL", "HPQ", "GOOGL","MSFT", "FB", "AMD", "AMZN", "GOOGL", "FDX", "HAS"};
-    //            "MCD", "MET", "NFLX", "NKE", "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", "FOX", "VZ", "XRX"
+    static public final String[] usedStocks = {"AAPL", "HPQ","MSFT", "FB", "FDX", "HAS","TWTR","MET","MCD","FOX"};
+    //            , "MET", "NFLX", , "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", , "VZ", "XRX"
 
     static public ArrayList<StockData> getAllStockDataList() {
         ArrayList<StockData> stockData = new ArrayList<>();
@@ -43,13 +43,10 @@ public class StockDataService {
 
     static public ArrayList<AllStocksTable> getAllStocksTableList() {
         ArrayList<AllStocksTable> tables = new ArrayList<>();
-        int i = 0;
         for (String shortName : usedStocks) {
             StockData map = new StockData.StockDataBuilder(shortName)
-                    .setNameAndSector().setLatestPriceAndDate().build();
+                    .setNameAndSector().setLatestPriceAndDate().setLogo().build();
             tables.add(new AllStocksTable(map));
-
-            i++;
         }
         return tables;
     }

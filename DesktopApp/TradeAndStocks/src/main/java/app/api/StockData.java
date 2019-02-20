@@ -23,6 +23,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import javafx.scene.image.Image;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,13 +38,15 @@ import java.util.HashMap;
 public class StockData {
     public HashMap map;
 
-    public StockData(String shortName, String name, String sector, double price, Date date) {
+    public StockData(String shortName, String name, String sector, double price, Date date, Image icon) {
         map = new HashMap();
         setSector(sector);
         setShortName(shortName);
         setName(name);
         setPrice(price);
         setDate(date);
+        setIcon(icon);
+
     }
 
     /*public StockData(String shortName, String name, String sector) {
@@ -106,6 +109,14 @@ public class StockData {
         map.put("sector", sector);
     }
 
+    public Image getIcon() {
+        return (Image) map.get("icon");
+    }
+
+    private void setIcon(Image icon) {
+        map.put("icon", icon);
+    }
+
     public static class StockDataBuilder {
         private HashMap map = new HashMap();
 
@@ -141,32 +152,16 @@ public class StockData {
                 request.connect();
                 JsonParser jp = new JsonParser();
                 JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-
-                //String range = root.getAsJsonObject().get("range").getAsString();
                 Date date = new Date();
                 JsonArray array = root.getAsJsonArray();
                 JsonObject latestElement = new JsonObject();
 
                 double price = 0.0;
-               // if(range.equals("1m")) {
-                    latestElement = array.get(array.size() - 1).getAsJsonObject();
-                    price = latestElement.get("close").getAsDouble();
-                    String date_s = latestElement.get("date").getAsString();
-                    SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
-                    date = dt.parse(date_s);
-/*
-                } else if(range.equals("1d")) {
-                    latestElement = array.get(array.size() - 1).getAsJsonObject();
-                    int i = 2;
-                    while (latestElement.get("average").getAsDouble() == -1) {
-                        latestElement = array.get(array.size() - i).getAsJsonObject();
-                        i++;
-                    }
-                    price = latestElement.get("average").getAsDouble();
-                    String date_s = latestElement.get("date").getAsString() + latestElement.get("minute").getAsString();
-                    SimpleDateFormat dt = new SimpleDateFormat("yyyyMMddhh:mm");
-                    date = dt.parse(date_s);
-                }*/
+                latestElement = array.get(array.size() - 1).getAsJsonObject();
+                price = latestElement.get("close").getAsDouble();
+                String date_s = latestElement.get("date").getAsString();
+                SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd");
+                date = dt.parse(date_s);
                 map.put("date", date);
                 map.put("price", price);
                 return this;
@@ -183,27 +178,36 @@ public class StockData {
                 request.connect();
                 JsonParser jp = new JsonParser();
                 JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-
-                //String range = root.getAsJsonObject().get("range").getAsString();
                 JsonArray array = root.getAsJsonArray();
                 JsonObject latestElement = new JsonObject();
 
                 double price = 0.0;
-                //if(range.equals("1m")) {
-                    latestElement = array.get(array.size() - 1).getAsJsonObject();
-                    price = latestElement.get("close").getAsDouble();
-/*
-                } else if(range.equals("1d")) {
-                    latestElement = array.get(array.size() - 1).getAsJsonObject();
-                    int i = 2;
-                    while (latestElement.get("average").getAsDouble() == -1) {
-                        latestElement = array.get(array.size() - i).getAsJsonObject();
-                        i++;
-                    }
-                    price = latestElement.get("average").getAsDouble();
-                }
-                */
+                latestElement = array.get(array.size() - 1).getAsJsonObject();
+                price = latestElement.get("close").getAsDouble();
                 map.put("price", price);
+                return this;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        public StockDataBuilder setLogo() {
+            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/logo";
+            try {
+                URL url = new URL(sURL);
+                URLConnection request = url.openConnection();
+                request.connect();
+                JsonParser jp = new JsonParser();
+                JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+
+                try {
+                    InputStream inputstream = new URL(root.getAsJsonObject().get("url").getAsString()).openStream();
+                    Image image = new Image(inputstream);
+                    map.put("icon",image);
+                }
+                catch (IOException e) {
+                    System.out.println("Loading unsuccessful");
+                }
                 return this;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -213,7 +217,7 @@ public class StockData {
 
         public StockData build() {
             return new StockData((String) map.get("shortName"), (String) map.get("name"),
-                    (String) map.get("sector"), (Double) map.get("price"), (Date) map.get("date"));
+                    (String) map.get("sector"), (Double) map.get("price"), (Date) map.get("date"), (Image) map.get("icon"));
         }
     }
 

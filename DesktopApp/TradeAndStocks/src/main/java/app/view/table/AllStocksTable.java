@@ -1,13 +1,20 @@
 package app.view.table;
 
 import app.api.StockData;
+import javafx.scene.image.Image;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 
 public class AllStocksTable {
 
     // ONLY USED WHEN CONSTRUCTED WITH ALL DATA
+    private Image icon;
     private String sector;
     private String shortName;
     private String name;
@@ -22,6 +29,18 @@ public class AllStocksTable {
         this.name = (String) map.get("name");
         this.price = (Double) map.get("price");
         this.date = (Date) map.get("date");
+        if(map.get("icon")==null) {
+            System.out.println("NULL");
+        }
+        this.icon = (Image) map.get("icon");
+    }
+
+    public Image getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Image icon) {
+        this.icon = icon;
     }
 
     public String getSector() {

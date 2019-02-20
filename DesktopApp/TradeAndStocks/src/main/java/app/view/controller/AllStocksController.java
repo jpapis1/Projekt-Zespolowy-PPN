@@ -14,15 +14,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class AllStocksController implements Initializable {
     private TableColumn<AllStocksTable, Date> date;
     @FXML
     private TableColumn<AllStocksTable, Double> price;
+    @FXML
+    private TableColumn<AllStocksTable, Image> icon;
 
 
     @FXML
@@ -98,6 +102,32 @@ public class AllStocksController implements Initializable {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        icon.setCellValueFactory(new PropertyValueFactory<>("icon"));
+
+        icon.setCellFactory(param -> {
+
+
+            final ImageView imageView = new ImageView();
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+
+            TableCell<AllStocksTable, Image> cell = new TableCell<AllStocksTable, Image>(){
+                @Override
+                protected void updateItem(Image active, boolean empty) {
+                    super.updateItem(active, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        imageView.setImage(active);
+                        setGraphic(imageView);
+                    }
+                }
+            };
+
+
+            return cell;
+        });
+
         ArrayList<AllStocksTable> data = new ArrayList<>();
         if(loadedList.size() == 0) {
             data = StockDataService.getAllStocksTableList();
