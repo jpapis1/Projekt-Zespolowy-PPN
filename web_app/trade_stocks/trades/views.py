@@ -116,6 +116,7 @@ def signup(request):
         reg_message = "Registration failed."
         
         if (form.is_valid()):
+            # TODO: create a function and move it to the separate file
             user = form.save(commit=False)
             pw = form.cleaned_data['password']
             user.password = make_password(pw)
@@ -150,13 +151,14 @@ def loginuser(request):
 
     return render(request, 'login.html')
 
+# Remove if logout stopped working
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('index')
 
 @login_required
 def profile(request):
-
     return render(request, 'profile.html')
 
 def rate_portfolio(request):
@@ -205,7 +207,7 @@ def linear_regression(request):
         end = request.POST.get('end')
 
         try:
-            # TODO: Move logic to the separate file
+            # TODO: Move logic to the separate file and add the sources
             # Calling the API through the module
 
             df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
@@ -261,6 +263,7 @@ def monte_carlo_sim(request):
             start = "2015-01-01"
         end = request.POST.get('end')
         try:
+            # TODO: Move logic to the separate file and add the sources
             sim = monte_carlo(start, end)
             sim.get_asset(ticker)
             sim.monte_carlo_sim(500, 180)
