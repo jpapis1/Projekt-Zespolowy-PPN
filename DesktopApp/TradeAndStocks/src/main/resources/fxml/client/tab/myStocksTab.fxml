@@ -9,6 +9,7 @@
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.MyStocksController">
     <TableView fx:id="myStocksTableView">
         <columns>
+            <TableColumn fx:id="icon" text="icon"/>
             <TableColumn fx:id="shortName" text="Short name" />
             <TableColumn fx:id="unitPrice"  text="Unit price" />
             <TableColumn fx:id="price" text="Value" />

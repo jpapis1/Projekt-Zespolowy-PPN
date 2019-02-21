@@ -1,18 +1,22 @@
 package app.view.table;
 
+import javafx.scene.image.Image;
+
 public class MyStocksTable {
     private String shortName;
     private Double unitPrice;
     private double units;
     private double value;
     private String profitLoss;
+    private Image icon;
 
-    public MyStocksTable(String shortName, Double unitPrice, double units, double value, String profitLoss) {
+    public MyStocksTable(String shortName, Double unitPrice, double units, double value, String profitLoss, Image icon) {
         this.shortName = shortName;
         this.unitPrice = unitPrice;
         this.units = units;
         this.value = value;
         this.profitLoss = profitLoss;
+        this.icon = icon;
     }
 
     public String getShortName() {
@@ -53,6 +57,14 @@ public class MyStocksTable {
 
     public void setProfitLoss(String profitLoss) {
         this.profitLoss = profitLoss;
+    }
+
+    public Image getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Image icon) {
+        this.icon = icon;
     }
 
     @Override

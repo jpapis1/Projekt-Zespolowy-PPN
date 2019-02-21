@@ -20,6 +20,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -58,6 +60,9 @@ public class MyStocksController implements Initializable {
     @FXML
     private TableColumn<MyStocksTable, Double> profitLoss;
 
+    @FXML
+    private TableColumn<MyStocksTable, Image> icon;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         shortName.setCellValueFactory(new PropertyValueFactory<>("shortName"));
@@ -65,6 +70,32 @@ public class MyStocksController implements Initializable {
         price.setCellValueFactory(new PropertyValueFactory<>("value"));
         units.setCellValueFactory(new PropertyValueFactory<>("units"));
         profitLoss.setCellValueFactory(new PropertyValueFactory<>("profitLoss"));
+        icon.setCellValueFactory(new PropertyValueFactory<>("icon"));
+
+
+        icon.setCellFactory(param -> {
+
+
+            final ImageView imageView = new ImageView();
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+
+            TableCell<MyStocksTable, Image> cell = new TableCell<MyStocksTable, Image>() {
+                @Override
+                protected void updateItem(Image active, boolean empty) {
+                    super.updateItem(active, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        imageView.setImage(active);
+                        setGraphic(imageView);
+                    }
+                }
+            };
+
+
+            return cell;
+        });
 
         ArrayList<MyStocksTable> data = new ArrayList<>();
         if(loadedList.size() == 0) {

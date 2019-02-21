@@ -192,7 +192,12 @@ public class StockData {
             return null;
         }
         public StockDataBuilder setLogo() {
+            map.put("icon",getLogo());
+            return this;
+        }
+        public Image getLogo() {
             String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/logo";
+            Image myImage;
             try {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();
@@ -203,12 +208,12 @@ public class StockData {
                 try {
                     InputStream inputstream = new URL(root.getAsJsonObject().get("url").getAsString()).openStream();
                     Image image = new Image(inputstream);
-                    map.put("icon",image);
+                    myImage = image;
+                    return myImage;
                 }
                 catch (IOException e) {
                     System.out.println("Loading unsuccessful");
                 }
-                return this;
             } catch (IOException e) {
                 e.printStackTrace();
             }

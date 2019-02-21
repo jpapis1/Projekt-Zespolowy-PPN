@@ -19,12 +19,15 @@
 
 package app.service;
 
+import app.api.StockData;
 import app.api.StockDataService;
 import app.model.Transaction;
 import app.model.User;
 import app.repository.UserRepository;
+import app.view.table.AllStocksTable;
 import app.view.table.MyStocksTable;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import javafx.scene.image.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -126,7 +129,12 @@ public class UserService {
             profitLoss = Double.parseDouble(str);
             if(unitSum!=0) {
                 String realValueRound = String.format("%.2f", realValue);
-                myStocksTable.add(new MyStocksTable(shortName, currentUnitPrice, unitSum,Double.parseDouble(realValueRound), profitLoss+"%"));
+                //icon
+                    Image icon = new StockData.StockDataBuilder(shortName).getLogo();
+
+
+
+                myStocksTable.add(new MyStocksTable(shortName, currentUnitPrice, unitSum,Double.parseDouble(realValueRound), profitLoss+"%",icon));
             }
         }
         return myStocksTable;
