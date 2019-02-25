@@ -1,31 +1,26 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
+from sklearn.model_selection import train_test_split
+from django.views.decorators.csrf import csrf_exempt
+from sklearn.linear_model import LinearRegression
+from iexfinance import get_historical_data
+from bokeh.models import ColumnDataSource
+from .forms import SignupForm, LoginForm
+from django.shortcuts import redirect
+from trades.logic import monte_carlo, linear_reg, portfolio_rate, single_ror, logo_url
 from django.shortcuts import render
+from bokeh.embed import components
+from bokeh.plotting import figure
+from sklearn import preprocessing
+from trades.models import User
 from datetime import datetime
 import iexfinance as iex
-import json
-import requests
-from bokeh.plotting import figure
-from bokeh.embed import components
-from datetime import datetime
-import numpy as np
 import pandas as pd
-from bokeh.models import ColumnDataSource
-from django.views.decorators.csrf import csrf_exempt
-from .forms import SignupForm, LoginForm
-from django.http import HttpResponseRedirect
-from django.contrib.auth.hashers import make_password
-from django.shortcuts import redirect
-from django.contrib.auth import authenticate, login, logout
-import bcrypt
-from trades.models import User
-from django.contrib.auth.decorators import login_required
-from sklearn.linear_model import LinearRegression
-from sklearn import preprocessing, svm
-from iexfinance import get_historical_data
-from sklearn.model_selection import train_test_split
-from trades.logic import monte_carlo
-import plotly
+import numpy as np
+import requests
+import json
 
-# TODO: Delete unused imports by searching the package names
 error_msg = "Invalid Parameters."
 
 def index(request):
@@ -61,12 +56,13 @@ def company_ticker(request,ticker):
         news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
         try:
             company = json.loads(company_json.content)
-            logo = json.loads(logo_json.content)
             news = json.loads(news_json.content)
         except:
             error_msg = "Unknown Ticker"
             return render(request,'company_form.html',{'error_msg':error_msg})
-            
+        
+        logo = logo_url(ticker)
+
         return render(request,'company_info.html',{'company':company,'news':news,'logo':logo})
 
     except:
@@ -80,32 +76,11 @@ def rate_single(request):
         start = request.POST.get('start')
         end = request.POST.get('end')
         try:
-            # TODO: Move to the separate file
-            # Calling the API through the module and calculating log RoR
-            df = iex.get_historical_data(ticker, start=start, end=end, output_format='pandas')
-            df['log_return'] = np.log(df['close'] / df['close'].shift(1))
-            log_return_a = df['log_return'].mean() * 250
-            annual_log_return = str(round(log_return_a, 5) * 100) + '%'
-            
-            # Plotting
-            df.reset_index(inplace = True)
-            df['date'] = pd.to_datetime(df['date'])
-            source = ColumnDataSource(df)
-            plot = figure(x_axis_type='datetime',title="Close prices")
-            plot.line(x='date', y='close', source=source)
-            script, div = components(plot)
+            annual_log_return, script, div = single_ror(ticker, start, end)
         except:
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
         
-        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
-
-        try:
-            logo = json.loads(logo_json.content)
-        except:
-            # Blank url for logo if there's an error.
-            data = {}
-            data['url'] = ''
-            logo = json.dumps(data)
+        logo = logo_url(ticker)
 
         return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
         'div':div,'start':start,'end':end,'ticker':ticker,'logo':logo})
@@ -113,7 +88,7 @@ def rate_single(request):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        reg_message = "Registration failed."
+        failed_message = "Registration failed."
         
         if (form.is_valid()):
             # TODO: create a function and move it to the separate file
@@ -127,7 +102,7 @@ def signup(request):
             user.save()
             suc_message = "Registration Successful!"
             return render(request,'registration_result.html',{'suc_message':suc_message})
-        return render(request,'registration_result.html',{'reg_message':reg_message})
+        return render(request,'registration_result.html',{'reg_message':failed_message})
     elif request.method == 'GET':
         form = SignupForm()
         return render(request,'registration_form.html',{'form': form})
@@ -136,7 +111,6 @@ def loginuser(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -151,7 +125,6 @@ def loginuser(request):
 
     return render(request, 'login.html')
 
-# Remove if logout stopped working
 @login_required
 def logout_view(request):
     logout(request)
@@ -166,88 +139,31 @@ def rate_portfolio(request):
         return render(request,'rate_portfolio_form.html')
     elif request.method == 'POST':
         tickers = request.POST.getlist('tickers[]')
-
         start = request.POST.get('start')
         end = request.POST.get('end')
         try:
-            # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
-            mydata = pd.DataFrame()
-            for t in tickers:
-                mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
-
-            returns = (mydata / mydata.shift(1)) - 1
-            
-            # Calculate weights of stocks in a portfolio - even by default
-            weights = np.array([1/len(tickers)] * len(tickers))
-
-            annual_returns = returns.mean() * 250
-
-            np.dot(annual_returns, weights)
-            pfolio_1 = str(round(np.dot(annual_returns,weights), 5) * 100) + ' %'
-            
+            # # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
+            pfolio_1 = portfolio_rate(tickers, start, end)
         except:
             return render(request,'rate_portfolio_form.html',{'error_msg':error_msg})
     
         return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end,'tickers':tickers})
 
-
-
-
 def linear_regression(request):
     if request.method == 'GET':
         return render(request,'linear_form.html')
     elif request.method == 'POST':
-        
         ticker = request.POST.get('ticker')
-
         start = request.POST.get('start')
         if(int(start[:4]) < int(datetime.now().year)-5):
             start = str(datetime.now().year-5)+"-01-01"
-        
         end = request.POST.get('end')
-
         try:
-            # TODO: Move logic to the separate file and add the sources
-            # Calling the API through the module
-
-            df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
-            df = df.reset_index()
-            df = df[['close']]
-            forecast_out = int(30) # predicting 30 days into future
-            df['Prediction'] = df[['close']].shift(-forecast_out) #  label column with data shifted 30 units up
-
-            X = np.array(df.drop(['Prediction'], 1))
-            X = preprocessing.scale(X)
-
-            X_forecast = X[-forecast_out:] # set X_forecast equal to last 30
-            X = X[:-forecast_out] # remove last 30 from X
-
-            y = np.array(df['Prediction'])
-            y = y[:-forecast_out]
-
-            # X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size = 0.2)
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
-
-            # Training
-            clf = LinearRegression()
-            clf.fit(X_train,y_train)
-            # Testing
-            confidence = clf.score(X_test, y_test)
-
-            # Predictions for next 30 days.
-            forecast_prediction = clf.predict(X_forecast)
+            confidence, forecast_prediction = linear_reg(ticker,start,end)
         except:
             return render(request,'linear_form.html',{'error_msg':error_msg})
     
-        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
-
-        try:
-            logo = json.loads(logo_json.content)
-        except:
-            # Blank url for logo if there's an error.
-            data = {}
-            data['url'] = ''
-            logo = json.dumps(data)
+        logo = logo_url(ticker)
 
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker,'logo':logo})
 
@@ -263,7 +179,7 @@ def monte_carlo_sim(request):
             start = "2015-01-01"
         end = request.POST.get('end')
         try:
-            # TODO: Move logic to the separate file and add the sources
+            # TODO: Move logic to the separate file and add the sources - Maybe not
             sim = monte_carlo(start, end)
             sim.get_asset(ticker)
             sim.monte_carlo_sim(500, 180)
@@ -273,16 +189,7 @@ def monte_carlo_sim(request):
             return render(request,'montecarlo_form.html',{'error_msg':error_msg})
 
 
-        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
-
-        try:
-            logo = json.loads(logo_json.content)
-        except:
-            # Blank url for logo if there's an error.
-            data = {}
-            data['url'] = ''
-            logo = json.dumps(data)
-        # Get values from describe like from an array ie. to get count value use 'desc.0'
+        logo = logo_url(ticker)
         return render(request, 'montecarlo.html',{'graph':graph,'mean':mean,'max':maximum,'min':minimum,'std':std,
         'desc':describe,'start':start,'end':end,'ticker':ticker,'logo':logo})
 
