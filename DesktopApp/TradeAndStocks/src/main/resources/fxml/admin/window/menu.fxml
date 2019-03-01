@@ -17,6 +17,9 @@
         <Tab text="Brokers">
             <fx:include fx:id="brokerTab" source="../tab/brokersTab.fxml"/>
         </Tab>
+        <Tab text="Users">
+            <fx:include fx:id="usersTab" source="../tab/usersTab.fxml"/>
+        </Tab>
         <!--
         <Tab text="Users">
             <fx:include fx:id="userTab" source="../tab/usersTab.fxml"/>

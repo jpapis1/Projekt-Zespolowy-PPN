@@ -127,7 +127,7 @@ public class UserService {
             System.out.println(profitLoss);
             String str = String.format("%.2f", profitLoss);
             profitLoss = Double.parseDouble(str);
-            if(unitSum!=0) {
+            if(unitSum>=0.01) {
                 String realValueRound = String.format("%.2f", realValue);
                 //icon
                     Image icon = new StockData.StockDataBuilder(shortName).getLogo();

@@ -14,36 +14,36 @@
       <children>
           <GridPane hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea" >
 
-          <Button mnemonicParsing="false" onAction="#handleBackButtonAction" text="Back" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
-            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
+          <Button mnemonicParsing="false" onAction="#handleBackButtonAction" text="Back" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1"/>
+            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
                   <Label text="Name: "/>
                   <Label fx:id="nameLabel" />
             </HBox>
-            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
                   <Label text="Unit price: "/>
                   <Label fx:id="unitPrice" />
             </HBox>
-            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
                   <Label text="Value: "/>
                   <TextField fx:id="value" onKeyTyped="#writingOnValue" text="0.00"/>
             </HBox>
-            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
                   <Label text="Units: "/>
                   <TextField fx:id="units" onKeyTyped="#writingOnUnits" text="0.00"/>
             </HBox>
-          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
               <Label text="Tax rate (only if you sell): " fx:id="taxRatePercent"/>
               <Label fx:id="taxRateValueLabel"/>
           </HBox>
-          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
+          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="7">
               <Label text="Profit Margin: (only if you sell): " fx:id="profitMarginPercent"/>
               <Label fx:id="profitMarginValueLabel"/>
           </HBox>
-          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="7">
+          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="8">
               <Label text="Handling fee (only if you buy): " fx:id="handlingFeePercent"/>
               <Label fx:id="handlingFeeValueLabel"/>
           </HBox>
-          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="8">
+          <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9">
               <Label text="Total transaction value (including fees): "/>
               <Label fx:id="totalTransactionValueLabel"/>
           </HBox>
@@ -53,7 +53,7 @@
       <fx:define>
             <ToggleGroup fx:id="buyOrSell"/>
       </fx:define>
-            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="9" spacing="10">
+            <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="10" spacing="10">
                 <Button fx:id="acceptButton"  mnemonicParsing="false" text="ACCEPT" onAction="#handleAcceptButtonAction" />
                   <RadioButton fx:id="radioBuy" mnemonicParsing="false" text="BUY" toggleGroup="$buyOrSell" selected="true" onAction="#radioButtonChanged"/>
                   <RadioButton fx:id="radioSell" mnemonicParsing="false" text="SELL" toggleGroup="$buyOrSell" onAction="#radioButtonChanged"/>
