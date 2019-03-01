@@ -10,10 +10,17 @@ Main features of the desktop app:
 - Showing profit/loss on specific stock.
 - Admin panel (includes creating/removing countries, brokers, users from database)
 
+Main features of the web app:
+- Using iextrading API to get real market data.
+- Providing information about companies listed on stock exchange.
+- Calculating single and portfolio rates of return.
+- Estimating future stock prices using linear regression.
+- Performing Monte Carlo Simulation of future stock prices.
+
 ## Web application
 https://trades-and-stocks.herokuapp.com/
 
-## Screenshots
+## Screenshots (Desktop app)
 <img src="screenshots/sc_AllStocks.png" height="400" alt="Screenshot"/>
 <img src="screenshots/sc_MyStocks.png" height="400" alt="Screenshot"/>
 <img src="screenshots/sc_StockInfo.png" height="400" alt="Screenshot"/>
