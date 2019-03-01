@@ -1,8 +1,8 @@
 # Projekt-Zespolowy-PPN
 Trade and Stocks contains:
 
-- desktop client app (Spring Boot, JavaFX)
-- web app (Python, Django)
+- desktop client app (Spring Boot, JavaFX) - by Jacek Papis
+- web app (Python, Django) - by Michał Piątek
 
 Main features of the desktop app:
 - Simulation of sell/buy transactions using real market price data (from iextrading API).
