@@ -1,33 +1,24 @@
-import pandas as pd
-import datetime
-import numpy as np
-import math
-from matplotlib import style
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from bokeh.models import ColumnDataSource
+from django.http import HttpResponse
+from bokeh.embed import components
+from sklearn import preprocessing
+from bokeh.plotting import figure
 import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
-from iexfinance import get_historical_data
+from matplotlib import style
 from matplotlib import pylab
-from django.http import HttpResponse
-from matplotlib.backends.backend_agg import FigureCanvasAgg
-from bokeh.models import ColumnDataSource
-from bokeh.plotting import figure
-from bokeh.embed import components
-import requests
-import json
-
-
-
-# from iexfinance import get_historical_data # Change that
 import iexfinance as iex
-
 from io import BytesIO
+import pandas as pd
+import numpy as np
+import datetime
+import requests
 import base64
-from sklearn import preprocessing
-
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-
-
+import math
+import json
 
 # TODO: Add source for monte carlo
 class monte_carlo:
@@ -40,7 +31,7 @@ class monte_carlo:
         start = self.start 
         end = self.end 
 
-        prices = get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
+        prices = iex.get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
         returns = prices.pct_change()
         self.returns = returns
         self.prices = prices

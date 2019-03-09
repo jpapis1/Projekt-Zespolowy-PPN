@@ -198,3 +198,6 @@ def tickers(request):
     tickers_json = requests.get("https://api.iextrading.com/1.0/ref-data/symbols")
     tickers = tickers_json.json()
     return render(request,'tickers.html',{'tickers':tickers})
+
+def custom_404(request):
+    return render(request, '404.html', {}, status=404)
