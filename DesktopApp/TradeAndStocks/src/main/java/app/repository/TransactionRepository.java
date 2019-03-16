@@ -44,9 +44,4 @@ public interface TransactionRepository extends CrudRepository<Transaction, Integ
     @Query(value = "SELECT SUM(t.unitPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=false AND t.user=:myUser")
     Double getSumOfSellTransactions(@Param("shortName") String shortName, @Param("myUser") User user);
 
-    @Query(value = "SELECT SUM(:currentPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=true AND t.user=:myUser")
-    Double getSumOfBuyTransactionsWithCurrentPrice(@Param("shortName") String shortName, @Param("myUser") User user, @Param("currentPrice") double currentPrice); //t.user.idUser=:myUser
-
-    @Query(value = "SELECT SUM(:currentPrice*t.units) from Transaction t WHERE t.shortName=:shortName AND t.doesExists=true AND t.isBuy=false AND t.user=:myUser")
-    Double getSumOfSellTransactionsWithCurrentPrice(@Param("shortName") String shortName, @Param("myUser") User user, @Param("currentPrice") double currentPrice);
 }

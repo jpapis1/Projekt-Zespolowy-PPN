@@ -124,7 +124,6 @@ public class UserService {
             double value = valueBuy - valueSell;
             double realValue = unitSum * currentUnitPrice;
             double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
-            System.out.println(profitLoss);
             String str = String.format("%.2f", profitLoss);
             profitLoss = Double.parseDouble(str);
             if(unitSum>=0.01) {
