@@ -4,7 +4,12 @@
 <div class="content">
 <div class="signup-div">
 <h1>Sign Up</h1>
-<hr>
+<div class="jumbotron">
+    <p>All fields are required.</p>
+    <p>Default broker is Bank of America. You can change it in a simulator client.</p>
+</div>
+{% comment %} <hr> {% endcomment %}
+
 
 <form method="POST" class="signup-form">
     {% csrf_token %}

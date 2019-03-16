@@ -88,7 +88,7 @@ def rate_single(request):
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        failed_message = "Registration failed."
+        failed_msg = "Registration failed."
         
         if (form.is_valid()):
             # TODO: create a function and move it to the separate file
@@ -100,9 +100,9 @@ def signup(request):
             user.idpermission = 2
             user.is_authenticated = False
             user.save()
-            suc_message = "Registration Successful!"
-            return render(request,'registration_result.html',{'suc_message':suc_message})
-        return render(request,'registration_result.html',{'reg_message':failed_message})
+            success_msg = "Registration Successful!"
+            return render(request,'registration_result.html',{'success_msg':success_msg})
+        return render(request,'registration_result.html',{'failed_msg':failed_msg})
     elif request.method == 'GET':
         form = SignupForm()
         return render(request,'registration_form.html',{'form': form})

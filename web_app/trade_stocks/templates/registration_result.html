@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="content">
-{% if suc_message %}
-    <p class="name">{{suc_message}}</p>
+{% if success_msg %}
+    <p class="name">{{success_msg}}</p>
     <p><a href="{% url 'loginuser' %}" class="btn btn-dark">Login</a></p>
 {% endif %}
-{% if reg_message %}
-    <p class="name">{{reg_message}}</p>
+{% if failed_msg %}
+    <p class="name">{{failed_msg}}</p>
     <p><a href="{% url 'signup' %}" class="btn btn-dark">Try Again.</a></p>
 {% endif %}
 
