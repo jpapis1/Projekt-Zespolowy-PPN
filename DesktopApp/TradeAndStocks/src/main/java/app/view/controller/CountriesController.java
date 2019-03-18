@@ -1,6 +1,7 @@
 package app.view.controller;
 
 import app.model.Country;
+import app.other.Messenger;
 import app.service.CountryService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,19 +41,11 @@ public class CountriesController implements Initializable {
 
     public void createCountryAction(ActionEvent actionEvent) {
         if(nameTextField.getText().isEmpty() || taxRateTextField.getText().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Fields cannot be empty!");
-            alert.showAndWait();
+            Messenger.errorBox("Field cannot be empty!");
+
         } else {
             countryService.addCountry(nameTextField.getText(), Double.parseDouble(taxRateTextField.getText()));
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information");
-            alert.setHeaderText(null);
-            alert.setContentText("Country has been added!");
-
-            alert.showAndWait();
+            Messenger.infoBox("Country has been added");
             refreshTable();
         }
     }
@@ -89,11 +82,7 @@ public class CountriesController implements Initializable {
 
     public void removeCountryAction(ActionEvent actionEvent) {
         if(countriesTableView.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("You have to choose a country to remove");
-            alert.showAndWait();
+            Messenger.errorBox("You have to choose a country to remove!");
             refreshTable();
 
         } else {
@@ -106,12 +95,7 @@ public class CountriesController implements Initializable {
             if (result.get() == ButtonType.OK){
 
                 countryService.removeCountry(countriesTableView.getSelectionModel().getSelectedItem());
-
-                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert2.setTitle("Confirmation");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Country has been removed!");
-                alert2.showAndWait();
+                Messenger.infoBox("Country has been removed!");
                 refreshTable();
             } else {
                 // ... user chose CANCEL or closed the dialog

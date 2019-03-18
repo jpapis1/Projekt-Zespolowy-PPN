@@ -25,12 +25,20 @@ import app.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
+@Transactional
 public class PermissionService {
     @Autowired
     private PermissionRepository permissionRepository;
 
     public Permission getPermissionByEnum(PermissionEnum name) {
         return permissionRepository.findFirstByName(name);
+    }
+
+    public List<Permission> getAllPermissions() {
+        return permissionRepository.findAll();
     }
 }

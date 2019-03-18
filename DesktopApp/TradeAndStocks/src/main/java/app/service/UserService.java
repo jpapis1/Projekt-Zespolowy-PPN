@@ -29,17 +29,21 @@ import app.view.table.MyStocksTable;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import javafx.scene.image.Image;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import javax.transaction.Transactional;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserService {
     private static User activeUser;
     @Autowired
@@ -47,9 +51,18 @@ public class UserService {
     @Autowired
     private TransactionService transactionService;
 
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     public static void setActiveUser(User user) {
         activeUser = user;
     }
+    public  void createUser(User user) throws DataAccessException{
+            userRepository.save(user);
+    }
+
     public static User getActiveUser() {
         return activeUser;
     }
@@ -139,4 +152,7 @@ public class UserService {
         return myStocksTable;
     }
 
+    public void removeUser(User selectedItem) throws DataAccessException {
+            userRepository.delete(selectedItem);
+    }
 }

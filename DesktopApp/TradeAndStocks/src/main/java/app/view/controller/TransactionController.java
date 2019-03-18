@@ -1,9 +1,9 @@
 package app.view.controller;
 
-import app.api.StockData;
 import app.api.StockDataService;
 import app.model.Transaction;
 import app.model.User;
+import app.other.Messenger;
 import app.service.TransactionService;
 import app.service.UserService;
 import javafx.event.ActionEvent;
@@ -168,28 +168,13 @@ public class TransactionController {
                 Double.parseDouble(totalTransactionValueLabel.getText()),Double.parseDouble(units.getText()),Double.parseDouble(unitPrice.getText())))
         {
             case Success:
-                System.out.println("SUCCESS");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Information Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Transaction has been successful!");
-                alert.showAndWait();
-
+                Messenger.infoBox("Transaction has been successful!");
                 break;
             case NotEnoughFunds:
-                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert2.setTitle("Information Dialog");
-                alert2.setHeaderText(null);
-                alert2.setContentText("You have not enough funds!");
-                alert2.showAndWait();
-                System.out.println("You have not enough funds!");
+                Messenger.errorBox("You have not enough funds!");
                 break;
             case NothingToSell:
-                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
-                alert3.setTitle("Information Dialog");
-                alert3.setHeaderText(null);
-                alert3.setContentText("You have nothing to sell!");
-                alert3.showAndWait();
+                Messenger.errorBox("You have nothing to sell!");
                 break;
         }
 

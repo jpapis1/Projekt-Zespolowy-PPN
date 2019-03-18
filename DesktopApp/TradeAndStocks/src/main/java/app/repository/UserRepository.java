@@ -36,4 +36,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findFirstByUsernameOrEmail(String username,String mail);
 
     User findFirstByEmail(String email);
+
+    List<User> findAll();
+
 }

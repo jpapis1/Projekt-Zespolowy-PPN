@@ -1,14 +1,11 @@
 package app.view.controller;
 
-import app.api.StockDataService;
 import app.model.Broker;
 import app.model.User;
+import app.other.Messenger;
 import app.service.BrokerService;
 import app.service.TransactionService;
 import app.service.UserService;
-import app.view.table.AllStocksTable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,14 +16,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -92,13 +87,7 @@ public class MyProfileController implements Initializable {
                     " | Broker: " + user.getBroker() + " | Handling Fee: " + user.getBroker().getHandlingFee()*100 + "%" +
                     " | Profit Margin: " + user.getBroker().getProfitMargin() + "%"+ " | Tax rate: " + user.getBroker().getCountry().getTaxRate()*100 + "%");
             // ... user chose OK
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("Information Dialog");
-            alert2.setHeaderText(null);
-            alert2.setContentText("Your account has been successfully reset with " + brokerComboBox.getValue() + " broker and balance of $" + balanceTextField.getText() + "!");
-
-            alert2.showAndWait();
-
+            Messenger.infoBox("Your account has been successfully reset with " + brokerComboBox.getValue() + " broker and balance of $" + balanceTextField.getText() + "!");
 
             try {
                 Parent menuParent = FXMLLoader.load(getClass().getResource("/fxml/client/window/menu.fxml"));

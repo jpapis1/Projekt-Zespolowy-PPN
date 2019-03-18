@@ -302,9 +302,17 @@ public class User {
             this.permission = permissionService.getPermissionByEnum(permissionEnum);
             return this;
         }
+        public UserBuilder perm(Permission permission) {
+            this.permission = permission;
+            return this;
+        }
 
         public UserBuilder broker(String broker) {
             this.broker = brokerService.getBrokerByName(broker);
+            return this;
+        }
+        public UserBuilder broker(Broker broker) {
+            this.broker = broker;
             return this;
         }
 

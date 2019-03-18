@@ -2,6 +2,7 @@ package app.view.controller;
 
 import app.model.Broker;
 import app.model.Country;
+import app.other.Messenger;
 import app.service.BrokerService;
 import app.service.CountryService;
 import javafx.collections.FXCollections;
@@ -119,11 +120,7 @@ public class BrokersController implements Initializable {
 
     public void removeBrokerAction(ActionEvent actionEvent) {
         if(brokersTableView.getSelectionModel().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("You have to choose a broker to remove");
-            alert.showAndWait();
+            Messenger.errorBox("You have to choose a broker to remove");
             refreshTable();
 
         } else {
@@ -137,11 +134,7 @@ public class BrokersController implements Initializable {
 
                 brokerService.removeBroker(brokersTableView.getSelectionModel().getSelectedItem());
 
-                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert2.setTitle("Confirmation");
-                alert2.setHeaderText(null);
-                alert2.setContentText("Broker has been removed!");
-                alert2.showAndWait();
+                Messenger.infoBox("Broker has been removed!");
                 refreshTable();
             } else {
                 // ... user chose CANCEL or closed the dialog
