@@ -10,17 +10,20 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 from matplotlib import style
 from matplotlib import pylab
+from django.contrib.auth.hashers import make_password
 import iexfinance as iex
 from io import BytesIO
 import pandas as pd
 import numpy as np
-import datetime
+from datetime import datetime
 import requests
 import base64
 import math
 import json
 
-# TODO: Add source for monte carlo
+# Monte Carlo Simulation based on a code published on 
+# https://programmingforfinance.com/2017/11/monte-carlo-simulations-of-future-stock-prices-in-python/
+
 class monte_carlo:
     def __init__(self, start, end):
         self.start = start
@@ -244,3 +247,18 @@ def logo_url(ticker):
 
     return logo
  
+# Function to limit the date to ensure that start date falls within the API limit.
+def date_limit(date):
+    if(int(date[:4]) < int(datetime.now().year)-5):
+        date = str(datetime.now().year-5)+"-01-01"
+    return date
+
+def new_user(form):
+    user = form.save(commit=False)
+    pw = form.cleaned_data['password']
+    user.password = make_password(pw)
+    user.idbroker = 6
+    user.funds = 3000
+    user.idpermission = 2
+    user.is_authenticated = False
+    user.save()    

@@ -1,23 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password
-from sklearn.model_selection import train_test_split
 from django.views.decorators.csrf import csrf_exempt
-from sklearn.linear_model import LinearRegression
-from iexfinance import get_historical_data
-from bokeh.models import ColumnDataSource
 from .forms import SignupForm, LoginForm
 from django.shortcuts import redirect
-from trades.logic import monte_carlo, linear_reg, portfolio_rate, single_ror, logo_url
+from trades.logic import monte_carlo, linear_reg, portfolio_rate,\
+    single_ror, logo_url, date_limit,new_user
 from django.shortcuts import render
-from bokeh.embed import components
-from bokeh.plotting import figure
-from sklearn import preprocessing
 from trades.models import User
-from datetime import datetime
-import iexfinance as iex
-import pandas as pd
-import numpy as np
 import requests
 import json
 
@@ -41,6 +30,7 @@ def chart(request):
 
     return render(request,'chart.html',{'data':data})
 
+# csrf_exempt decorator used to integrate with the client app. 
 @csrf_exempt
 def company(request):
     if request.method == 'GET':
@@ -49,6 +39,7 @@ def company(request):
         ticker = request.POST.get('ticker')
         return redirect('/company/'+ticker) 
 
+# 'Companies' tool
 def company_ticker(request,ticker):
     try:
         company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
@@ -58,8 +49,7 @@ def company_ticker(request,ticker):
             company = json.loads(company_json.content)
             news = json.loads(news_json.content)
         except:
-            error_msg = "Unknown Ticker"
-            return render(request,'company_form.html',{'error_msg':error_msg})
+            return render(request,'company_form.html',{'error_msg':"Unknown Ticker"})
         
         logo = logo_url(ticker)
 
@@ -68,41 +58,16 @@ def company_ticker(request,ticker):
     except:
         return render(request,'company_form.html',{'error_msg':"error_occured"})       
 
-def rate_single(request):
-    if request.method == 'GET':
-        return render(request,'rate_single_form.html')
-    elif request.method == 'POST':
-        ticker = request.POST.get('ticker')
-        start = request.POST.get('start')
-        end = request.POST.get('end')
-        try:
-            annual_log_return, script, div = single_ror(ticker, start, end)
-        except:
-            return render(request,'rate_single_form.html',{'error_msg':error_msg})
-        
-        logo = logo_url(ticker)
-
-        return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
-        'div':div,'start':start,'end':end,'ticker':ticker,'logo':logo})
-
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
-        failed_msg = "Registration failed."
         
         if (form.is_valid()):
-            # TODO: create a function and move it to the separate file
-            user = form.save(commit=False)
-            pw = form.cleaned_data['password']
-            user.password = make_password(pw)
-            user.idbroker = 6
-            user.funds = 3000
-            user.idpermission = 2
-            user.is_authenticated = False
-            user.save()
-            success_msg = "Registration Successful!"
-            return render(request,'registration_result.html',{'success_msg':success_msg})
-        return render(request,'registration_result.html',{'failed_msg':failed_msg})
+            # Setting default values and saving a new user.
+            new_user(form)
+
+            return render(request,'registration_result.html',{'success_msg':"Registration Successful!"})
+        return render(request,'registration_result.html',{'failed_msg':"Registration failed."})
     elif request.method == 'GET':
         form = SignupForm()
         return render(request,'registration_form.html',{'form': form})
@@ -134,12 +99,31 @@ def logout_view(request):
 def profile(request):
     return render(request, 'profile.html')
 
+# 'Single Rate' tool.
+def rate_single(request):
+    if request.method == 'GET':
+        return render(request,'rate_single_form.html')
+    elif request.method == 'POST':
+        ticker = request.POST.get('ticker')
+        start = date_limit(request.POST.get('start'))
+        end = request.POST.get('end')
+        try:
+            annual_log_return, script, div = single_ror(ticker, start, end)
+        except:
+            return render(request,'rate_single_form.html',{'error_msg':error_msg})
+        
+        logo = logo_url(ticker)
+
+        return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
+        'div':div,'start':start,'end':end,'ticker':ticker,'logo':logo})
+
+# 'Portfolio' tool.
 def rate_portfolio(request):
     if request.method == 'GET':
         return render(request,'rate_portfolio_form.html')
     elif request.method == 'POST':
         tickers = request.POST.getlist('tickers[]')
-        start = request.POST.get('start')
+        start = date_limit(request.POST.get('start'))
         end = request.POST.get('end')
         try:
             # # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
@@ -149,14 +133,14 @@ def rate_portfolio(request):
     
         return render(request, 'rate_portfolio.html',{'pfolio':pfolio_1,'start':start,'end':end,'tickers':tickers})
 
+# 'Linear regression' tool.
 def linear_regression(request):
     if request.method == 'GET':
         return render(request,'linear_form.html')
     elif request.method == 'POST':
         ticker = request.POST.get('ticker')
-        start = request.POST.get('start')
-        if(int(start[:4]) < int(datetime.now().year)-5):
-            start = str(datetime.now().year-5)+"-01-01"
+        # Limiting start date to ensure that data is within API limit.
+        start = date_limit(request.POST.get('start'))
         end = request.POST.get('end')
         try:
             confidence, forecast_prediction = linear_reg(ticker,start,end)
@@ -167,19 +151,16 @@ def linear_regression(request):
 
         return render(request, 'linear.html',{'forecast_pred':forecast_prediction,'start':start,'end':end,'confidence':confidence,'ticker':ticker,'logo':logo})
 
-
+# 'Monte Carlo' tool.
 def monte_carlo_sim(request):
     if request.method == 'GET':
         return render(request,'montecarlo_form.html')
     elif request.method == 'POST':
         ticker = request.POST.get('ticker')
-        start = request.POST.get('start')
-        # Limiting date for API calls
-        if(int(start[:4]) < 2015):
-            start = "2015-01-01"
+        # Limiting start date to ensure that data is within API limit.
+        start = date_limit(request.POST.get('start'))
         end = request.POST.get('end')
         try:
-            # TODO: Move logic to the separate file and add the sources - Maybe not
             sim = monte_carlo(start, end)
             sim.get_asset(ticker)
             sim.monte_carlo_sim(500, 180)

@@ -7,7 +7,7 @@
 <div class="jumbotron">
     <p>Here you can find information about various public companies.</p>
     <h4 class="name">Usage</h4>
-    <p>Input the company symbol(ticker) and click "Submit Query"</p>
+    <p>Input the company ticker symbol and click "Submit Query"</p>
 </div>
 
 {% if user.is_authenticated %}
@@ -15,8 +15,8 @@
 {% endif %}
 <form action="{% url 'company' %}" method="post">
     {% comment %} {% csrf_token %} {% endcomment %}
-    <h3>Company ticker:</h3>
-    <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+    <h3>Company ticker symbol:</h3>
+    <input type="text" name="ticker" placeholder="Ticker symbol eg. AAPL">
     {% if user.is_authenticated %}
     <br>
     

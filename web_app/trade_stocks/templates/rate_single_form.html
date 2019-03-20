@@ -6,15 +6,15 @@
 <div class="jumbotron">
     <p>Rate of return shows how stock price changed over the time period.</p>
     <h4 class="name">Usage</h4>
-    <p>Input the company symbol(ticker) and dates of a period you want to analyze.</p>
+    <p>Input the company ticker symbol and dates of a period you want to analyze.</p>
 </div>
     {% if user.is_authenticated %}
 <button class="btn btn-primary btn-spacing manual_button">Toggle manual input</button>
 {% endif %}
 <form action="{% url 'rate_single' %}" method="post">
     {% csrf_token %}
-    <h3>Company ticker:</h3>
-    <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+    <h3>Company ticker symbol:</h3>
+    <input type="text" name="ticker" placeholder="Ticker symbol eg. AAPL">
     
     {% if user.is_authenticated %}
                     <script>
@@ -31,7 +31,7 @@
         });
     </script>
     <h4 style="margin-top: 1%">OR</h4>
-    <h3>Tickers from Portfolio</h3>
+    <h3>Ticker symbols from Portfolio</h3>
         <select name="ticker" id="tickerSelect"></select>
             <script>
                 function onlyUnique(value, index, self) { 

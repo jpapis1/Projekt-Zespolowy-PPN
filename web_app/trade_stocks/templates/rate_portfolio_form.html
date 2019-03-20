@@ -7,7 +7,7 @@
 <div class="jumbotron">
     <p>Portfolio rate of return price change of portfolio of stocks over the time period. Rate of return is calculated for stocks of equal weights in a portfolio.</p>
     <h4 class="name">Usage</h4>
-    <p>Input the companies symbols(ticker) and dates of a period you want to analyze.</p>
+    <p>Input the companies ticker symbols and dates of a period you want to analyze.</p>
 </div>
 <script>
 $(document).ready(function() {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 </script>
     <form action="{% url 'rate_portfolio' %}" method="post">
         {% csrf_token %}
-        <h3>Companies tickers:</h3>
+        <h3>Companies ticker symbols:</h3>
                 
         <div class="input_fields_wrap">
             
@@ -39,15 +39,11 @@ $(document).ready(function() {
 
         </div>
         <button class="btn btn-primary btn-spacing add_field_button">Add More Fields</button>
-        <!--<input type="text" name="short" placeholder="Ticker eg. AAPL"> -->
         <h3>Start date:</h3>
         <input type="date" name="start" placeholder="Start date">
         <h3>End date:</h3>
         <input type="date" name="end" placeholder="End date">
 
-        {% comment %} {{ the_div|safe }}
-
-        {{ the_script|safe }} {% endcomment %}
         <br>
         <input type="submit" class="btn btn-primary btn-spacing">
     </form>

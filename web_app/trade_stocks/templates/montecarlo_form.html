@@ -83,15 +83,15 @@
 <div class="jumbotron">
     <p>Monte Carlo Simulation simulates behavior of stocks over next 180 days using Monte Carlo method.</p>
     <h4 class="name">Usage</h4>
-    <p>Input the company symbol(ticker) and dates of a period you want to use as data for predictions. Longer periods increase accuracy of a simulation (Minimum 1 year).</p>
+    <p>Input the company ticker symbol and dates of a period you want to use as data for predictions. Longer periods increase accuracy of a simulation (Minimum 1 year).</p>
 </div>
         {% if user.is_authenticated %}
     <button class="btn btn-primary btn-spacing manual_button">Toggle manual input</button>
     {% endif %}
     <form action="{% url 'monte_carlo_sim' %}" method="post">
         {% csrf_token %}
-        <h3>Company ticker:</h3>
-        <input type="text" name="ticker" placeholder="Ticker eg. AAPL">
+        <h3>Company ticker symbol:</h3>
+        <input type="text" name="ticker" placeholder="Ticker symbol eg. AAPL">
         {% if user.is_authenticated %}
             <br>
     
@@ -110,7 +110,7 @@
             });
         </script>
         <h4 style="margin-top: 1%;">OR</h4>
-            <h3>Tickers from Portfolio</h3>
+            <h3>Ticker symbols from Portfolio</h3>
                 <select name="ticker" id="tickerSelect"></select>
                 <script>
                     function onlyUnique(value, index, self) { 
