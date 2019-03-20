@@ -52,4 +52,9 @@ public class Permission {
     public void setName(PermissionEnum name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return name.toString();
+    }
 }

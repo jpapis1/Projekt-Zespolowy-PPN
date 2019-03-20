@@ -11,9 +11,70 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
-<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.BrokersController">
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.PasswordField?>
+<VBox xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.controller.UsersController">
+
+    <TableView fx:id="usersTableView" prefHeight="200.0" prefWidth="1000.0">
+        <columns>
+            <TableColumn fx:id="username" prefWidth="105.0" text="username" />
+            <TableColumn fx:id="email" prefWidth="120.0" text="email" />
+            <TableColumn fx:id="firstName" prefWidth="115.0" text="firstName" />
+            <TableColumn fx:id="lastName" prefWidth="125.0" text="lastName" />
+            <TableColumn fx:id="permission" prefWidth="125.0" text="permission" />
+            <TableColumn fx:id="funds" prefWidth="125.0" text="funds" />
+            <TableColumn fx:id="broker" prefWidth="125.0" text="broker" />
+
+        </columns>
+    </TableView>
+    <Separator/>
+    <GridPane hgap="10" styleClass="root" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.172-ea">
+        <HBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5" spacing="10">
+            <Button onAction="#refreshAction" mnemonicParsing="false" text="Refresh list" GridPane.columnIndex="0"  GridPane.rowIndex="0"/>
+            <Button onAction="#createUserAction" mnemonicParsing="false" text="Create user" />
+            <Button onAction="#removeUserAction" mnemonicParsing="false" text="Remove user"/>
+        </HBox>
 
 
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="1" spacing="10">
+            <Label text="Username"/>
+            <TextField fx:id="usernameTextField" />
+        </HBox>
+        <HBox GridPane.columnIndex="1"  GridPane.rowIndex="1" spacing="10">
+            <Label text="Email"/>
+            <TextField fx:id="emailTextField" />
+        </HBox>
+
+        <HBox GridPane.columnIndex="2" GridPane.rowIndex="1" spacing="10">
+            <Label text="Password"/>
+            <PasswordField fx:id="passwordTextField" />
+        </HBox>
+
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="10">
+            <Label text="First Name"/>
+            <TextField fx:id="firstNameTextField" />
+        </HBox>
+        <HBox GridPane.columnIndex="1"  GridPane.rowIndex="2" spacing="10">
+            <Label text="Last Name"/>
+            <TextField fx:id="lastNameTextField" />
+        </HBox>
+        <HBox GridPane.columnIndex="2"  GridPane.rowIndex="2" spacing="10">
+            <Label text="Funds"/>
+            <TextField fx:id="fundsTextField" />
+        </HBox>
+
+        <HBox GridPane.columnIndex="0"  GridPane.rowIndex="3" spacing="10">
+            <Label text="Permission"/>
+            <ComboBox fx:id="permissionComboBox" promptText="Choose permission"/>
+        </HBox>
+        <HBox GridPane.columnIndex="1"  GridPane.rowIndex="3" spacing="10">
+            <Label text="Broker"/>
+            <ComboBox fx:id="brokerComboBox" promptText="Choose broker"/>
+        </HBox>
+
+
+    </GridPane>
 
 
 

@@ -24,7 +24,11 @@ import app.model.PermissionEnum;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PermissionRepository extends CrudRepository<Permission, Integer> {
-    public Permission findFirstByName(PermissionEnum name);
+    Permission findFirstByName(PermissionEnum name);
+    List<Permission> findAll();
+
 }
