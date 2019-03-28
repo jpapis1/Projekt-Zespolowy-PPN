@@ -19,7 +19,6 @@ from trades import views
 from django.conf.urls import url
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     url(r'^$',views.index, name='index'),
     url(r'markets',views.chart, name='markets'),
     url(r'company/form',views.company, name='company'),
