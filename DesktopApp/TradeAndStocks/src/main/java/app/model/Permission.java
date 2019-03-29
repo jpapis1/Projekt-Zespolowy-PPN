@@ -24,7 +24,7 @@ import javax.persistence.*;
 @Entity
 public class Permission {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPermission;
     @Column(unique = true)
     @Enumerated(EnumType.STRING)
