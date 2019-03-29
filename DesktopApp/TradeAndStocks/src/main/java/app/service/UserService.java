@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.transaction.Transactional;
+import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -95,25 +96,19 @@ public class UserService {
         return false;
     }
     public String hashPassword(String password) {
+        String[] pass = new String[3];
+        pass[1] = "120000";
+        byte[] array = new byte[12]; // length is bounded by 7
+        new Random().nextBytes(array);
+        String generatedString = new String(array, Charset.forName("UTF-8"));
+
+        pass[2] = generatedString;
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
         try {
-            byte[] salt = new byte[8];
-            Random srandom = new Random();
-            srandom.nextBytes(salt);
-            SecretKeyFactory factory =
-                    SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-
-
-            KeySpec spec = new PBEKeySpec(password.toCharArray(), salt,120000, 256);
-            String passHash = "";
-            try {
-                SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-                passHash = Base64.encode(f.generateSecret(spec).getEncoded());
-            } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-                System.out.println("ERROR");
-            }
-            String sSalt = java.util.Base64.getEncoder().encodeToString(salt);
-            return "pbkdf2_sha256$" + "120000$" + sSalt + "$" + passHash;
-        } catch (NoSuchAlgorithmException e) {
+            SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+            String passHash = Base64.encode(f.generateSecret(spec).getEncoded());
+            return "pbkdf2_sha256$" + pass[1] + "$" + pass[2] + "$" + passHash;
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             System.out.println("ERROR");
         }
         return null;
