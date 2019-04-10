@@ -6,10 +6,16 @@ from trades.models import User
 
 
 class MyBackend:
+
+    # Check the username and password and return a user.
     def authenticate(self, request, username=None, password=None):
-        # Check the username and password and return a user.
         
-        user = User.objects.get(username=username)
+
+        # If there is no user with given username return None.
+        try:
+            user = User.objects.get(username=username)
+        except:
+            return None
 
         success = check_password(password,user.password)
         user.is_authenticated = True
