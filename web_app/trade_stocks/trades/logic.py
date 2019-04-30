@@ -1,8 +1,17 @@
+from django.http import HttpResponse
+from django.contrib.auth.hashers import make_password
+from datetime import datetime, date
+import requests
+import base64
+import math
+import json
+from io import BytesIO
+import pandas as pd
+import numpy as np
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from bokeh.models import ColumnDataSource
-from django.http import HttpResponse
 from bokeh.embed import components
 from sklearn import preprocessing
 from bokeh.plotting import figure
@@ -10,16 +19,10 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 from matplotlib import style
 from matplotlib import pylab
-from django.contrib.auth.hashers import make_password
 import iexfinance as iex
-from io import BytesIO
-import pandas as pd
-import numpy as np
-from datetime import datetime
-import requests
-import base64
-import math
-import json
+
+
+
 
 # Monte Carlo Simulation based on a code published on 
 # https://programmingforfinance.com/2017/11/monte-carlo-simulations-of-future-stock-prices-in-python/
@@ -252,6 +255,11 @@ def date_limit(date):
     if(int(date[:4]) < int(datetime.now().year)-5):
         date = str(datetime.now().year-5)+"-01-01"
     return date
+
+def date_future_limit(date_input):
+    today = str(date.today())
+    return today if date_input > today else date_input
+
 
 def new_user(form):
     user = form.save(commit=False)

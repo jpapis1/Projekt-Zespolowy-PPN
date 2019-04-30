@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .forms import SignupForm, LoginForm
 from django.shortcuts import redirect
-from trades.logic import monte_carlo, linear_reg, portfolio_rate,\
-    single_ror, logo_url, date_limit,new_user
 from django.shortcuts import render
-from trades.models import User
 import requests
 import json
+from trades.models import User
+from .forms import SignupForm, LoginForm
+from trades.logic import monte_carlo, linear_reg, portfolio_rate,\
+    single_ror, logo_url, date_limit,date_future_limit, new_user
 
 error_msg = "Invalid Parameters."
 
@@ -105,10 +105,10 @@ def rate_single(request):
     if request.method == 'GET':
         return render(request,'rate_single_form.html')
     elif request.method == 'POST':
-        ticker = request.POST.get('ticker')
-        start = date_limit(request.POST.get('start'))
-        end = request.POST.get('end')
         try:
+            ticker = request.POST.get('ticker')
+            start = date_limit(request.POST.get('start'))
+            end = date_future_limit(request.POST.get('end'))
             annual_log_return, script, div = single_ror(ticker, start, end)
         except:
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
@@ -123,10 +123,10 @@ def rate_portfolio(request):
     if request.method == 'GET':
         return render(request,'rate_portfolio_form.html')
     elif request.method == 'POST':
-        tickers = request.POST.getlist('tickers[]')
-        start = date_limit(request.POST.get('start'))
-        end = request.POST.get('end')
         try:
+            tickers = request.POST.getlist('tickers[]')
+            start = date_limit(request.POST.get('start'))
+            end =  date_future_limit(request.POST.get('end'))
             # # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
             pfolio_1 = portfolio_rate(tickers, start, end)
         except:
@@ -139,11 +139,12 @@ def linear_regression(request):
     if request.method == 'GET':
         return render(request,'linear_form.html')
     elif request.method == 'POST':
-        ticker = request.POST.get('ticker')
-        # Limiting start date to ensure that data is within API limit.
-        start = date_limit(request.POST.get('start'))
-        end = request.POST.get('end')
         try:
+            ticker = request.POST.get('ticker')
+            # Limiting start date to ensure that data is within API limit.
+            start = date_limit(request.POST.get('start'))
+            end = date_future_limit(request.POST.get('end'))
+        
             confidence, forecast_prediction = linear_reg(ticker,start,end)
         except:
             return render(request,'linear_form.html',{'error_msg':error_msg})
@@ -157,11 +158,12 @@ def monte_carlo_sim(request):
     if request.method == 'GET':
         return render(request,'montecarlo_form.html')
     elif request.method == 'POST':
-        ticker = request.POST.get('ticker')
-        # Limiting start date to ensure that data is within API limit.
-        start = date_limit(request.POST.get('start'))
-        end = request.POST.get('end')
         try:
+            ticker = request.POST.get('ticker')
+            # Limiting start date to ensure that data is within API limit.
+            start = date_limit(request.POST.get('start'))
+            end = date_future_limit(request.POST.get('end'))
+        
             sim = monte_carlo(start, end)
             sim.get_asset(ticker)
             sim.monte_carlo_sim(500, 180)

@@ -14,7 +14,6 @@
 <button class="btn btn-primary btn-spacing manual_button">Toggle manual input</button>
 {% endif %}
 <form action="{% url 'company' %}" method="post">
-    {% comment %} {% csrf_token %} {% endcomment %}
     <h3>Company ticker symbol:</h3>
     <input type="text" name="ticker" placeholder="Ticker symbol eg. AAPL">
     {% if user.is_authenticated %}
