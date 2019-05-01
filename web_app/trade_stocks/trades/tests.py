@@ -4,15 +4,14 @@ from django.test import SimpleTestCase
 from django.urls import reverse
 import datetime
 from dateutil.relativedelta import relativedelta
+import iexfinance
 # Create your tests here.
 
 from . import views
 from . import logic
 
-
-class HomePageTests(SimpleTestCase):
-
-    # Check if pages are available.
+class StatusCodeTests(SimpleTestCase):
+    # Check if all pages are available.
 
     def test_home_page_status_code(self):
         response = self.client.get('/')
@@ -67,50 +66,158 @@ class HomePageTests(SimpleTestCase):
         self.assertEquals(response.status_code, 200)
 
 
-    # Check if single_ror responds to start date before limit
+class SingleRorTests(SimpleTestCase):
+    # Test for start date before limit
     def test_single_ror_function_start_before_limit(self):
         ticker = "AAPL"
         start = "2010-01-01"
         end = datetime.date.today()
-        # annual_log_return, script, div = logic.single_ror(ticker, start, end)
-        # self.assertEquals(annual_log_return, False)
         self.assertRaises(ValueError, logic.single_ror, ticker,start,end)
 
-    # Check if single_ror with invalid date input still returns a valid response.
+    # Test for start date before limit in POST parameters
     def test_single_ror_response_start_before_limit(self):
-        response = self.client.post('/rate_single',{'start':'2010-01-01','end':datetime.date.today(), 'ticker':'AAPL'})
-        # annual_log_return, script, div = logic.single_ror(ticker, start, end)
-        # self.assertEquals(annual_log_return, False)
+        response = self.client.post('/rate_single',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAPL'})
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'rate_single.html')
-        # self.assertRaises(ValueError, logic.single_ror, ticker,start,end)
-        # 
+
+    # Test for POST request with no params
     def test_single_ror_response_no_params(self):
         response = self.client.post('/rate_single',{})
-        # annual_log_return, script, div = logic.single_ror(ticker, start, end)
-        # self.assertEquals(annual_log_return, False)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'rate_single_form.html')    
 
+    # Test for non existing ticker in POST parameters
     def test_single_ror_response_invalid_ticker(self):
-        response = self.client.post('/rate_single',{'start':'2010-01-01','end':datetime.date.today(), 'ticker':'AAAAAAAAPL'})
-        # annual_log_return, script, div = logic.single_ror(ticker, start, end)
-        # self.assertEquals(annual_log_return, False)
+        response = self.client.post('/rate_single',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAAAAAAAPL'})
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'rate_single_form.html')
 
+    
+    # Test for end date in the future in POST parameters
     def test_single_ror_response_end_date_after_limit(self):
-        response = self.client.post('/rate_single',{'start':'2010-01-01','end':datetime.date.today() + relativedelta(years=2), 'ticker':'AAPL'})
-        # annual_log_return, script, div = logic.single_ror(ticker, start, end)
-        # self.assertEquals(annual_log_return, False)
+        response = self.client.post('/rate_single',{'start':'2010-01-01',
+        'end':datetime.date.today() + relativedelta(years=2), 'ticker':'AAPL'})
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'rate_single.html')  
+        self.assertTemplateUsed(response, 'rate_single.html')
 
-    # def test_view_url_by_name(self):
-    #     response = self.client.get(reverse('index'))
-    #     self.assertEquals(response.status_code, 200)
 
-    # def test_view_uses_correct_template(self):
-    #     response = self.client.get(reverse('index'))
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'index.html')
+class RatePortfolioTests(SimpleTestCase):
+    # Test for start date before limit
+    def test_portfolio_rate_function_start_before_limit(self):
+        tickers = ["AAPL"]
+        start = "2010-01-01"
+        end = datetime.date.today()
+        self.assertRaises(ValueError, logic.portfolio_rate, tickers,start,end)
+
+    # Test for start date before limit in POST parameters
+    def test_portfolio_rate_response_start_before_limit(self):
+        response = self.client.post('/rate_portfolio',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'tickers[]':['AAPL']})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'rate_portfolio.html')
+
+    # Test for POST request with no params
+    def test_portfolio_rate_response_no_params(self):
+        response = self.client.post('/rate_portfolio',{})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'rate_portfolio_form.html')    
+
+    # Test for non existing ticker in POST parameters
+    def test_portfolio_rate_response_invalid_ticker(self):
+        response = self.client.post('/rate_portfolio',{'start':datetime.date.today() 
+        - relativedelta(years=3),'end':datetime.date.today(), 'tickers[]':['AAAAAAAAPL']})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'rate_portfolio_form.html')
+
+    # Test for end date in the future in POST parameters
+    def test_portfolio_rate_response_end_date_after_limit(self):
+        response = self.client.post('/rate_portfolio',{'start':datetime.date.today() 
+        - relativedelta(years=3),'end':datetime.date.today() + relativedelta(years=2), 'tickers[]':['AAPL']})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'rate_portfolio.html')
+
+
+class LinearRegressionTests(SimpleTestCase):
+    # Test for start date before limit
+    def test_linear_reg_function_start_before_limit(self):
+        ticker = "AAPL"
+        start = "2010-01-01"
+        end = datetime.date.today()
+        self.assertRaises(ValueError, logic.linear_reg, ticker,start,end)
+
+    # Test for start date before limit in POST parameters
+    def test_linear_reg_response_start_before_limit(self):
+        response = self.client.post('/linear_regression',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'linear.html')
+
+    # Test for POST request with no params
+    def test_linear_reg_response_no_params(self):
+        response = self.client.post('/linear_regression',{})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'linear_form.html')    
+
+    # Test for non existing ticker in POST parameters
+    def test_linear_reg_response_invalid_ticker(self):
+        response = self.client.post('/linear_regression',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAAAAAAAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'linear_form.html')
+
+    # Test for end date in the future in POST parameters
+    def test_linear_reg_response_end_date_after_limit(self):
+        response = self.client.post('/linear_regression',{'start':'2010-01-01',
+        'end':datetime.date.today() + relativedelta(years=2), 'ticker':'AAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'linear.html')
+
+
+class MonteCarloTests(SimpleTestCase):
+
+    # Test monte carlo constructor with date before limit.
+    def test_monte_carlo_function_start_before_limit(self):
+        ticker = "AAPL"
+        start = datetime.date.today() - relativedelta(years=10)
+        end = datetime.date.today()
+
+        sim = logic.monte_carlo(start, end)
+        
+        self.assertRaises(ValueError, sim.get_asset, ticker)
+    
+    # Test get_asset method with invalid ticker.
+    def test_monte_carlo_function_invalid_ticker(self):
+        ticker = "AAAAAAAAAAAAAAAAAAAAAPL"
+        start = datetime.date.today() - relativedelta(years=3)
+        end = datetime.date.today()
+        sim = logic.monte_carlo(start, end)
+        self.assertRaises(ValueError, sim.get_asset, ticker)
+
+    # Test for start date before limit in POST parameters
+    def test_monte_carlo_response_start_before_limit(self):
+        response = self.client.post('/monte_carlo',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'montecarlo.html')
+
+    # Test for POST request with no params
+    def test_monte_carlo_response_no_params(self):
+        response = self.client.post('/monte_carlo',{})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'montecarlo_form.html')    
+
+    # Test for non existing ticker in POST parameters
+    def test_monte_carlo_response_invalid_ticker(self):
+        response = self.client.post('/monte_carlo',{'start':'2010-01-01',
+        'end':datetime.date.today(), 'ticker':'AAAAAAAAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'montecarlo_form.html')
+
+    # Test for end date in the future in POST parameters
+    def test_monte_carlo_response_end_date_after_limit(self):
+        response = self.client.post('/monte_carlo',{'start':'2010-01-01',
+        'end':datetime.date.today() + relativedelta(years=2), 'ticker':'AAPL'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'montecarlo.html')
