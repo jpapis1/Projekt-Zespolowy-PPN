@@ -21,9 +21,6 @@ from matplotlib import style
 from matplotlib import pylab
 import iexfinance as iex
 
-
-
-
 # Monte Carlo Simulation based on a code published on 
 # https://programmingforfinance.com/2017/11/monte-carlo-simulations-of-future-stock-prices-in-python/
 
@@ -33,11 +30,14 @@ class monte_carlo:
         self.end = end
 
     def get_asset(self, symbol):
-        #Dates
-        start = self.start 
-        end = self.end 
+        try:
+            #Dates
+            start = self.start 
+            end = self.end 
 
-        prices = iex.get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
+            prices = iex.get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
+        except:
+            raise ValueError("Invalid parameters specified.")
         returns = prices.pct_change()
         self.returns = returns
         self.prices = prices
@@ -74,46 +74,6 @@ class monte_carlo:
                 count += 1
         
             simulation_df[x] = price_series
-            self.simulation_df = simulation_df
-            self.predicted_days = predicted_days
-
-    def brownian_motion(self, num_simulations, predicted_days):
-        returns = self.returns
-        prices = self.prices
-
-        last_price = prices[-1]
-
-        # Note we are assuming drift here
-        simulation_df = pd.DataFrame()
-        
-        # Create Each Simulation as a Column in df
-        for x in range(num_simulations):
-            
-            # Inputs
-            count = 0
-            avg_daily_ret = returns.mean()
-            variance = returns.var()
-            
-            daily_vol = returns.std()
-            daily_drift = avg_daily_ret - (variance/2)
-            drift = daily_drift - 0.5 * daily_vol ** 2
-            
-            # Append Start Value    
-            prices = []
-            
-            shock = drift + daily_vol * np.random.normal()
-            last_price * math.exp(shock)
-            prices.append(last_price)
-            
-            for i in range(predicted_days):
-                if count == 251:
-                    break
-                shock = drift + daily_vol * np.random.normal()
-                price = prices[count] * math.exp(shock)
-                prices.append(price)
-                
-                count += 1
-            simulation_df[x] = prices
             self.simulation_df = simulation_df
             self.predicted_days = predicted_days
 
@@ -192,7 +152,6 @@ def linear_reg(ticker, start, end):
             y = np.array(df['Prediction'])
             y = y[:-forecast_out]
 
-            # X_train, X_test, y_train, y_test = cross_validation.train_test_split(X, y, test_size = 0.2)
             X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
 
             # Training

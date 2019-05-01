@@ -127,7 +127,6 @@ def rate_portfolio(request):
             tickers = request.POST.getlist('tickers[]')
             start = date_limit(request.POST.get('start'))
             end =  date_future_limit(request.POST.get('end'))
-            # # TODO: Introduce option to change weights of stocks in a portfolio (values from sliders?)
             pfolio_1 = portfolio_rate(tickers, start, end)
         except:
             return render(request,'rate_portfolio_form.html',{'error_msg':error_msg})
