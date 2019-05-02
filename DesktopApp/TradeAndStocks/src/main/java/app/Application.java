@@ -31,11 +31,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Locale;
 
 
 @SpringBootApplication
+@EnableTransactionManagement
 public class Application {
     private static final Logger log = LoggerFactory.getLogger(Application.class);
     @Autowired

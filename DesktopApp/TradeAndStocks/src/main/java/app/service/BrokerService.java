@@ -43,6 +43,9 @@ public class BrokerService {
     public void addBroker(String name, double profitMargin, double handlingFee, Country country) {
         brokerRepository.save(new Broker(name,profitMargin,handlingFee,country));
     }
+    public void addBroker(Broker broker) {
+        brokerRepository.save(broker);
+    }
 
 
     public void removeBroker(Broker selectedItem) {

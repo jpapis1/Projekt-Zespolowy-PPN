@@ -25,6 +25,7 @@ import app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -260,6 +261,7 @@ public class User {
     }
 
     //
+
     public static class UserBuilder {
         @Autowired
         private UserService userService;
@@ -298,10 +300,11 @@ public class User {
             return this;
         }
 
-        public UserBuilder perm(PermissionEnum permissionEnum) {
+       /* public UserBuilder perm(PermissionEnum permissionEnum) {
+            System.out.println(permissionService);
             this.permission = permissionService.getPermissionByEnum(permissionEnum);
             return this;
-        }
+        }*/
         public UserBuilder perm(Permission permission) {
             this.permission = permission;
             return this;

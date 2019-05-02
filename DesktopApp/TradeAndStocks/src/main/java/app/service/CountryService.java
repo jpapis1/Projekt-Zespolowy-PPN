@@ -35,6 +35,9 @@ public class CountryService {
     public void addCountry(String name, double taxRate) {
         countryRepository.save(new Country(name,taxRate));
     }
+    public void addCountry(Country country) {
+        countryRepository.save(country);
+    }
     public List<Country> getAllCountries() {
         return countryRepository.findAll();
     }
