@@ -121,17 +121,23 @@ public class UserService {
         for (Transaction t : list) {
             names.add(t.getShortName());
         }
+
         for (String shortName : names) {
+            transactionService.getUsersActiveTransactionListOfOneStock(user,shortName);
+
             List<Transaction> transactionsByShortName = list.stream().filter(x -> x.getShortName().equals(shortName)).collect(Collectors.toList());
-            double unitSumBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(Transaction::getUnits).sum();
-            double unitSumSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
-            double unitSum = unitSumBuy - unitSumSell;
+            //double unitSumBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(Transaction::getUnits).sum();
+            //double unitSumSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
+            //double unitSum = unitSumBuy - unitSumSell;
+            double unitSum = transactionService.calculateCurrentlyOwnedStockUnits(transactionsByShortName);
             double currentUnitPrice = StockDataService.getLatestPrice(shortName).getPrice();
-            double valueBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
-            double valueSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
-            double value = valueBuy - valueSell;
+           // double valueBuy = transactionsByShortName.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+           // double valueSell = transactionsByShortName.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+
             double realValue = unitSum * currentUnitPrice;
-            double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
+
+            double profitLoss = transactionService.calculateProfitLoss(shortName,user);
+            //double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
             String str = String.format("%.2f", profitLoss);
             profitLoss = Double.parseDouble(str);
             if(unitSum>=0.01) {

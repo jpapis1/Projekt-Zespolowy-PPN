@@ -59,12 +59,12 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
+
     @FXML
     protected void writingOnUnits() throws IOException{
 
         try
         {
-
             Double producedValue = Double.parseDouble(unitPrice.getText())* Double.parseDouble(units.getText());
             value.setText(producedValue.toString());
             updateFees();
@@ -81,10 +81,10 @@ public class TransactionController {
 
         try
         {
-
             Double producedUnits = Double.parseDouble(value.getText()) / Double.parseDouble(unitPrice.getText());
             units.setText(producedUnits.toString());
             updateFees();
+
         }
         catch(NumberFormatException e)
         {
@@ -92,25 +92,23 @@ public class TransactionController {
         }
     }
     protected void updateFees() {
+        System.out.println("UPDATE FEES");
         if(radioBuy.isSelected()) {
-            handlingFeeValueLabel.setText(String.format("%.2f",Double.parseDouble(value.getText())*UserService.getActiveUser().getBroker().getHandlingFee()));
+            double handlingFeeValue= transactionService.calculateHandlingFee(Double.parseDouble(value.getText()), UserService.getActiveUser().getBroker().getHandlingFee());
+            handlingFeeValueLabel.setText(String.format("%.2f",handlingFeeValue));
             handlingFeeValueLabel.setDisable(false);
             taxRateValueLabel.setDisable(true);
             profitMarginValueLabel.setDisable(true);
             profitMarginValueLabel.setText("0.00");
             taxRateValueLabel.setText("0.00");
         } else if (radioSell.isSelected()) {
-            List<Transaction> list = transactionService.getUsersActiveTransactionListOfOneStock(UserService.getActiveUser(),nameLabel.getText());
-            double unitSumBuy = list.stream().filter(Transaction::isBuy).mapToDouble(Transaction::getUnits).sum();
-            double unitSumSell = list.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
-            double unitSum = unitSumBuy - unitSumSell;
-            double currentUnitPrice = StockDataService.getLatestPrice(nameLabel.getText()).getPrice();
-            double valueBuy = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
-            double valueSell = list.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
-            double val = valueBuy - valueSell;
-            double realValue = unitSum * currentUnitPrice;
 
-            double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy);
+
+
+           // double val = valueBuy - valueSell;
+           // double realValue = unitSum * currentUnitPrice;
+
+            double profitLoss = transactionService.calculateProfitLoss(nameLabel.getText(),UserService.getActiveUser());
             if(profitLoss>0) {
                 User user = UserService.getActiveUser();
                 double sellValue = Double.parseDouble(value.getText());
@@ -156,16 +154,17 @@ public class TransactionController {
 
 
     public void handleAcceptButtonAction(ActionEvent actionEvent) {
-        Transaction.TransactionBuilder transaction = new Transaction.TransactionBuilder(nameLabel.getText(),UserService.getActiveUser());
-        transaction = transaction.date(new Date()).price(Double.parseDouble(unitPrice.getText())).units(Double.parseDouble(units.getText()));
-        boolean err = false;
+        Transaction.TransactionBuilder transaction = new Transaction.TransactionBuilder(nameLabel.getText(),UserService.getActiveUser())
+                .date(new Date()).price(Double.parseDouble(unitPrice.getText())).units(Double.parseDouble(units.getText()));
         if(radioBuy.isSelected()) {
             transaction = transaction.setToBuy();
         } else if (radioSell.isSelected()) {
             transaction = transaction.setToSell();
         }
+
+
         switch (transactionService.makeTransaction(transaction.build(),radioBuy.isSelected(),
-                Double.parseDouble(totalTransactionValueLabel.getText()),Double.parseDouble(units.getText()),Double.parseDouble(unitPrice.getText())))
+                Double.parseDouble(totalTransactionValueLabel.getText())))
         {
             case Success:
                 Messenger.infoBox("Transaction has been successful!");

@@ -25,11 +25,11 @@
             </HBox>
             <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
                   <Label text="Value: "/>
-                  <TextField fx:id="value" onKeyTyped="#writingOnValue" text="0.00"/>
+                  <TextField fx:id="value" onKeyReleased="#writingOnValue" text="0.00"/>
             </HBox>
             <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
                   <Label text="Units: "/>
-                  <TextField fx:id="units" onKeyTyped="#writingOnUnits" text="0.00"/>
+                  <TextField fx:id="units" onKeyReleased="#writingOnUnits" text="0.00"/>
             </HBox>
           <HBox GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6">
               <Label text="Tax rate (only if you sell): " fx:id="taxRatePercent"/>

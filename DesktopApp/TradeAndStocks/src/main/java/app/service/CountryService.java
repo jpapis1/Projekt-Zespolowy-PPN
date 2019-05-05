@@ -38,6 +38,10 @@ public class CountryService {
     public void addCountry(Country country) {
         countryRepository.save(country);
     }
+    public Country getCountryByName(String name) {
+        return countryRepository.findFirstByName(name);
+    }
+
     public List<Country> getAllCountries() {
         return countryRepository.findAll();
     }

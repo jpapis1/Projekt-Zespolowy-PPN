@@ -24,7 +24,6 @@ import app.api.StockDataService;
 import app.model.Transaction;
 import app.model.User;
 import app.repository.TransactionRepository;
-import app.repository.UserRepository;
 import app.view.table.StockInfoTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,14 +56,16 @@ public class TransactionService {
             transactionRepository.save(transaction);
         });
     }
-    public CustomMessages makeTransaction(Transaction transaction, boolean isBuy, double total, double currentPortfolioUnits, double currentStockPrice) {
+    public CustomMessages makeTransaction(Transaction transaction, boolean isBuy, double totalTransactionValue) {
         User myUser = UserService.getActiveUser();
         double availableFunds = myUser.getFunds();
-        double transactionValue = transaction.getUnitPrice() * transaction.getUnits();
-        transactionValue = Math.round(transactionValue * 100.0) / 100.0;
+        double nettoTransactionValue = transaction.getUnitPrice() * transaction.getUnits();
+        nettoTransactionValue = Math.round(nettoTransactionValue * 100.0) / 100.0;
+        System.out.println(nettoTransactionValue + "T Value");
+        System.out.println(totalTransactionValue + " Total");
         if (isBuy) {
-            if ((total) <= availableFunds) {
-                myUser.setFunds(myUser.getFunds() - (total));
+            if ((totalTransactionValue) <= availableFunds) {
+                myUser.setFunds(myUser.getFunds() - (totalTransactionValue));
                 userService.updateUser(myUser);
                 transactionRepository.save(transaction);
                 return CustomMessages.Success;
@@ -72,16 +73,10 @@ public class TransactionService {
                 return CustomMessages.NotEnoughFunds;
             }
         } else {
-            Double buyValue = transactionRepository.getSumOfBuyTransactions(transaction.getShortName(),myUser);
-            Double sellValue = transactionRepository.getSumOfSellTransactions(transaction.getShortName(),myUser);
-
-            List<Transaction> listOfTransactions = transactionRepository.findByUserAndShortNameAndDoesExistsTrue(myUser,transaction.getShortName());
-
-
-            if(buyValue==null){buyValue=0.0;}
-            if(sellValue==null){sellValue=0.0;}
-            if((currentPortfolioUnits*currentStockPrice)>=transactionValue) {
-                myUser.setFunds(myUser.getFunds() + total);
+            List<Transaction> list = getUsersActiveTransactionListOfOneStock(UserService.getActiveUser(),transaction.getShortName());
+            double currentPortfolioUnits = calculateCurrentlyOwnedStockUnits(list);
+            if((currentPortfolioUnits*transaction.getUnitPrice())>=nettoTransactionValue) {
+                myUser.setFunds(myUser.getFunds() + totalTransactionValue);
                 userService.updateUser(myUser);
                 transactionRepository.save(transaction);
                 return CustomMessages.Success;
@@ -116,5 +111,35 @@ public class TransactionService {
             result.add(stockInfoTable);
         });
         return result;
+    }
+
+    public double calculateHandlingFee(double transactionValue, double fee) {
+        return transactionValue * fee;
+    }
+
+    public double calculateProfitLoss(String stockName,User user) {
+
+        List<Transaction> list = getUsersActiveTransactionListOfOneStock(user,stockName);
+        double unitSum = calculateCurrentlyOwnedStockUnits(list);
+
+
+        double currentUnitPrice = StockDataService.getLatestPrice(stockName).getPrice();
+
+
+        double valueBuy = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+        double valueSell = list.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+
+        return  -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy);
+
+    }
+
+    public double calculateCurrentlyOwnedStockUnits(List<Transaction> oneStockUserTransactions) {
+
+
+        double unitSumBuy = oneStockUserTransactions.stream().filter(Transaction::isBuy).mapToDouble(Transaction::getUnits).sum();
+        // all sell transactions
+        double unitSumSell = oneStockUserTransactions.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
+        return unitSumBuy - unitSumSell;
+
     }
 }
