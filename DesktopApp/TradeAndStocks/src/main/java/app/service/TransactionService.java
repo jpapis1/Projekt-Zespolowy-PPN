@@ -29,6 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +62,9 @@ public class TransactionService {
         User myUser = UserService.getActiveUser();
         double availableFunds = myUser.getFunds();
         double nettoTransactionValue = transaction.getUnitPrice() * transaction.getUnits();
+        //round results
         nettoTransactionValue = Math.round(nettoTransactionValue * 100.0) / 100.0;
-        System.out.println(nettoTransactionValue + "T Value");
-        System.out.println(totalTransactionValue + " Total");
+        totalTransactionValue = Math.round(totalTransactionValue * 100.0) / 100.0;
         if (isBuy) {
             if ((totalTransactionValue) <= availableFunds) {
                 myUser.setFunds(myUser.getFunds() - (totalTransactionValue));
@@ -75,7 +77,22 @@ public class TransactionService {
         } else {
             List<Transaction> list = getUsersActiveTransactionListOfOneStock(UserService.getActiveUser(),transaction.getShortName());
             double currentPortfolioUnits = calculateCurrentlyOwnedStockUnits(list);
-            if((currentPortfolioUnits*transaction.getUnitPrice())>=nettoTransactionValue) {
+
+           // if((currentPortfolioUnits*transaction.getUnitPrice())>=nettoTransactionValue) {
+            /*
+            DecimalFormat df=new DecimalFormat("0.000000");
+            String formate = df.format(currentPortfolioUnits);
+            try {
+                currentPortfolioUnits = (Double)df.parse(formate) ;
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }*/
+            currentPortfolioUnits = Math.round(currentPortfolioUnits*1000000)/1000000.00;
+
+
+            System.out.println("UNITS: " + currentPortfolioUnits + " || " + transaction.getUnits() );
+            if(currentPortfolioUnits>=transaction.getUnits()) {
+
                 myUser.setFunds(myUser.getFunds() + totalTransactionValue);
                 userService.updateUser(myUser);
                 transactionRepository.save(transaction);
@@ -118,18 +135,30 @@ public class TransactionService {
     }
 
     public double calculateProfitLoss(String stockName,User user) {
+        // calculating  profit or loss %
+
 
         List<Transaction> list = getUsersActiveTransactionListOfOneStock(user,stockName);
         double unitSum = calculateCurrentlyOwnedStockUnits(list);
-
-
         double currentUnitPrice = StockDataService.getLatestPrice(stockName).getPrice();
+        double sumOfBuyTransactions = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
+        double profitLoss =  ((unitSum * currentUnitPrice)/(sumOfBuyTransactions)) - 1;
+        //System.out.println(profitLoss);
+        return profitLoss;
+        /*
+
+
+
+
 
 
         double valueBuy = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
         double valueSell = list.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
 
-        return  -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy);
+
+        double profitLoss =  -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy);
+        System.out.println(profitLoss);*/
+       // return profitLoss;
 
     }
 
@@ -141,5 +170,12 @@ public class TransactionService {
         double unitSumSell = oneStockUserTransactions.stream().filter(transaction -> !transaction.isBuy()).mapToDouble(Transaction::getUnits).sum();
         return unitSumBuy - unitSumSell;
 
+    }
+    public double calculateTotalValue(boolean isBuy,double value, double handlingFee, double profitLoss,User user) {
+        if(isBuy) {
+            return value + handlingFee;
+        } else {
+            return value - user.getBroker().getProfitMargin()*profitLoss - user.getBroker().getCountry().getTaxRate()*profitLoss;
+        }
     }
 }

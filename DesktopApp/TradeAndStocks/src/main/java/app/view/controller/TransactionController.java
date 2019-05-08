@@ -93,6 +93,7 @@ public class TransactionController {
     }
     protected void updateFees() {
         System.out.println("UPDATE FEES");
+        double profitLoss = 0;
         if(radioBuy.isSelected()) {
             double handlingFeeValue= transactionService.calculateHandlingFee(Double.parseDouble(value.getText()), UserService.getActiveUser().getBroker().getHandlingFee());
             handlingFeeValueLabel.setText(String.format("%.2f",handlingFeeValue));
@@ -108,7 +109,7 @@ public class TransactionController {
            // double val = valueBuy - valueSell;
            // double realValue = unitSum * currentUnitPrice;
 
-            double profitLoss = transactionService.calculateProfitLoss(nameLabel.getText(),UserService.getActiveUser());
+            profitLoss = transactionService.calculateProfitLoss(nameLabel.getText(),UserService.getActiveUser());
             if(profitLoss>0) {
                 User user = UserService.getActiveUser();
                 double sellValue = Double.parseDouble(value.getText());
@@ -128,15 +129,11 @@ public class TransactionController {
             //handlingFeeValueLabel.setText(String.valueOf(Double.parseDouble(unitPrice.getText())*UserService.getActiveUser().getBroker().getHandlingFee()));
         }
 
-        double total;
-        if(radioBuy.isSelected()) {
-            total = Double.parseDouble(value.getText()) +
-                    Double.parseDouble(handlingFeeValueLabel.getText());
-        } else {
-            total = Double.parseDouble(value.getText()) -
-                    Double.parseDouble(profitMarginValueLabel.getText())
-                    -Double.parseDouble(taxRateValueLabel.getText());
-        }
+        double total = transactionService.calculateTotalValue(radioBuy.isSelected(),
+                Double.parseDouble(value.getText()),
+                Double.parseDouble(handlingFeeValueLabel.getText()),
+                profitLoss,UserService.getActiveUser());
+
         totalTransactionValueLabel.setText(String.format("%.2f",total));
     }
 
