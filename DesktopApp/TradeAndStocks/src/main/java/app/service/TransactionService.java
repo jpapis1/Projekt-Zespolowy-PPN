@@ -113,18 +113,21 @@ public class TransactionService {
             stockInfoTable.setDateOfTransaction(transaction.getDate());
 
             // w ifiestockInfoTable.setValueAtTheDayOfPurchase(transaction.getUnits()*transaction.);
+            int sell = 0;
             if(transaction.isBuy()) {
                 stockInfoTable.setUnits(transaction.getUnits());
                 String str = String.format("%.2f",transaction.getUnits()*transaction.getUnitPrice());
                 stockInfoTable.setValueAtTheDayOfPurchase(Double.parseDouble(str));
                 str = String.format("%.2f",transaction.getUnits()*currentUnitPrice);
                 stockInfoTable.setCurrentValue(Double.parseDouble(str));
+                sell = -1;
             } else {
                 stockInfoTable.setUnits(-transaction.getUnits());
                 stockInfoTable.setValueAtTheDayOfPurchase(-(transaction.getUnits()*transaction.getUnitPrice()));
                 stockInfoTable.setCurrentValue(-(transaction.getUnits()*currentUnitPrice));
+                sell = 1;
             }
-            stockInfoTable.setProfitLoss(String.format("%.2f",(1-(stockInfoTable.getValueAtTheDayOfPurchase()/stockInfoTable.getCurrentValue()))*100) + "%");
+            stockInfoTable.setProfitLoss(String.format("%.2f",sell*((1-(stockInfoTable.getCurrentValue()/stockInfoTable.getValueAtTheDayOfPurchase()))*100)) + "%");
             result.add(stockInfoTable);
         });
         return result;
@@ -143,7 +146,7 @@ public class TransactionService {
         double currentUnitPrice = StockDataService.getLatestPrice(stockName).getPrice();
         double sumOfBuyTransactions = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
         double profitLoss =  ((unitSum * currentUnitPrice)/(sumOfBuyTransactions)) - 1;
-        //System.out.println(profitLoss);
+        System.out.println(profitLoss);
         return profitLoss;
         /*
 
