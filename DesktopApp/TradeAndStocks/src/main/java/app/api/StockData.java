@@ -25,6 +25,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.scene.image.Image;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -196,17 +197,19 @@ public class StockData {
             return this;
         }
         public Image getLogo() {
-            String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/logo";
+            //String sURL = "https://api.iextrading.com/1.0/stock/" + map.get("shortName") + "/logo";
+            String sURL = "https://storage.googleapis.com/iex/api/logos/"+ map.get("shortName")+ ".png";
             Image myImage;
             try {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();
                 request.connect();
                 JsonParser jp = new JsonParser();
-                JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+                //JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 
                 try {
-                    InputStream inputstream = new URL(root.getAsJsonObject().get("url").getAsString()).openStream();
+                    //InputStream inputstream = new URL(root.getAsJsonObject().get("url").getAsString()).openStream();
+                    InputStream inputstream = new BufferedInputStream(url.openStream());
                     Image image = new Image(inputstream);
                     myImage = image;
                     return myImage;
