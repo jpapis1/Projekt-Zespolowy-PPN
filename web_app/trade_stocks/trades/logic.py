@@ -35,7 +35,7 @@ class monte_carlo:
             start = self.start 
             end = self.end 
 
-            prices = iex.get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
+            prices = iex.stocks.get_historical_data(symbol,start=start, end=end, output_format='pandas')['close']
         except:
             raise ValueError("Invalid parameters specified.")
         returns = prices.pct_change()
@@ -137,7 +137,7 @@ class monte_carlo:
 
 def linear_reg(ticker, start, end):
             # Calling the API through the module
-            df = iex.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
+            df = iex.stocks.get_historical_data(ticker,start=start, end=end, output_format='pandas')['close']
             df = df.reset_index()
             df = df[['close']]
             forecast_out = int(30) # predicting 30 days into future
@@ -167,7 +167,7 @@ def linear_reg(ticker, start, end):
 def portfolio_rate(tickers, start, end):
             mydata = pd.DataFrame()
             for t in tickers:
-                mydata[t] = iex.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
+                mydata[t] = iex.stocks.get_historical_data(t, start=start, end=end, output_format='pandas')['close']
 
             returns = (mydata / mydata.shift(1)) - 1
             
@@ -182,7 +182,7 @@ def portfolio_rate(tickers, start, end):
 
 def single_ror(ticker, start, end):
             # Calling the API through the module and calculating log RoR
-            df = iex.get_historical_data(ticker, start=start, end=end, output_format='pandas')
+            df = iex.stocks.get_historical_data(ticker, start=start, end=end, output_format='pandas')
             df['log_return'] = np.log(df['close'] / df['close'].shift(1))
             log_return_a = df['log_return'].mean() * 250
             annual_log_return = str(round(log_return_a, 5) * 100) + '%'
@@ -197,17 +197,7 @@ def single_ror(ticker, start, end):
             return annual_log_return, script, div
 
 def logo_url(ticker):
-    logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
-
-    try:
-        logo = json.loads(logo_json.content)
-    except:
-        # Blank url for logo if there's an error.
-        data = {}
-        data['url'] = ''
-        logo = json.dumps(data)
-
-    return logo
+    return "https://storage.googleapis.com/iex/api/logos/"+ ticker+ ".png"
  
 # Function to limit the date to ensure that start date falls within the API limit.
 def date_limit(date):
