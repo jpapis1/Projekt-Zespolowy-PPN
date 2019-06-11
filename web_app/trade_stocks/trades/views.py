@@ -43,7 +43,7 @@ def company(request):
 def company_ticker(request,ticker):
     try:
         company_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/company")
-        logo_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/logo")
+        # logo_json = requests.get("https://storage.googleapis.com/iex/api/logos/"+ ticker+ ".png")
         news_json = requests.get("https://api.iextrading.com/1.0/stock/"+ticker+"/news/last/5")
         try:
             company = json.loads(company_json.content)
@@ -114,7 +114,7 @@ def rate_single(request):
             return render(request,'rate_single_form.html',{'error_msg':error_msg})
         
         logo = logo_url(ticker)
-
+        print(logo)
         return render(request, 'rate_single.html',{'annual_return':annual_log_return, 'script':script,
         'div':div,'start':start,'end':end,'ticker':ticker,'logo':logo})
 
