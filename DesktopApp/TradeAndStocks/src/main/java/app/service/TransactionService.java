@@ -145,8 +145,16 @@ public class TransactionService {
         double unitSum = calculateCurrentlyOwnedStockUnits(list);
         double currentUnitPrice = StockDataService.getLatestPrice(stockName).getPrice();
         double sumOfBuyTransactions = list.stream().filter(Transaction::isBuy).mapToDouble(x -> x.getUnitPrice() * x.getUnits()).sum();
-        double profitLoss =  ((unitSum * currentUnitPrice)/(sumOfBuyTransactions)) - 1;
-        System.out.println(profitLoss);
+        double sumOfBuyTransactionsWithCurrentPrice = list.stream().filter(Transaction::isBuy).mapToDouble(x -> currentUnitPrice * x.getUnits()).sum();
+
+       // double profitLoss =  ((unitSum * currentUnitPrice)/(sumOfBuyTransactions)) - 1;
+        double profitLoss = (sumOfBuyTransactionsWithCurrentPrice/sumOfBuyTransactions) - 1;
+        if(stockName.equals("AAPL")) {
+            System.out.println("UNIT SUM" + unitSum);
+            System.out.println("Current unit price " + currentUnitPrice);
+            System.out.println("Sum of buy transactions" + sumOfBuyTransactions);
+            System.out.println("PROFIT LOSS" + profitLoss);
+        }
         return profitLoss;
         /*
 

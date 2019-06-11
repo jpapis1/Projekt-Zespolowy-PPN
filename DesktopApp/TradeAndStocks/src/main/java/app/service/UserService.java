@@ -138,7 +138,7 @@ public class UserService {
 
             double profitLoss = transactionService.calculateProfitLoss(shortName,user);
             //double profitLoss = -(1 - (valueSell + (currentUnitPrice*unitSum))/valueBuy)*100;
-            String str = String.format("%.2f", profitLoss);
+            String str = String.format("%.2f", profitLoss*100);
             profitLoss = Double.parseDouble(str);
             if(unitSum>=0.01) {
                 String realValueRound = String.format("%.2f", realValue);

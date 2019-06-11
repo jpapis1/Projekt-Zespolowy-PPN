@@ -204,7 +204,7 @@ public class StockData {
                 URL url = new URL(sURL);
                 URLConnection request = url.openConnection();
                 request.connect();
-                JsonParser jp = new JsonParser();
+                //JsonParser jp = new JsonParser();
                 //JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
 
                 try {
