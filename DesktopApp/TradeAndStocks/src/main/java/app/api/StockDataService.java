@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class StockDataService {
 
-    static public final String[] usedStocks = {"AMD","AAPL", "FB", "FDX", "HAS","TWTR","MET","MCD","FOX"};
+    static public final String[] usedStocks = {"AAPL", "FB", "FDX", "HAS","TWTR","MCD","FOX","XRX"};
     //            , "MET", "NFLX", , "HD", "PYPL", "QCOM", "SBUX", "TGT", "TXN", "TWTR", , "VZ", "XRX"
 
     static public ArrayList<StockData> getAllStockDataList() {
