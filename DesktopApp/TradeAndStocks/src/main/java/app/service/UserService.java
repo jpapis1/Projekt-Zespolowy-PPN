@@ -101,9 +101,9 @@ public class UserService {
         String[] pass = new String[3];
         pass[1] = "120000";
         SecureRandom random = new SecureRandom();
-        byte bytes[] = new byte[12];
+        byte bytes[] = new byte[9];
         random.nextBytes(bytes);
-        String generatedString =  bytes.toString();
+        String generatedString =  java.util.Base64.getEncoder().encodeToString(bytes);
         pass[2] = generatedString;
         KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
         try {
