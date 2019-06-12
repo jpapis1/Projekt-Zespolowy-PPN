@@ -36,7 +36,9 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.transaction.Transactional;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.SQLException;
@@ -98,10 +100,10 @@ public class UserService {
     public String hashPassword(String password) {
         String[] pass = new String[3];
         pass[1] = "120000";
-        byte[] array = new byte[12]; // length is bounded by 7
-        new Random().nextBytes(array);
-        String generatedString = new String(array, Charset.forName("UTF-8"));
-
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[12];
+        random.nextBytes(bytes);
+        String generatedString =  bytes.toString();
         pass[2] = generatedString;
         KeySpec spec = new PBEKeySpec(password.toCharArray(), pass[2].getBytes(), Integer.valueOf(pass[1]), 256);
         try {
