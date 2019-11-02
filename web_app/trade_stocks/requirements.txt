@@ -23,7 +23,7 @@ nbformat==4.4.0
 numpy==1.15.4
 packaging==18.0
 pandas==0.23.4
-Pillow==5.4.1
+Pillow==6.2.0
 plotly==3.5.0
 psycopg2==2.7.6.1
 pycparser==2.19
